@@ -53,7 +53,7 @@ class SignIn extends Component {
 
             <div className="isoSignInForm">
               <div className="isoInputWrapper">
-                <Input size="large" placeholder="Username" id="inputEmail"  defaultValue="seller@food.com" />
+                <Input size="large" placeholder="Username" id="inputEmail"  defaultValue="admin@admin.com" />
               </div>
 
               <div className="isoInputWrapper">
@@ -73,14 +73,6 @@ class SignIn extends Component {
                 <IntlMessages id="page.signInPreview" />
               </p>
 
-              <div className="isoInputWrapper isoOtherLogin">
-                <Button onClick={this.handleLogin} type="primary btnFacebook">
-                  <IntlMessages id="page.signInFacebook" />
-                </Button>
-                <Button onClick={this.handleLogin} type="primary btnGooglePlus">
-                  <IntlMessages id="page.signInGooglePlus" />
-                </Button>
-              </div>
               <div className="isoCenterComponent isoHelperWrapper">
                 <Link to="" className="isoForgotPass">
                   <IntlMessages id="page.signInForgotPass" />

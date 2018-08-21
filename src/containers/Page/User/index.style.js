@@ -1,7 +1,7 @@
 import styled from 'styled-components';
 import { palette } from 'styled-theme';
-import BoxComponent from '../../components/utility/box';
-import WithDirection from '../../settings/withDirection';
+import BoxComponent from '../../../components/utility/box';
+import WithDirection from '../../../settings/withDirection';
 
 const BoxWrapper = styled(BoxComponent)`
   .isoInvoiceTableBtn {

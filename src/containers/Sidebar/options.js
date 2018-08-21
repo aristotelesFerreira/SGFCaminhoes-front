@@ -5,14 +5,9 @@ const options = [
     leftIcon: "ion-document"
   },
   {
-    key: "sellers/:id",
-    label: "sidebar.sellers",
+    key: "users",
+    label: "sidebar.users",
     leftIcon: "ion-document"
-  },
-  {
-    key: 'menu-options',
-    label: 'sidebar.menu-options',
-    leftIcon: 'ion-ios-list-outline'
-  },
+  }
 ];
 export default options;

@@ -1,15 +1,21 @@
-import React, { Component } from 'react';
-import LayoutContentWrapper from '../components/utility/layoutWrapper';
-import LayoutContent from '../components/utility/layoutContent';
+/*import React, { Component } from 'react';
+import PageHeader from "../../../components/utility/pageHeader";
+import IntlMessages from "../../../components/utility/intlMessages";
+import { Button, message } from "antd";
+import CardWrapper, { Box, StatusTag } from "./index.style";
+import LayoutWrapper from '../../../components/utility/layoutWrapper';
 
 export default class extends Component {
   render() {
     return (
-      <LayoutContentWrapper style={{ height: '100vh' }}>
-        <LayoutContent>
-          <h1>Blank Page</h1>
-        </LayoutContent>
-      </LayoutContentWrapper>
+      <LayoutWrapper>
+        <PageHeader>
+            <IntlMessages id='header.users'/>
+        </PageHeader>
+        <Box>
+        
+        </Box>
+      </LayoutWrapper>
     );
   }
-}
+}*/

@@ -1,24 +1,21 @@
 {
-  "sidebar.sellers": "Restaurante",
   "sidebar.authCheck": "Auth Check",
-  "sidebar.menu-options": "Cardápio",
-  "sidebar.category": "Categoria",
   "sidebar.feedback": "Feedback",
+  "sidebar.users": "Usuários",
 
   "topbar.help": "Ajuda",
   "topbar.logout": "Sair",
 
-  "page.signInTitle": "Easy-Food",
+  "page.signInTitle": "SGF-Caminhões",
   "page.signInButton": "Entrar",
   "page.signInRememberMe": "Lembrar-se de mim",
   "page.signInPreview": "Esqueceu sua senha ?",
+  "page.signInForgotPass": "Esqueceu sua senha ?",
+  "page.signInCreateAccount": "Cadastrar-se",
 
   "themeSwitcher.settings": "Configuraçoes",
   
-  "header.menu-options": "Cardápios",
-  "header.sellers": "Meus Dados",
-  "header.products": "Produtos",
-  "header.categorys": "Categorias",
+  "header.users": "Usuários"
 
-  "sellers.address": "Informações de Endereço"
+  
 }
