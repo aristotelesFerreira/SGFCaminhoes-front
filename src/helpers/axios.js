@@ -7,11 +7,14 @@ const axiosInstance = axios.create({
     headers: {
         "Authorization": 'Bearer ' + localStorage.getItem('id_token') || undefined,
         'Content-Type': 'application/json',
-        Accept: 'application/json'
+        Accept: 'application/json',
+        
+        ///Access-Control-Allow-Origin
     },
+
     
 })
 
-console.log(localStorage.getItem('id_token'))
+//console.log(localStorage.getItem('id_token'))
 
 export default axiosInstance 
