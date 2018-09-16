@@ -1,18 +1,28 @@
 const options = [
   {
-    key: "blankPage",
-    label: "sidebar.blankPage",
+    key: "drivers",
+    label: "sidebar.drivers",
     leftIcon: "ion-document"
   },
   {
-    key: "sellers/:id",
-    label: "sidebar.sellers",
+    key: "vehicles",
+    label: 'sidebar.vehicles',
     leftIcon: "ion-document"
   },
   {
-    key: 'menu-options',
-    label: 'sidebar.menu-options',
-    leftIcon: 'ion-ios-list-outline'
+    key: 'carts',
+    label: 'sidebar.carts',
+    leftIcon: 'ion-document'
   },
+  {
+    key: 'itineraries',
+    label: 'sidebar.itineraries',
+    leftIcon: 'ion-document'
+  },
+  {
+    key: 'travel',
+    label: 'sidebar.travel',
+    leftIcon: 'ion-document'
+  }
 ];
 export default options;

@@ -6,7 +6,7 @@ class AuthHelper {
         if(!userInfo.email || !userInfo.password) {
             return { error: 'preencha os campos'}
         }
-        return await axios.post('http://127.0.0.1:3333/api/v1/login/token', userInfo)
+        return await axios.post('http://127.0.0.1:3333/auth', userInfo)
             .then(response => {
             return this.checkExpirity(response.data.token);
            

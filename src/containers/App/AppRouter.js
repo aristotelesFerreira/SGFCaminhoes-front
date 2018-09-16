@@ -8,17 +8,9 @@ const routes = [
     component: asyncComponent(() => import("../dashboard"))
   },
   {
-    path: 'sellers/:id',
-    component: asyncComponent(() => import("../Seller"))
-  },
-  {
-    path: 'menu-options',
-    component: asyncComponent(() => import("../MenuOptions"))
-  },
-  {
-    path: 'menu-options/:id',
-    component: asyncComponent(() => import('../MenuOptions/viewMenuOptions'))
-  },
+    path: 'drivers',
+    component: asyncComponent(() => import('../Driver'))
+  }
 ];
 
 class AppRouter extends Component {

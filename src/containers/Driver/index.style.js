@@ -12,30 +12,29 @@ const BoxWrapper = styled(BoxComponent)`
     }
   }
 `;
-
-const StatusTag = styled.span`
+const StatusTagAtivo = styled.span`
   padding: 0 5px;
   height: 20px;
   display: inline-flex;
   align-items: center;
   justify-content: center;
   border-radius: 2px;
-  background-color: ${palette('primary', 0)};
+  background-color: ${palette('success', 0)};
   font-size: 12px;
   color: #ffffff;
   text-transform: capitalize;
-
-  &.pending {
-    background-color: ${palette('error', 0)};
-  }
-
-  &.shipped {
-    background-color: ${palette('warning', 0)};
-  }
-
-  &.delivered {
-    background-color: ${palette('success', 0)};
-  }
+`;
+const StatusTagInativo = styled.span`
+  padding: 0 5px;
+  height: 20px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 2px;
+  background-color: ${palette('error', 0)};
+  font-size: 12px;
+  color: #ffffff;
+  text-transform: capitalize;
 `;
 
 const CardWrapper = styled.div`
@@ -96,5 +95,5 @@ const CardWrapper = styled.div`
 `;
 
 const Box = WithDirection(BoxWrapper);
-export { Box, StatusTag };
+export { Box, StatusTagAtivo, StatusTagInativo };
 export default WithDirection(CardWrapper);

@@ -1,24 +1,27 @@
 {
-  "sidebar.sellers": "Restaurante",
-  "sidebar.authCheck": "Auth Check",
-  "sidebar.menu-options": "Cardápio",
-  "sidebar.category": "Categoria",
+  "sidebar.drivers": "Motoristas",
+  "sidebar.vehicles": "Veículos",
+  "sidebar.carts": "Carretas",
+  "sidebar.itineraries": "Itinerários",
+  "sidebar.travel": "Viagens",
   "sidebar.feedback": "Feedback",
 
   "topbar.help": "Ajuda",
   "topbar.logout": "Sair",
 
-  "page.signInTitle": "Easy-Food",
+  "page.signInTitle": "SGF-CAMINHÕES",
   "page.signInButton": "Entrar",
   "page.signInRememberMe": "Lembrar-se de mim",
   "page.signInPreview": "Esqueceu sua senha ?",
+  "page.signInForgotPass": "Esqueceu sua senha ?" ,
 
   "themeSwitcher.settings": "Configuraçoes",
-  
-  "header.menu-options": "Cardápios",
-  "header.sellers": "Meus Dados",
-  "header.products": "Produtos",
-  "header.categorys": "Categorias",
 
-  "sellers.address": "Informações de Endereço"
+
+
+  "header.drivers": "Motoristas"
+
+
+  
+  
 }
