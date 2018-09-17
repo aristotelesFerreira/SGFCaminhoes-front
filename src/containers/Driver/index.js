@@ -7,11 +7,14 @@ import CardWrapper, { Box, StatusTagAtivo, StatusTagInativo } from "./index.styl
 import IntlMessages from "../../components/utility/intlMessages";
 import PageHeader from "../../components/utility/pageHeader";
 import Scrollbars from "../../components/utility/customScrollBar";
-import notification from "../../components/notification";
+import { Link } from "react-router-dom";
 
-import { Button, mesage, Input, Icon } from 'antd';
+
+import { Button, mesage, Input, Icon, notification } from 'antd';
 
 import axios from '../../helpers/axios'
+import AddDriver from './addDriver'
+import EditDriver from './editDriver'
 
 
 export default class index extends Component {
@@ -22,27 +25,27 @@ export default class index extends Component {
     visibleEdit: false,
     confirmLoading: false,
     list: [],
-    initialSatte: {
+    initialState: {
         name: '',
         cpf_number: '',
         drivers_license: '',
-        admission_date: '',
-        resignation_date: '',
-        salary: '',
+        admission_date: null,
+        resignation_date: null,
+        salary: null,
         phone_1: '',
         phone_2: '',
-        status: ''
+        status: true
     },
     driversInfo: {
         name: '',
         cpf_number: '',
         drivers_license: '',
-        admission_date: '',
-        resignation_date: '',
-        salary: '',
+        admission_date: null,
+        resignation_date: null,
+        salary: null,
         phone_1: '',
         phone_2: '',
-        status: ''
+        status: true
     }
   }
   componentWillMount = () => {
@@ -57,6 +60,55 @@ export default class index extends Component {
       console.log(error)
     })
   }
+  addDriver = () => {
+    const { name } = this.state.driversInfo;
+    if (name !== '') {
+      let newDriverInfo = {
+        ...this.state.driversInfo
+      };
+      axios.post("drivers", newDriverInfo)
+        .then(response => {
+          this.setState({
+            confirmLoading: true
+          });
+          setTimeout(() => {
+            this.setState({
+              confirmLoading: false
+            });
+            this.handleAddClose();
+            this.componentWillMount()
+          }, 2000);
+          notification.success({message: 'Cadastrado com sucesso !'})
+          
+        })
+        .catch(error => {
+          notification.error({message: 'Não foi possivel cadastrar !'})
+          console.log(error);
+        });
+    } else {
+      notification.warning({message: 'Campos inválidos', description: 'Preencha todos os campos obrigatórios (*)'})
+    }
+  }
+  editDriver = () => {
+    const { name } = this.state.driversInfo
+    if( name!== ''){
+      let newDriverInfo = {
+        ...this.state.driversInfo
+      }
+      axios.put(`drivers/${this.state.uuid}`, newDriverInfo)
+      .then(response => {
+        notification.success({message: 'Editado com sucesso'})
+        this.handleEditClose()
+        this.componentWillMount()
+      })
+      .catch(error => {
+        console.log(error)
+        notification.error({message:'Não foi possivel editar !'})
+      })
+    } else {
+      notification.warning({message: "Campo 'nome' obrigatório !"})
+    }
+  }
   handleSearch = (selectedKeys, confirm) => () => {
     confirm();
     this.setState({ searchText: selectedKeys[0]})
@@ -65,6 +117,37 @@ export default class index extends Component {
   handleReset = clearFilters => () => {
     clearFilters()
     this.setState({searchText: ''})
+  }
+
+  handleAddClose = () => {
+    this.setState({
+      visible: false,
+      driversInfo: {...this.state.initialState} 
+    });
+  }
+  handleEditClose = () => {
+    this.setState({
+      visibleEdit: false,
+      driversInfo: {...this.state.initialState} 
+    });
+  }
+  showModalEdit = () => {
+    this.setState({
+      visibleEdit:true
+    })
+  }
+  onChangeAddDriverInfo(key, value) {
+    this.setState({
+      driversInfo: {
+        ...this.state.driversInfo,
+        [key]: value
+      }
+    });
+  }
+  showAddModal = () => {
+    this.setState({
+      visible: true
+    })
   }
 
   columns = [
@@ -123,7 +206,7 @@ export default class index extends Component {
       sorter: (a, b) => a.status -b.status,
       render: (text, status) => {
         let className, userStatus;
-        if (status.status === 'active' ) {
+        if (status.status !== 0 ) {
           className = "Ativo";
            userStatus = <StatusTagAtivo>{className}</StatusTagAtivo>
         } else{
@@ -132,6 +215,54 @@ export default class index extends Component {
         }
         return userStatus
       }
+    },
+    {
+      title: "Ações",
+      dataIndex: "view",
+      key: "view",
+      width: "20%",
+      render: (text, driversInfo) => (
+        <div className="isoInvoiceBtnView">
+          <Link to={`${this.props.match.path}/${driversInfo.uuid}/products`}>
+            <Button type="primary" >
+              Visualizar
+            </Button>
+          </Link>
+          <Button color='primary'
+            onClick={() => {
+              console.log(driversInfo)
+              this.showModalEdit()
+              this.setState({ uuid: driversInfo.uuid, driversInfo:{
+                name: driversInfo.name,
+                cpf_number: driversInfo.cpf_number,
+                drivers_license: driversInfo.drivers_license,
+                admission_date: driversInfo.admission_date,
+                resignation_date: driversInfo.resignation_date,
+                salary: driversInfo.salary,
+                phone_1: driversInfo.phone_1,
+                phone_2: driversInfo.phone_2,
+                status: driversInfo.status
+               
+                } 
+              })
+              console.log(this.state.driversInfo.name)
+            }}>
+            Editar
+          </Button>
+
+          <Button
+            className="invoiceDltBtn"
+            // icon="delete"
+            onClick={() => {
+              notification.success({message: 'Excluido com sucesso !'})
+              this.props.deleteInvoice([driversInfo.key]);
+              this.setState({ selected: [] });
+            }}
+          >
+            <i className="ion-android-delete" />
+          </Button>
+        </div>
+      )
     }
   ]
   
@@ -181,7 +312,7 @@ export default class index extends Component {
           <div className='BtnAdd' align='right'>
             <Button
              type='primary'
-             onClick={this.showModal}
+             onClick={this.showAddModal}
              style={{ top: -10 }}
              >
              Adicionar Motorista
@@ -200,7 +331,21 @@ export default class index extends Component {
             </Scrollbars>
           </div>
         </CardWrapper>
-
+        <AddDriver 
+        openAddModal={this.state.visible}
+        close={this.handleAddClose}
+        addDriver={this.addDriver}
+        onChangeAddDriverInfo={this.onChangeAddDriverInfo.bind(this)}
+        confirmLoading={this.state.confirmLoading}
+        />
+        <EditDriver 
+        driversInfo={this.state.driversInfo}
+        open={this.state.visibleEdit}
+        close={this.handleEditClose}
+        editDriver={this.editDriver}
+        onChangeAddDriverInfo={this.onChangeAddDriverInfo.bind(this)}
+        confirmLoading={this.state.confirmLoading}
+        />
         </Box>
       </LayoutWrapper>
     );
