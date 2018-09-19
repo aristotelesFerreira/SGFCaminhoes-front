@@ -2,14 +2,6 @@ import React, { Component } from 'react'
 import { Button, Modal, Row, Col, Input, Switch, Icon, Tooltip } from 'antd'
 import Form from '../../components/uielements/form'
 
-import locale from 'antd/lib/date-picker/locale/pt_BR';
-import pt_BR from 'antd/lib/locale-provider/pt_BR';
-import moment from 'moment';
-
-import { DatePicker } from 'antd';
-
-const { RangePicker } = DatePicker;
-
 const FormItem = Form.Item
 
 class addDriver extends Component {

@@ -4,9 +4,6 @@ import AuthHelper from '../../helpers/authHelper';
 import { push } from 'react-router-redux';
 import { setToken, getToken, clearToken } from '../../helpers/utility';
 import actions from './actions';
-import axios from 'axios'
-
-const URL = 'http://127.0.0.1:3333/api/v1/';
 
 export function* loginRequest() {
   yield takeEvery('LOGIN_REQUEST', function*({ payload }) {

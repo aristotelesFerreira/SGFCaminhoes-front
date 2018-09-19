@@ -1,4 +1,3 @@
-import { Map } from 'immutable';
 
 export function clearToken() {
   localStorage.removeItem('id_token');

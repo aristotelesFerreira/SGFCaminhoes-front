@@ -2,13 +2,6 @@ import React, { Component } from 'react'
 import { Button, Modal, Row, Col, Input, Switch, Icon, Tooltip } from 'antd'
 import Form from '../../components/uielements/form'
 
-import moment from 'moment';
-//import 'moment/locale/pt_BR';
-import { DatePicker } from 'antd';
-
-//moment.locale('pt_BR')
-const { RangePicker } = DatePicker;
-
 const FormItem = Form.Item
 
 class editDriver extends Component {
@@ -18,7 +11,7 @@ class editDriver extends Component {
         const { getFieldDecorator } = this.props.form;
         //const d = new Date(this.props.driversInfo.admission_date);
         //const y = d.toLocaleDateString()
-        const t = moment(new Date(this.props.driversInfo.admission_date)).format('YYYY-MM-DD')
+        //const t = moment(new Date(this.props.driversInfo.admission_date)).format('YYYY-MM-DD')
         return (
             <Modal
             title='Editar Motorista'
@@ -173,31 +166,21 @@ class editDriver extends Component {
                     <Col sm={24} xs={24} md={7}>
                             <FormItem label='Data de admissão' hasFeedback>
                                     {getFieldDecorator('admission_date', {
-                                        initialValue: moment(new Date(this.props.driversInfo.admission_date)).format('YYYY-MM-DD')
-                                    })(
-                                       
+                                        initialValue: this.props.driversInfo.admission_date
+                                      })(
                                         <Input 
                                         type='date'
                                         placeholder='Data de admissão'
                                         name='admission_date'
                                         onChange={e => this.props.onChangeAddDriverInfo('admission_date', e.target.value)}
-                                        onClick={console.log(t)}
-                                       
-                                    />
-                                          
+                                    />     
                                     )}
                             </FormItem>
                     </Col>
                     <Col sm={24} xs={24} md={7}>
                             <FormItem label='Data de demissão' hasFeedback>
                                     {getFieldDecorator('resignation_date', {
-                                        initialValue: moment(new Date(this.props.driversInfo.resignation_date)).format('YYYY-MM-DD'),
-                                        rules: [
-                                            /*{
-                                                required: true,
-                                                message: 'Campo obrigatório'
-                                            }*/
-                                        ]
+                                       initialValue: this.props.driversInfo.resignation_date,
                                     })(
                                         <Input 
                                             type='date'
@@ -212,9 +195,9 @@ class editDriver extends Component {
                         <FormItem label="Status" hasFeedback>
                         
                         <Switch
-                        
                         checkedChildren={<Icon type="check" />}
-                        unCheckedChildren= {<Icon type="cross" />} defaultChecked
+                        unCheckedChildren= {<Icon type="cross" />} //defaultChecked
+                        defaultChecked = {this.props.driversInfo.status === 1 ? this.defaultChecked = true : this.defaultChecked = false}
                         name='status'
                         onChange={e => this.props.onChangeAddDriverInfo('status', e)}
                         />

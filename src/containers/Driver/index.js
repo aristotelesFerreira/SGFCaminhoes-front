@@ -10,11 +10,12 @@ import Scrollbars from "../../components/utility/customScrollBar";
 import { Link } from "react-router-dom";
 
 
-import { Button, mesage, Input, Icon, notification } from 'antd';
+import { Button, Input, Icon, notification } from 'antd';
 
 import axios from '../../helpers/axios'
 import AddDriver from './addDriver'
 import EditDriver from './editDriver'
+import moment from 'moment';
 
 
 export default class index extends Component {
@@ -54,12 +55,12 @@ export default class index extends Component {
       this.setState({
         list: response.data
       })
-      console.log(this.state.list)
     })
     .catch(error => {
       console.log(error)
     })
   }
+  
   addDriver = () => {
     const { name } = this.state.driversInfo;
     if (name !== '') {
@@ -236,16 +237,15 @@ export default class index extends Component {
                 name: driversInfo.name,
                 cpf_number: driversInfo.cpf_number,
                 drivers_license: driversInfo.drivers_license,
-                admission_date: driversInfo.admission_date,
-                resignation_date: driversInfo.resignation_date,
+                admission_date:  moment(new Date(driversInfo.admission_date)).format('YYYY-MM-DD'),
+                resignation_date:  moment(new Date(driversInfo.resignation_date)).format('YYYY-MM-DD'),
                 salary: driversInfo.salary,
                 phone_1: driversInfo.phone_1,
                 phone_2: driversInfo.phone_2,
-                status: driversInfo.status
+                status: driversInfo.status,
+                }
                
-                } 
               })
-              console.log(this.state.driversInfo.name)
             }}>
             Editar
           </Button>
