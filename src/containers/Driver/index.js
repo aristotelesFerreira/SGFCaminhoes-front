@@ -8,15 +8,14 @@ import IntlMessages from "../../components/utility/intlMessages";
 import PageHeader from "../../components/utility/pageHeader";
 import Scrollbars from "../../components/utility/customScrollBar";
 import { Link } from "react-router-dom";
-
-
 import { Button, Input, Icon, notification } from 'antd';
 
+import { palette } from 'styled-theme';
 import axios from '../../helpers/axios'
 import AddDriver from './addDriver'
 import EditDriver from './editDriver'
 import moment from 'moment';
-
+import { Ionicons } from 'react-icons/io'
 
 export default class index extends Component {
 
@@ -209,10 +208,11 @@ export default class index extends Component {
         let className, userStatus;
         if (status.status !== 0 ) {
           className = "Ativo";
-           userStatus = <StatusTagAtivo>{className}</StatusTagAtivo>
+           userStatus =  <Icon type="check-circle"  style={{ fontSize: 20, color: '#52c41a'}}/>
+           /*<StatusTagAtivo>{className}</StatusTagAtivo>*/
         } else{
           className = "Inativo";
-          userStatus = <StatusTagInativo>{className}</StatusTagInativo>
+          userStatus = <Icon type="close-circle"  style={{ fontSize: 20, color: '#f5222d'}}/>
         }
         return userStatus
       }
@@ -225,11 +225,13 @@ export default class index extends Component {
       render: (text, driversInfo) => (
         <div className="isoInvoiceBtnView">
           <Link to={`${this.props.match.path}/${driversInfo.uuid}/products`}>
-            <Button type="primary" >
-              Visualizar
-            </Button>
+          <Icon 
+          type="search"  
+          style={{ fontSize: 25, color: '#1890ff' }} />
           </Link>
-          <Button color='primary'
+          <Icon 
+          type="form"  
+          style={{ fontSize: 25, color: '#faad14' }}
             onClick={() => {
               console.log(driversInfo)
               this.showModalEdit()
@@ -246,11 +248,11 @@ export default class index extends Component {
                 }
                
               })
-            }}>
-            Editar
-          </Button>
+            }}
+          />
+         
 
-          <Button
+         {/* <Button
             className="invoiceDltBtn"
             // icon="delete"
             onClick={() => {
@@ -259,8 +261,8 @@ export default class index extends Component {
               this.setState({ selected: [] });
             }}
           >
-            <i className="ion-android-delete" />
-          </Button>
+            <i className="ion-android-add" />
+          </Button> */}
         </div>
       )
     }
@@ -311,11 +313,16 @@ export default class index extends Component {
         <Box>
           <div className='BtnAdd' align='right'>
             <Button
-             type='primary'
+            // style={{ background: '#1890ff' }}
+            // color='#1890ff'
+             //ghost
+            // type='primary'
              onClick={this.showAddModal}
              style={{ top: -10 }}
              >
-             Adicionar Motorista
+            <Icon type="plus-circle"  style={{ fontSize: 20, color: '#52c41a'}}/>
+             Adicionar
+            
              </Button>
           </div>
         <CardWrapper title='Motorista'>

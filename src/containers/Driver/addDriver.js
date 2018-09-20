@@ -1,6 +1,7 @@
 import React, { Component } from 'react'
 import { Button, Modal, Row, Col, Input, Switch, Icon, Tooltip } from 'antd'
 import Form from '../../components/uielements/form'
+import InputMask from 'react-input-mask'
 
 const FormItem = Form.Item
 
@@ -59,13 +60,16 @@ class addDriver extends Component {
                                     }
                                 ]
                             })(
-                                <Input 
+                                <Input
+                                   
                                     type='text'
                                     maxLength={11}
                                     placeholder='CPF'
                                     name='cpf_number'
                                     onChange={e => this.props.onChangeAddDriverInfo('cpf_number', e.target.value)}
                                 />
+                                
+
                             )}
                         </FormItem>
                     </Col>

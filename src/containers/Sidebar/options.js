@@ -1,28 +1,29 @@
+
 const options = [
   {
     key: "drivers",
     label: "sidebar.drivers",
-    leftIcon: "ion-document"
+    leftIcon: "ion-android-contacts"
   },
   {
     key: "vehicles",
     label: 'sidebar.vehicles',
-    leftIcon: "ion-document"
+    leftIcon: "ion-android-bus"
   },
   {
     key: 'carts',
     label: 'sidebar.carts',
-    leftIcon: 'ion-document'
+    leftIcon: 'ion-android-bus'
   },
   {
     key: 'itineraries',
     label: 'sidebar.itineraries',
-    leftIcon: 'ion-document'
+    leftIcon: 'ion-android-pin'
   },
   {
     key: 'travel',
     label: 'sidebar.travel',
-    leftIcon: 'ion-document'
+    leftIcon: 'ion-ios-world-outline'
   }
 ];
 export default options;

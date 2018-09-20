@@ -1,6 +1,7 @@
 import styled from "styled-components";
 import { palette } from "styled-theme";
-import bgImage from "../../image/sign.jpg";
+//import bgImage from "../../image/sign.jpg";
+import bgImage from "../../image/asfalto3.jpg";
 import WithDirection from "../../settings/withDirection";
 
 const SignInStyleWrapper = styled.div`
@@ -29,27 +30,37 @@ const SignInStyleWrapper = styled.div`
 
   .isoLoginContentWrapper {
     width: 500px;
-    height: 100%;
+    height: 500px;
     overflow-y: auto;
     z-index: 10;
     position: relative;
+    right: 30%;
+    top: 15%;
+    
   }
 
   .isoLoginContent {
     min-height: 100%;
+    width: 100%;
     display: flex;
     flex-direction: column;
-    padding: 70px 50px;
+    padding: 10px 10px;
     position: relative;
-    background-color: #ffffff;
+    
+    
 
     @media only screen and (max-width: 767px) {
       width: 100%;
-      padding: 70px 20px;
+      display: flex;
+      flex-direction: column;
+      padding: 30px 15%;
+      right: -25%;
+      position: relative;
+      
     }
-
     .isoLogoWrapper {
       width: 100%;
+      margin-left: -5%;
       display: flex;
       margin-bottom: 50px;
       justify-content: center;
@@ -65,9 +76,10 @@ const SignInStyleWrapper = styled.div`
     }
 
     .isoSignInForm {
-      width: 100%;
+      width: 85%;
       display: flex;
       flex-shrink: 0;
+      
       flex-direction: column;
 
       .isoInputWrapper {
