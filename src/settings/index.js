@@ -1,9 +1,9 @@
 
 
 const siteConfig = {
-  siteName: 'EasyFood',
+  siteName: 'SGF-Caminhões',
   siteIcon: 'ion-flash',
-  footerText: 'EasyFood ©2018 Created by A2WR',
+  footerText: 'SGFCaminhões ©2018 Created by Aristoteles F.',
 };
 const themeConfig = {
   topbar: 'themedefault',

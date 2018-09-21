@@ -1,9 +1,10 @@
 import React, { Component } from 'react'
-import { Button, Modal, Row, Col, Input, Switch, Icon, Tooltip } from 'antd'
+import { Button, Modal, Row, Col, Input, Switch, Icon, Tooltip, Select } from 'antd'
 import Form from '../../components/uielements/form'
 import InputMask from 'react-input-mask'
 
 const FormItem = Form.Item
+const Option = Select.Option
 
 class addDriver extends Component {
     
@@ -67,13 +68,11 @@ class addDriver extends Component {
                                     placeholder='CPF'
                                     name='cpf_number'
                                     onChange={e => this.props.onChangeAddDriverInfo('cpf_number', e.target.value)}
-                                />
-                                
-
+                                />                         
                             )}
                         </FormItem>
                     </Col>
-                    <Col sm={24} xs={24} md={3}>
+                    <Col sm={24} xs={24} md={5}>
                         <FormItem label={( <span>
                             CNH&nbsp;
                             <Tooltip title="Exemplos: ABCD">
@@ -91,13 +90,18 @@ class addDriver extends Component {
                               
                             })(
                              
-                                <Input 
-                                    type='text'
-                                    placeholder='CNH'
-                                    name='drivers_license'
-                                    onChange={e => this.props.onChangeAddDriverInfo('drivers_license', e.target.value)}
-                                />
-                                
+                                <Select 
+                                placeholder='CNH'
+                                name='drivers_license'
+                                onChange={e => this.props.onChangeAddDriverInfo('drivers_license', e)}
+                                >       
+                                    <Option value='a'>A</Option>
+                                    <Option value="ab">AB</Option>
+                                    <Option value="abc">ABC</Option>
+                                    <Option value="abcd">ABCD</Option>
+                                    <Option value="abcde">ABCDE</Option>
+                                    
+                                </Select>
                             )}
                         </FormItem>
                     </Col>
@@ -141,19 +145,22 @@ class addDriver extends Component {
                                 )}
                             </FormItem>
                     </Col>
-                    <Col sm={24} xs={24} md={4}>
-                        <FormItem label='Salário' hasFeedback>
-                                {getFieldDecorator('salary', {
+                    <Col sm={24} xs={24} md={7}>
+                        <FormItem label='Validade da CNH' hasFeedback>
+                                {getFieldDecorator('driversLicense_validate', {
                                     rules: [
-                                       
+                                       {
+                                           required: true,
+                                           message: 'Campo obrigatório'
+                                       }
                                     ]
                                 })(
                                     <Input 
-                                        type='number'
-                                        placeholder='Salário'
-                                        name='salary'
-                                        onChange={e => this.props.onChangeAddDriverInfo('salary', e.target.value)}
-                                    />
+                                            type='date'
+                                            placeholder='Validade da CNH'
+                                            name='driversLicense_validate'
+                                            onChange={e => this.props.onChangeAddDriverInfo('driversLicense_validate', e.target.value)}
+                                        />
                                 )}
                         </FormItem>
                     </Col>
@@ -162,20 +169,10 @@ class addDriver extends Component {
                     <Col sm={24} xs={24} md={7}>
                             <FormItem label='Data de admissão' hasFeedback>
                                     {getFieldDecorator('admission_date', {
-                                        rules: [
-                                            {
-                                                required: true,
-                                                message: 'Campo obrigatório',
-                                               
-                                            },
-                                            
-                                           
-                                        ]
                                     })(
                                        
                                         <Input 
                                         type='date'
-                                       
                                         placeholder='Data de admissão'
                                         name='admission_date'
                                         onChange={e => this.props.onChangeAddDriverInfo('admission_date', e.target.value)}
@@ -187,12 +184,6 @@ class addDriver extends Component {
                     <Col sm={24} xs={24} md={7}>
                             <FormItem label='Data de demissão' hasFeedback>
                                     {getFieldDecorator('resignation_date', {
-                                        rules: [
-                                            /*{
-                                                required: true,
-                                                message: 'Campo obrigatório'
-                                            }*/
-                                        ]
                                     })(
                                         <Input 
                                             type='date'
@@ -204,7 +195,7 @@ class addDriver extends Component {
                             </FormItem>
                     </Col>
                     <Col sm={24} xs={24} md={5}>
-                        <FormItem label="Status" hasFeedback>
+                        <FormItem label="Ativo" hasFeedback>
                         
                         <Switch
                         checkedChildren={<Icon type="check" />}

@@ -1,25 +1,21 @@
-import React, { Component } from 'react';
-
+import React, { Component } from 'react'
 
 import LayoutWrapper from "../../components/utility/layoutWrapper.js";
 import TableWrapper from "../Tables/antTables/antTable.style";
 import CardWrapper, { Box } from "./index.style";
 import IntlMessages from "../../components/utility/intlMessages";
 import PageHeader from "../../components/utility/pageHeader";
-import Scrollbars from "../../components/utility/customScrollBar";
-import { Link } from "react-router-dom";
 import { Button, Input, Icon, notification } from 'antd';
+import Scrollbars from "../../components/utility/customScrollBar";
 
-import { palette } from 'styled-theme';
 import axios from '../../helpers/axios'
-import AddDriver from './addDriver'
-import EditDriver from './editDriver'
-import ViewDriver from './viewDriver'
 import moment from 'moment';
-import { Ionicons } from 'react-icons/io'
+
+import AddVehicle from './addVehicle'
+import EditVehicle from './editVehicle'
+import ViewVehicle from './viewVehicle'
 
 export default class index extends Component {
-
   state = {
     selected: [],
     visible: false,
@@ -28,30 +24,35 @@ export default class index extends Component {
     confirmLoading: false,
     list: [],
     initialState: {
-        name: '',
-        cpf_number: '',
-        drivers_license: '',
-        admission_date: null,
-        resignation_date: null,
-        driversLicense_validate: null,
-        phone_1: '',
-        phone_2: '',
+        brand: '',
+        model: '',
+        type: '',
+        km_current: '',
+        year: '',
+        plate: '',
+        chassis_number: '',
+        purchase_price: '0',
+        purchase_date: null,
+        sale_value: '0',
         status: true
     },
-    driversInfo: {
-        name: '',
-        cpf_number: '',
-        drivers_license: '',
-        admission_date: null,
-        resignation_date: null,
-        driversLicense_validate: null,
-        phone_1: '',
-        phone_2: '',
+    vehicleInfo: {
+        brand: '',
+        model: '',
+        type: '',
+        km_current: '',
+        year: '',
+        plate: '',
+        chassis_number: '',
+        purchase_price: '0',
+        purchase_date: null,
+        sale_value: '0',
         status: true
     }
   }
+
   componentWillMount = () => {
-    axios.get('drivers')
+    axios.get('vehicles')
     .then(response => {
       this.setState({
         list: response.data
@@ -61,14 +62,13 @@ export default class index extends Component {
       console.log(error)
     })
   }
-  
-  addDriver = () => {
-    const { name } = this.state.driversInfo;
-    if (name !== '') {
-      let newDriverInfo = {
-        ...this.state.driversInfo
+  addVehicle = () => {
+    const { brand, model, type, plate, chassis_number } = this.state.vehicleInfo;
+    if (brand !== '' && model !== '' && type !== '' && plate !== '' && chassis_number !== '') {
+      let newVehicleInfo = {
+        ...this.state.vehicleInfo
       };
-      axios.post("drivers", newDriverInfo)
+      axios.post("vehicles", newVehicleInfo)
         .then(response => {
           this.setState({
             confirmLoading: true
@@ -91,13 +91,14 @@ export default class index extends Component {
       notification.warning({message: 'Campos inválidos', description: 'Preencha todos os campos obrigatórios (*)'})
     }
   }
-  editDriver = () => {
-    const { name } = this.state.driversInfo
-    if( name!== ''){
-      let newDriverInfo = {
-        ...this.state.driversInfo
-      }
-      axios.put(`drivers/${this.state.uuid}`, newDriverInfo)
+  
+  editVehicle = () => {
+    const { brand, model, type, plate, chassis_number } = this.state.vehicleInfo;
+    if (brand !== '' && model !== '' && type !== '' && plate !== '' && chassis_number !== '') {
+      let newVehicleInfo = {
+        ...this.state.vehicleInfo
+      };
+      axios.put(`vehicles/${this.state.uuid}`, newVehicleInfo)
       .then(response => {
         notification.success({message: 'Editado com sucesso'})
         this.handleEditClose()
@@ -111,32 +112,23 @@ export default class index extends Component {
       notification.warning({message: "Campo 'nome' obrigatório !"})
     }
   }
-  handleSearch = (selectedKeys, confirm) => () => {
-    confirm();
-    this.setState({ searchText: selectedKeys[0]})
-  }
-
-  handleReset = clearFilters => () => {
-    clearFilters()
-    this.setState({searchText: ''})
-  }
-
+  
   handleAddClose = () => {
     this.setState({
       visible: false,
-      driversInfo: {...this.state.initialState} 
+      vehicleInfo: {...this.state.initialState} 
     });
   }
   handleEditClose = () => {
     this.setState({
       visibleEdit: false,
-      driversInfo: {...this.state.initialState} 
+      vehicleInfo: {...this.state.initialState} 
     });
   }
   handleViewClose = () => {
     this.setState({
       visibleView: false,
-      driversInfo: {...this.state.initialState} 
+      vehicleInfo: {...this.state.initialState} 
     });
   }
   showAddModal = () => {
@@ -151,29 +143,37 @@ export default class index extends Component {
   }
   showModalView = () => {
     this.setState({
-      visibleView:true
+      visibleView: true
     })
   }
-  onChangeAddDriverInfo(key, value) {
+  onChangeAddVehicleInfo(key, value) {
     this.setState({
-      driversInfo: {
-        ...this.state.driversInfo,
+      vehicleInfo: {
+        ...this.state.vehicleInfo,
         [key]: value
       }
     });
   }
+  handleSearch = (selectedKeys, confirm) => () => {
+    confirm();
+    this.setState({ searchText: selectedKeys[0]})
+  }
+  handleReset = clearFilters => () => {
+    clearFilters()
+    this.setState({searchText: ''})
+  }
 
   columns = [
     {
-      title: "Nome",
-      dataIndex: "name",
-      key: "name",
-      width: "30%",
+      title: "Modelo",
+      dataIndex: "model",
+      key: "model",
+      width: "20%",
       filterDropdown: ({ setSelectedKeys, selectedKeys, confirm, clearFilters }) => (
         <div className='custom-filter-dropdown' xs={5} sm={5}>
           <Input
             ref={ele => this.searchInput = ele}
-            placeholder="Nome"
+            placeholder="Modelo"
             value={selectedKeys[0]}
             onChange={e => setSelectedKeys(e.target.value ? [e.target.value] : [])}
             onPressEnter={this.handleSearch(selectedKeys, confirm)}         
@@ -183,7 +183,7 @@ export default class index extends Component {
         </div>
       ),
       filterIcon: filtered => <Icon type="filter" style={{fontSize:18, color: filtered ? 'red' : '#aaa' }} />,
-      onFilter: (value, record) => record.name.toLowerCase().includes(value.toLowerCase()),
+      onFilter: (value, record) => record.model.toLowerCase().includes(value.toLowerCase()),
       onFilterDropdownVisibleChange: (visible) => {
         if (visible) {
           setTimeout(() => {
@@ -204,17 +204,63 @@ export default class index extends Component {
       }
     },
     {
-      title: 'CPF',
-      dataIndex: 'cpf_number',
-      key: 'cpf_number',
-      width: '30%',
+      title: 'Marca',
+      dataIndex: 'brand',
+      key: 'brand',
+      width: '20%',
+      render: text => <span>{text}</span>
+    },
+    {
+      title: 'Placa',
+      dataIndex: 'plate',
+      key: 'plate',
+      width: '20%',
+      filterDropdown: ({ setSelectedKeys, selectedKeys, confirm, clearFilters }) => (
+        <div className='custom-filter-dropdown' xs={5} sm={5}>
+          <Input
+            ref={ele => this.searchInput = ele}
+            placeholder="Placa"
+            value={selectedKeys[0]}
+            onChange={e => setSelectedKeys(e.target.value ? [e.target.value] : [])}
+            onPressEnter={this.handleSearch(selectedKeys, confirm)}         
+          /> 
+          <Button type='primary' onClick={this.handleSearch(selectedKeys, confirm )}>Buscar </Button>
+          <Button onClick={this.handleReset(clearFilters )}>Limpar</Button>
+        </div>
+      ),
+      filterIcon: filtered => <Icon type="filter" style={{fontSize:18, color: filtered ? 'red' : '#aaa' }} />,
+      onFilter: (value, record) => record.plate.toLowerCase().includes(value.toLowerCase()),
+      onFilterDropdownVisibleChange: (visible) => {
+        if (visible) {
+          setTimeout(() => {
+            this.searchInput.focus();
+          });
+        }
+      },
+      render: (text) => {
+        const { searchText } = this.state
+        return searchText ? (
+          <span>
+          {text.split(new RegExp(`(?<=${searchText})|(?=${searchText})`, 'i')).map((fragment, i) => (
+            fragment.toLowerCase() === searchText.toLowerCase()
+              ? <span key={i} style={{ color: 'red'}} className="highlight">{fragment}</span> : fragment // eslint-disable-line
+          ))}
+        </span>
+        ) : text
+      }
+    },
+    {
+      title: 'Tipo',
+      dataIndex: 'type',
+      key: 'type',
+      width: '20%',
       render: text => <span>{text}</span>
     },
     {
       title: "Status",
       dataIndex: "status",
       key: 'status',
-      width: "20%",
+      width: "10%",
       defaultSortOrder: 'descend',
       sorter: (a, b) => a.status -b.status,
       render: (text, status) => {
@@ -222,7 +268,6 @@ export default class index extends Component {
         if (status.status !== 0 ) {
           className = "Ativo";
            userStatus =  <Icon type="check-circle"  style={{ fontSize: 20, color: '#52c41a'}}/>
-           /*<StatusTagAtivo>{className}</StatusTagAtivo>*/
         } else{
           className = "Inativo";
           userStatus = <Icon type="close-circle"  style={{ fontSize: 20, color: '#f5222d'}}/>
@@ -235,24 +280,26 @@ export default class index extends Component {
       dataIndex: "view",
       key: "view",
       width: "20%",
-      render: (text, driversInfo) => (
+      render: (text, vehicleInfo) => (
         <div className="isoInvoiceBtnView">
           <Icon 
           type="search"  
           style={{ fontSize: 25, color: '#1890ff' }} 
           onClick={() => {
-            console.log(driversInfo)
+            console.log(vehicleInfo)
             this.showModalView()
-            this.setState({ uuid: driversInfo.uuid, driversInfo:{
-              name: driversInfo.name,
-              cpf_number: driversInfo.cpf_number,
-              drivers_license: driversInfo.drivers_license,
-              admission_date:  moment(new Date(driversInfo.admission_date)).format('YYYY-MM-DD'),
-              resignation_date:  moment(new Date(driversInfo.resignation_date)).format('YYYY-MM-DD'),
-              driversLicense_validate:  moment(new Date(driversInfo.driversLicense_validate)).format('YYYY-MM-DD'),
-              phone_1: driversInfo.phone_1,
-              phone_2: driversInfo.phone_2,
-              status: driversInfo.status,
+            this.setState({ uuid: vehicleInfo.uuid, vehicleInfo:{
+              brand: vehicleInfo.brand,
+              model: vehicleInfo.model,
+              type: vehicleInfo.type,
+              km_current: vehicleInfo.km_current,
+              year: vehicleInfo.year,
+              plate: vehicleInfo.plate,
+              chassis_number: vehicleInfo.chassis_number,
+              purchase_price: vehicleInfo.purchase_price,
+              purchase_date:  moment(new Date(vehicleInfo.purchase_date)).format('YYYY-MM-DD'),
+              sale_value: vehicleInfo.sale_value,
+              status: vehicleInfo.status,
               }
              
             })
@@ -262,20 +309,21 @@ export default class index extends Component {
           type="form"  
           style={{ fontSize: 25, color: '#faad14' , marginLeft: 20}}
           onClick={() => {
-            console.log(driversInfo)
+            console.log(vehicleInfo)
             this.showModalEdit()
-            this.setState({ uuid: driversInfo.uuid, driversInfo:{
-              name: driversInfo.name,
-              cpf_number: driversInfo.cpf_number,
-              drivers_license: driversInfo.drivers_license,
-              admission_date:  moment(new Date(driversInfo.admission_date)).format('YYYY-MM-DD'),
-              resignation_date:  moment(new Date(driversInfo.resignation_date)).format('YYYY-MM-DD'),
-              driversLicense_validate:  moment(new Date(driversInfo.driversLicense_validate)).format('YYYY-MM-DD'),
-              phone_1: driversInfo.phone_1,
-              phone_2: driversInfo.phone_2,
-              status: driversInfo.status,
+            this.setState({ uuid: vehicleInfo.uuid, vehicleInfo:{
+              brand: vehicleInfo.brand,
+              model: vehicleInfo.model,
+              type: vehicleInfo.type,
+              km_current: vehicleInfo.km_current,
+              year: vehicleInfo.year,
+              plate: vehicleInfo.plate,
+              chassis_number: vehicleInfo.chassis_number,
+              purchase_price: vehicleInfo.purchase_price,
+              purchase_date:  moment(new Date(vehicleInfo.purchase_date)).format('YYYY-MM-DD'),
+              sale_value: vehicleInfo.sale_value,
+              status: vehicleInfo.status,
               }
-             
             })
           }}
           />
@@ -283,11 +331,10 @@ export default class index extends Component {
       )
     }
   ]
-  
+
   render() {
     const { list } = this.state
     const { selected } = this.state
-    const { deleteInvoice } = this.props;
     const rowSelection = {
       hideDefaultSelections: true,
       selectedRowKeys: selected,
@@ -307,21 +354,18 @@ export default class index extends Component {
           text: "Unselect all",
           onSelect: () => this.setState({ selected: [] })
         },
+       
       ],
       onSelection: selected => this.setState({ selected })
     };
     return (
       <LayoutWrapper>
-        <PageHeader>
-          <IntlMessages id='header.drivers'/>
-        </PageHeader>
-        <Box>
-          <div className='BtnAdd' align='right'>
+      <PageHeader>
+        <IntlMessages id='header.vehicles'/>
+      </PageHeader>
+      <Box>
+        <div className='BtnAdd' align='right'>
             <Button
-            // style={{ background: '#1890ff' }}
-            // color='#1890ff'
-             //ghost
-            // type='primary'
              onClick={this.showAddModal}
              style={{ top: -10 }}
              >
@@ -329,8 +373,8 @@ export default class index extends Component {
              Adicionar
             
              </Button>
-          </div>
-        <CardWrapper title='Veículos'>
+        </div>
+        <CardWrapper title='Motorista'>
           <div className='isoInvoiceTable'>
             <Scrollbars style={{ width: '100%'}}>
               <TableWrapper rowKey='id'
@@ -343,29 +387,29 @@ export default class index extends Component {
             </Scrollbars>
           </div>
         </CardWrapper>
-        <AddDriver 
+        <AddVehicle 
         openAddModal={this.state.visible}
         close={this.handleAddClose}
-        addDriver={this.addDriver}
-        onChangeAddDriverInfo={this.onChangeAddDriverInfo.bind(this)}
+        addVehicle={this.addVehicle}
+        onChangeAddVehicleInfo={this.onChangeAddVehicleInfo.bind(this)}
         confirmLoading={this.state.confirmLoading}
         />
-        <EditDriver 
-        driversInfo={this.state.driversInfo}
-        open={this.state.visibleEdit}
+        <EditVehicle 
+        vehicleInfo={this.state.vehicleInfo}
+        openEditModal={this.state.visibleEdit}
         close={this.handleEditClose}
-        editDriver={this.editDriver}
-        onChangeAddDriverInfo={this.onChangeAddDriverInfo.bind(this)}
+        editVehicle={this.editVehicle}
+        onChangeAddVehicleInfo={this.onChangeAddVehicleInfo.bind(this)}
         confirmLoading={this.state.confirmLoading}
         />
-        <ViewDriver
-        driversInfo={this.state.driversInfo}
+        <ViewVehicle
+        vehicleInfo={this.state.vehicleInfo}
         open={this.state.visibleView}
         close={this.handleViewClose}
         confirmLoading={this.state.confirmLoading} 
         />
-        </Box>
+      </Box>
       </LayoutWrapper>
-    );
+    )
   }
 }

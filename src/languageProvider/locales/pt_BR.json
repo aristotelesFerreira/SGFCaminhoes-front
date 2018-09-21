@@ -19,7 +19,9 @@
 
 
 
-  "header.drivers": "Motoristas"
+  "header.drivers": "Motoristas",
+  "header.vehicles": "Veículos",
+  "header.carts": "Carretas"
 
 
   

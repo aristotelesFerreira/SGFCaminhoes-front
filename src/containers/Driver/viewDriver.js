@@ -2,22 +2,19 @@ import React, { Component } from 'react'
 import { Button, Modal, Row, Col, Input, Switch, Icon, Tooltip, Select } from 'antd'
 import Form from '../../components/uielements/form'
 
-const Option = Select.Option;
 const FormItem = Form.Item
+const Option = Select.Option;
 
-class editDriver extends Component {
+class viewDriver extends Component {
     
     render() {
         
         const { getFieldDecorator } = this.props.form;
-        //const d = new Date(this.props.driversInfo.admission_date);
-        //const y = d.toLocaleDateString()
-        //const t = moment(new Date(this.props.driversInfo.admission_date)).format('YYYY-MM-DD')
+       
         return (
             <Modal
-            title='Editar Motorista'
+            title='Visualizar Motorista'
             visible={this.props.open}
-            onOk={this.props.editDriver}
             confirmLoading={this.props.confirmLoading}
             onClose={this.props.close}
             onCancel={this.props.close}
@@ -25,16 +22,14 @@ class editDriver extends Component {
             width={700}
             centered
             footer={ [
-                <Button key='back' onClick={this.props.close}> Cancelar </Button>,
-                <Button key='submit' type='primary' loading={this.props.confirmLoading} 
-                        onClick={this.props.editDriver}> Salvar 
-                 </Button>
+                <Button key='back' onClick={this.props.close}> Voltar </Button>,
+                <Button key='primary' type='primary' onClick={window.print}> Imprimir </Button>,
             ]}
             >
             <Form>
                 <Row gutter={12}>
                     <Col sm={24} xs={24} md={12}>
-                      <FormItem label='Nome' hasFeedback>
+                      <FormItem label='Nome'>
                         {getFieldDecorator('name', {
                             initialValue: this.props.driversInfo.name,
                             rules: [
@@ -45,16 +40,18 @@ class editDriver extends Component {
                             ]
                         })(
                             <Input
+                              disabled
+                              style={{color: 'black', fontWeight: 'bold'}} 
                               type='text'
                               placeholder='Nome'
                               name='name'
-                              onChange={e => this.props.onChangeAddDriverInfo('name', e.target.value)} 
+                             
                             />
                         )}
                       </FormItem>
                     </Col>
                     <Col sm={24} xs={24} md={7}>
-                        <FormItem label='CPF' hasFeedback>
+                        <FormItem label='CPF' >
                             {getFieldDecorator('cpf_number', {
                                 initialValue: this.props.driversInfo.cpf_number,
                                 rules: [
@@ -66,11 +63,13 @@ class editDriver extends Component {
                                 ]
                             })(
                                 <Input 
+                                    disabled
+                                    style={{color: 'black', fontWeight: 'bold'}}
                                     type='text'
                                     maxLength={11}
                                     placeholder='CPF'
                                     name='cpf_number'
-                                    onChange={e => this.props.onChangeAddDriverInfo('cpf_number', e.target.value)}
+                                   
                                 />
                             )}
                         </FormItem>
@@ -81,7 +80,7 @@ class editDriver extends Component {
                             <Tooltip title="Exemplos: ABCD">
                                 <Icon type="question-circle-o" />
                             </Tooltip>
-                            </span> )} hasFeedback>
+                            </span> )} >
                             {getFieldDecorator('drivers_license', {
                                 initialValue: this.props.driversInfo.drivers_license,
                                 rules: [
@@ -96,7 +95,8 @@ class editDriver extends Component {
                                 <Select 
                                 placeholder='CNH'
                                 name='drivers_license'
-                                onChange={e => this.props.onChangeAddDriverInfo('drivers_license', e)}
+                                disabled
+                                style={{color: 'black', fontWeight: 'bold'}}
                                 >
                                     <Option value="a">A</Option>
                                     <Option value="ab">AB</Option>
@@ -112,47 +112,37 @@ class editDriver extends Component {
                 </Row>
                 <Row gutter={12}>
                     <Col sm={24} xs={24} md={6}>
-                            <FormItem label='Telefone' hasFeedback>
+                            <FormItem label='Telefone'>
                                 {getFieldDecorator('phone_1', {
                                     initialValue: this.props.driversInfo.phone_1,
-                                    rules: [
-                                        /*{
-                                            required: true,
-                                            message: 'Campo obrigatório'
-                                        }*/
-                                    ]
                                 })(
                                     <Input 
                                         type='text'
                                         placeholder='Telefone'
                                         name='phone_1'
-                                        onChange={e => this.props.onChangeAddDriverInfo('phone_1', e.target.value)}
+                                        disabled
+                                        style={{color: 'black', fontWeight: 'bold'}}
                                     />
                                 )}
                             </FormItem>
                     </Col>
                     <Col sm={24} xs={24} md={6}>
-                            <FormItem label='Telefone Opcional' hasFeedback>
+                            <FormItem label='Telefone Opcional' >
                                 {getFieldDecorator('phone_2', {
                                     initialValue: this.props.driversInfo.phone_2,
-                                    rules: [
-                                        /*{
-                                            required: true,
-                                            message: 'Campo obrigatório'
-                                        }*/
-                                    ]
                                 })(
                                     <Input 
                                         type='text'
                                         placeholder='Telefone Opcional'
                                         name='phone_2'
-                                        onChange={e => this.props.onChangeAddDriverInfo('phone_2', e.target.value)}
+                                        disabled
+                                        style={{color: 'black', fontWeight: 'bold'}}
                                     />
                                 )}
                             </FormItem>
                     </Col>
                     <Col sm={24} xs={24} md={7}>
-                    <FormItem label='Validade da CNH' hasFeedback>
+                    <FormItem label='Validade da CNH'>
                                 {getFieldDecorator('driversLicense_validate', {
                                     initialValue: this.props.driversInfo.driversLicense_validate,
                                     rules: [
@@ -163,10 +153,11 @@ class editDriver extends Component {
                                     ]
                                 })(
                                     <Input 
-                                            type='date'
-                                            placeholder='Validade da CNH'
-                                            name='driversLicense_validate'
-                                            onChange={e => this.props.onChangeAddDriverInfo('driversLicense_validate', e.target.value)}
+                                        type='date'
+                                        placeholder='Validade da CNH'
+                                        name='driversLicense_validate'
+                                        disabled
+                                        style={{color: 'black', fontWeight: 'bold'}}
                                         />
                                 )}
                         </FormItem>
@@ -174,7 +165,7 @@ class editDriver extends Component {
                 </Row>
                 <Row gutter={12}>
                     <Col sm={24} xs={24} md={7}>
-                            <FormItem label='Data de admissão' hasFeedback>
+                            <FormItem label='Data de admissão'>
                                     {getFieldDecorator('admission_date', {
                                         initialValue: this.props.driversInfo.admission_date
                                       })(
@@ -182,13 +173,14 @@ class editDriver extends Component {
                                         type='date'
                                         placeholder='Data de admissão'
                                         name='admission_date'
-                                        onChange={e => this.props.onChangeAddDriverInfo('admission_date', e.target.value)}
+                                        disabled
+                                        style={{color: 'black', fontWeight: 'bold'}}
                                     />     
                                     )}
                             </FormItem>
                     </Col>
                     <Col sm={24} xs={24} md={7}>
-                            <FormItem label='Data de demissão' hasFeedback>
+                            <FormItem label='Data de demissão' >
                                     {getFieldDecorator('resignation_date', {
                                        initialValue: this.props.driversInfo.resignation_date,
                                     })(
@@ -196,20 +188,22 @@ class editDriver extends Component {
                                             type='date'
                                             placeholder='Data de demissão'
                                             name='resignation_date'
-                                            onChange={e => this.props.onChangeAddDriverInfo('resignation_date', e.target.value)}
+                                            disabled
+                                            style={{color: 'black', fontWeight: 'bold'}}
                                         />
                                     )}
                             </FormItem>
                     </Col>
                     <Col sm={24} xs={24} md={5}>
-                        <FormItem label="Ativo" hasFeedback>
+                        <FormItem label="Ativo" >
                         
                         <Switch
                         checkedChildren={<Icon type="check" />}
-                        unCheckedChildren= {<Icon type="cross" />} //defaultChecked
+                        unCheckedChildren= {<Icon type="cross" />} 
                         defaultChecked = {this.props.driversInfo.status === 1 ? this.defaultChecked = true : this.defaultChecked = false}
                         name='status'
-                        onChange={e => this.props.onChangeAddDriverInfo('status', e)}
+                        disabled
+                        style={{color: 'black', fontWeight: 'bold'}}
                         />
                         </FormItem>
                     </Col>
@@ -221,5 +215,5 @@ class editDriver extends Component {
     }
 };
 
-const WrappedEditDriver = Form.create()(editDriver)
-export default WrappedEditDriver
+const WrappedViewDriver = Form.create()(viewDriver)
+export default WrappedViewDriver
