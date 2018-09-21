@@ -18,6 +18,10 @@ const routes = [
   {
     path: 'carts',
     component: asyncComponent(() => import('../Cart'))
+  },
+  {
+    path: 'itineraries',
+    component: asyncComponent(() => import('../Itinerary'))
   }
 ];
 
