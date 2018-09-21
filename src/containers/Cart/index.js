@@ -13,6 +13,7 @@ import moment from 'moment';
 
 import AddCart from './addCart'
 import ViewCart from './viewCart'
+import EditCart from './editCart'
 
 export default class index extends Component {
   state = {
@@ -94,6 +95,26 @@ export default class index extends Component {
       notification.warning({message: 'Campos inválidos', description: 'Preencha todos os campos obrigatórios (*)'})
     }
   }
+  editCart = () => {
+    const { brand, model, type, plate, chassis_number } = this.state.cartsInfo;
+    if (brand !== '' && model !== '' && type !== '' && plate !== '' && chassis_number !== '') {
+      let newCartInfo = {
+        ...this.state.cartsInfo
+      };
+      axios.put(`carts/${this.state.uuid}`, newCartInfo)
+      .then(response => {
+        notification.success({message: 'Editado com sucesso'})
+        this.handleEditClose()
+        this.componentWillMount()
+      })
+      .catch(error => {
+        console.log(error)
+        notification.error({message:'Não foi possivel editar !'})
+      })
+    } else {
+      notification.warning({message: "Campo 'nome' obrigatório !"})
+    }
+  }
 
   handleAddClose = () => {
     this.setState({
@@ -136,13 +157,10 @@ export default class index extends Component {
       }
     });
   }
-
-
   handleSearch = (selectedKeys, confirm) => () => {
     confirm();
     this.setState({ searchText: selectedKeys[0]})
   }
-
   handleReset = clearFilters => () => {
     clearFilters()
     this.setState({searchText: ''})
@@ -196,10 +214,17 @@ export default class index extends Component {
       render: text => <span>{text}</span>
     },
     {
+      title: 'Descrição',
+      dataIndex: 'description',
+      key: 'description',
+      width: '20%',
+      render: text => <span>{text}</span>
+    },
+    {
       title: 'Placa',
       dataIndex: 'plate',
       key: 'plate',
-      width: '20%',
+      width: '10%',
       filterDropdown: ({ setSelectedKeys, selectedKeys, confirm, clearFilters }) => (
         <div className='custom-filter-dropdown' xs={5} sm={5}>
           <Input
@@ -381,6 +406,14 @@ export default class index extends Component {
         open={this.state.visible}
         close={this.handleAddClose}
         addCart={this.addCart}
+        onChangeAddCartInfo={this.onChangeAddCartInfo.bind(this)}
+        confirmLoading={this.state.confirmLoading}
+        />
+        <EditCart 
+        cartsInfo={this.state.cartsInfo}
+        open={this.state.visibleEdit}
+        close={this.handleEditClose}
+        editCart={this.editCart}
         onChangeAddCartInfo={this.onChangeAddCartInfo.bind(this)}
         confirmLoading={this.state.confirmLoading}
         />
