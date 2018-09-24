@@ -42,6 +42,7 @@ class TopbarUser extends Component {
           onClick={() => {
             this.props.logout();
             this.props.closeAll();
+            localStorage.clear()
           }}
         >
           <IntlMessages id="topbar.logout" />
