@@ -5,7 +5,8 @@ import CardWrapper, { Box } from "./index.style";
 import IntlMessages from "../../components/utility/intlMessages";
 import PageHeader from "../../components/utility/pageHeader";
 
-import MapWithADirectionsRenderer from './teste'
+import Map from './map'
+import Place from './places'
 
 export default class index extends Component {
     newLat = localStorage.getItem('latitude')
@@ -50,13 +51,15 @@ export default class index extends Component {
               <IntlMessages id='header.itineraries'/>
             </PageHeader>
             <Box>
-              
-            <MapWithADirectionsRenderer 
-            origin={{lat: -15.859545400000002, lng: -50.8882269}}
-            destination={{lat: -16.000000000, lng: -50.00000000 }}
-            />
-          </Box>
-          </LayoutWrapper>
+            <Map
+            currentLocation={this.state.currentLocation}
+        
+           
+           />
+           <Place />
+            
+            </Box>
+            </LayoutWrapper>
         )
     }
 };
