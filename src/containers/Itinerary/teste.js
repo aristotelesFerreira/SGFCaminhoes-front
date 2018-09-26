@@ -2,12 +2,15 @@ import React, { Component}  from 'react';
 const { compose, withProps, lifecycle } = require("recompose");
 
 /*global google*/
+
+const number = localStorage.getItem('latitude')
 const {
   withScriptjs,
   withGoogleMap,
   GoogleMap,
   DirectionsRenderer,
 } = require("react-google-maps");
+
 
 const MapWithADirectionsRenderer = compose(
   withProps({
@@ -19,9 +22,9 @@ const MapWithADirectionsRenderer = compose(
   withScriptjs,
   withGoogleMap,
   lifecycle({
-    componentDidMount() {
+    componentDidUpdate() {
+      const teste = this.props
       const DirectionsService = new google.maps.DirectionsService();
-
       DirectionsService.route({
         origin: this.props.origin,
         destination: this.props.destination,
@@ -30,8 +33,10 @@ const MapWithADirectionsRenderer = compose(
         if (status === google.maps.DirectionsStatus.OK) {
           this.setState({
             directions: result,
+
           });
-          console.log(result)
+          this.props.setText(result.routes[0].legs[0].distance.text)
+         
         } else {
           console.error(`error fetching directions ${result}`);
         }
@@ -39,10 +44,14 @@ const MapWithADirectionsRenderer = compose(
     }
   })
 )(props =>
-  <GoogleMap
-    defaultZoom={7}
-    defaultCenter={{lat: -15.859545400000002, lng: -50.8882269}}
-  >
+  
+  <GoogleMap 
+  //  -15.859545400000002 8882269
+    defaultZoom={15}
+    defaultCenter={{lat: props.currentLocation.lat , lng: props.currentLocation.lng}}
+  //setCenter={{ lat: -15.859545400000002, lng: -50.8882269}}
+  > 
+  
     {props.directions && <DirectionsRenderer directions={props.directions} />}
   </GoogleMap>
 );

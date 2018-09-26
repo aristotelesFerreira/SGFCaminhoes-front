@@ -2,7 +2,7 @@ import React, {Component} from "react"
 import GoogleMapLoader from "react-google-maps-loader"
 import GooglePlacesSuggest from "react-google-places-suggest"
 
-const MY_API_KEY = "AIzaSyC-ZSkQXDE7HBQf7a6umNX39pUnbB1kMhI" // fake
+const MY_API_KEY = "AIzaSyC-ZSkQXDE7HBQf7a6umNX39pUnbB1kMhI" 
 
 export default class GoogleSuggest extends React.Component {
     state = {
@@ -18,14 +18,16 @@ export default class GoogleSuggest extends React.Component {
     }
 
     handleSelectSuggest = (geocodedPrediction) => {
+        //console.log(geocodedPrediction.geometry.bounds) // eslint-disable-line
         this.setState({search: "", value: geocodedPrediction.formatted_address,
                         lat: geocodedPrediction.geometry.bounds.f.f,
                         lng: geocodedPrediction.geometry.bounds.b.f})
-        this.props.setMarkerA(geocodedPrediction)
+        this.props.setMarkerB(geocodedPrediction)
     }
     
+    
     render() {
-        const {search, value, searchB, valueB } = this.state
+        const {search, value } = this.state
         return (
             <GoogleMapLoader
                 params={{
@@ -37,7 +39,7 @@ export default class GoogleSuggest extends React.Component {
                         <GooglePlacesSuggest
                             googleMaps={googleMaps}
                             autocompletionRequest={{
-                                input: search, searchB
+                                input: search
                                 
                                 // Optional options
                                 // https://developers.google.com/maps/documentation/javascript/reference?hl=fr#AutocompletionRequest
@@ -56,7 +58,7 @@ export default class GoogleSuggest extends React.Component {
                             <input style={{marginBottom: '30px', marginLeft: '10px'}}
                                 type="text"
                                 value={value}
-                                placeholder="Cidade Inicial"
+                                placeholder="Cidade Final"
                                 onChange={this.handleInputChange}
                             />
                         </GooglePlacesSuggest>
