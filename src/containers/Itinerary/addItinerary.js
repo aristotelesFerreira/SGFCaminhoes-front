@@ -18,7 +18,7 @@ class addItinerary extends Component {
 
         return (
             <Modal
-            title='Adicionar Carreta'
+            title='Adicionar Itinerário'
             visible={this.props.open}
             onOk={this.props.addItinerary}
             confirmLoading={this.props.confirmLoading}
@@ -26,7 +26,6 @@ class addItinerary extends Component {
             onCancel={this.props.close}
             destroyOnClose={true}
             width={1000}
-            //height={1200}
             centered
             footer={ [
                 <Button key='back' onClick={this.props.close}> Cancelar </Button>,
@@ -37,7 +36,7 @@ class addItinerary extends Component {
             >
             <Form>
                 <Row gutter={12}> 
-                    <Col sm={24} xs={24} md={5}>
+                    <Col sm={24} xs={24} md={6}>
                         <FormItem label="Origem" hasFeedback>
                         {getFieldDecorator('initial_point', {
                             rules: [
@@ -54,7 +53,7 @@ class addItinerary extends Component {
                         </FormItem>
                     </Col>
                 
-                    <Col sm={24} xs={24} md={5}>
+                    <Col sm={24} xs={24} md={6}>
                         <FormItem label="Destino" hasFeedback>
 
                          {getFieldDecorator('end_point', {
@@ -65,49 +64,12 @@ class addItinerary extends Component {
                                 }
                             ]
                         })(
-                            <PlacesTwo 
+                            <PlacesTwo style={{borderWidth: 50}}
                             setMarkerB={this.props.setMarkerB} 
                             />
                         )}
-
                         </FormItem>
                     </Col>
-                </Row>
-                <Row gutter={12}>
-                    <Col sm={24} xs={24} md={7}>
-                      <FormItem label='Nome da rota' hasFeedback>
-                        {getFieldDecorator('route_name', {
-                            rules: [
-                                {
-                                    required: true,
-                                    message: 'Campo obrigatório'
-                                }
-                            ]
-                        })(
-                            <Input
-                              type='text'
-                              placeholder='Nome'
-                              name='route_name'
-                              onChange={e => this.props.onChangeAddItinerariesInfo('route_name', e.target.value)} 
-                            />
-                        )}
-                      </FormItem>
-                    </Col>
-                    <Col sm={24} xs={24} md={7}>
-                      <FormItem label='Observações' hasFeedback>
-                        {getFieldDecorator('observation', {
-                        })(
-                            <Input
-                              type='text'
-                              placeholder='Observações'
-                              name='observation'
-                              onChange={e => this.props.onChangeAddItinerariesInfo('observation', e.target.value)} 
-                            />
-                        )}
-                      </FormItem>
-                    </Col>
-                    </Row>
-                    <Row gutter={12}>
                     <Col sm={24} xs={24} md={3}>
                       <FormItem label='Distância' hasFeedback>
                        
@@ -136,6 +98,40 @@ class addItinerary extends Component {
                               placeholder='Tempo Aprox.'
                               name='time'
                              // onChange={e => this.props.onChangeAddItinerariesInfo('route_name', e.target.value)} 
+                            />
+                        )}
+                      </FormItem>
+                    </Col>
+                </Row>
+                <Row gutter={12}>
+                    <Col sm={24} xs={24} md={9}>
+                      <FormItem label='Nome da rota' hasFeedback>
+                        {getFieldDecorator('route_name', {
+                            rules: [
+                                {
+                                    required: true,
+                                    message: 'Campo obrigatório'
+                                }
+                            ]
+                        })(
+                            <Input
+                              type='text'
+                              placeholder='Nome'
+                              name='route_name'
+                              onChange={e => this.props.onChangeAddItinerariesInfo('route_name', e.target.value)} 
+                            />
+                        )}
+                      </FormItem>
+                    </Col>
+                    <Col sm={24} xs={24} md={10}>
+                      <FormItem label='Observações' hasFeedback>
+                        {getFieldDecorator('observation', {
+                        })(
+                            <Input
+                              type='text'
+                              placeholder='Observações'
+                              name='observation'
+                              onChange={e => this.props.onChangeAddItinerariesInfo('observation', e.target.value)} 
                             />
                         )}
                       </FormItem>

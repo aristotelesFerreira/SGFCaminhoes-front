@@ -1,6 +1,7 @@
 import React, {Component} from "react"
 import GoogleMapLoader from "react-google-maps-loader"
 import GooglePlacesSuggest from "react-google-places-suggest"
+import { Input } from 'antd'
 
 const MY_API_KEY = "AIzaSyC-ZSkQXDE7HBQf7a6umNX39pUnbB1kMhI" // fake
 
@@ -53,7 +54,7 @@ export default class GoogleSuggest extends React.Component {
                                 </div>
                             )}
                         >
-                            <input style={{marginBottom: '10px', marginLeft: '10px'}}
+                            <Input style={{marginBottom: '10px'}}
                                 type="text"
                                 value={value}
                                 placeholder="Cidade Inicial"
