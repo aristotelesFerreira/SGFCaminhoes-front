@@ -14,13 +14,13 @@ export default class GoogleSuggest extends React.Component {
 
     handleInputChange = e => {
         this.setState({search: e.target.value, value: e.target.value})
-        
     }
 
     handleSelectSuggest = (geocodedPrediction) => {
         this.setState({search: "", value: geocodedPrediction.formatted_address,
-                        lat: geocodedPrediction.geometry.bounds.f.f,
-                        lng: geocodedPrediction.geometry.bounds.b.f})
+                        lat: geocodedPrediction.geometry.location.lat(),
+                        lng: geocodedPrediction.geometry.location.lng()
+                    })
         this.props.setMarkerA(geocodedPrediction)
     }
     
@@ -53,7 +53,7 @@ export default class GoogleSuggest extends React.Component {
                                 </div>
                             )}
                         >
-                            <input style={{marginBottom: '30px', marginLeft: '10px'}}
+                            <input style={{marginBottom: '10px', marginLeft: '10px'}}
                                 type="text"
                                 value={value}
                                 placeholder="Cidade Inicial"
