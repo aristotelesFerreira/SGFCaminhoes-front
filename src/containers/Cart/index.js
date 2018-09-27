@@ -274,13 +274,10 @@ export default class index extends Component {
       defaultSortOrder: 'descend',
       sorter: (a, b) => a.status -b.status,
       render: (text, status) => {
-        let className, userStatus;
+        let userStatus;
         if (status.status !== 0 ) {
-          className = "Ativo";
            userStatus =  <Icon type="check-circle"  style={{ fontSize: 20, color: '#52c41a'}}/>
-           /*<StatusTagAtivo>{className}</StatusTagAtivo>*/
         } else{
-          className = "Inativo";
           userStatus = <Icon type="close-circle"  style={{ fontSize: 20, color: '#f5222d'}}/>
         }
         return userStatus

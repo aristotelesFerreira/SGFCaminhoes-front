@@ -1,4 +1,4 @@
-import React, {Component} from "react"
+import React from "react"
 import GoogleMapLoader from "react-google-maps-loader"
 import GooglePlacesSuggest from "react-google-places-suggest"
 import { Input } from 'antd'
@@ -29,6 +29,7 @@ export default class GoogleSuggest extends React.Component {
     
     render() {
         const {search, value } = this.state
+        //const { itinerariesInfo } = this.props
         return (
             <GoogleMapLoader
                 params={{
@@ -61,6 +62,7 @@ export default class GoogleSuggest extends React.Component {
                                 value={value}
                                 placeholder="Cidade Final"
                                 onChange={this.handleInputChange}
+                                
                             />
                         </GooglePlacesSuggest>
                         

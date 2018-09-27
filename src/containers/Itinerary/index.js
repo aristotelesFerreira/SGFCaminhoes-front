@@ -9,8 +9,10 @@ import Scrollbars from "../../components/utility/customScrollBar";
 
 import axios from '../../helpers/axios'
 import AddItinerary from './addItinerary'
+import EditItinerary from './editItinerary'
 
 export default class index extends Component {
+  
     newLat = parseFloat(localStorage.getItem('latitude'))
     newLng = parseFloat(localStorage.getItem('longitude'))
     state = {
@@ -61,7 +63,10 @@ export default class index extends Component {
         },
         distance: [],
         time: [],
+        
     }
+
+
     componentWillMount = () => {
         axios.get('itineraries')
         .then(response => {
@@ -110,10 +115,67 @@ export default class index extends Component {
     handleAddClose = () => {
         this.setState({
           visible: false,
+          distance: [''],
+          time: [''],
+          markerA: {
+            address: '',
+              lat: '',
+              lng: ''
+          },
+          markerB: {
+            address: '',
+              lat: '',
+              lng: ''
+          },
           itinerariesInfo: {...this.state.initialState} 
         });
     }
-
+    showModalEdit = () => {
+      this.setState({
+        visibleEdit: true
+      })
+    }
+    handleEditClose = () => {
+      this.setState({
+        visibleEdit: false,
+        distance: [''],
+        time: [''],
+        markerA: {
+          address: '',
+            lat: '',
+            lng: ''
+        },
+        markerB: {
+          address: '',
+            lat: '',
+            lng: ''
+        },
+        itinerariesInfo: {...this.state.initialState} 
+      });
+    }
+    showModalView = () => {
+      this.setState({
+        visibleView:true
+      })
+    }
+    handleViewClose = () => {
+      this.setState({
+        visibleView: false,
+        distance: [''],
+          time: [''],
+          markerA: {
+            address: '',
+              lat: '',
+              lng: ''
+          },
+          markerB: {
+            address: '',
+              lat: '',
+              lng: ''
+          },
+        itinerariesInfo: {...this.state.initialState} 
+      });
+    }
     onChangeAddItinerariesInfo(key, value) {
         this.setState({
           itinerariesInfo: {
@@ -157,8 +219,44 @@ export default class index extends Component {
         } else {
             notification.warning({message: 'Preencha os campos obrigatórios'})
         }
-
     }
+    editItinerary = () => {
+      if(this.state.itinerariesInfo.route_name !== '' && this.state.markerA.lat !== '' && this.state.markerB.lat !== ''){
+      let newItineraryInfo = {
+          route_name: this.state.itinerariesInfo.route_name,
+          initial_point: this.state.markerA.address,
+          lat_initial: this.state.markerA.lat,
+          lng_initial: this.state.markerA.lng,
+          end_point: this.state.markerB.address,
+          lat_end: this.state.markerB.lat,
+          lng_end: this.state.markerB.lng,
+          distance: this.state.distance.value,
+          observation: this.state.itinerariesInfo.observation,
+          status: this.state.itinerariesInfo.status
+      }
+      axios.put(`itineraries/${this.state.uuid}`, newItineraryInfo)
+          .then(response => {
+              this.setState({
+                  confirmLoading: true
+              });
+              setTimeout(() => {
+                  this.setState({
+                    confirmLoading: false
+                  });
+                  this.handleEditClose();
+                  this.componentWillMount()
+              }, 2000);
+              notification.success({message: 'Editado com sucesso !'})        
+          })
+          .catch(error => {
+              notification.error({message: 'Não foi possivel Editar'})
+              console.log(error)
+          })
+      } else {
+          notification.warning({message: 'Preencha os campos obrigatórios'})
+      }
+
+  }
     
     setMarkerA = (geocodedPrediction) => {
         this.setState({ 
@@ -272,13 +370,14 @@ export default class index extends Component {
           dataIndex: 'end_point',
           key: 'end_point',
           width: '10%',
-          filterDropdown: ({ setSelectedKeys, selectedKeys, confirm, clearFilters }) => (
+          filterDropdown: ({ setSelectedKeys , selectedKeys, confirm, clearFilters }) => (
             <div className='custom-filter-dropdown' xs={5} sm={5}>
               <Input
                 ref={ele => this.searchInput = ele}
                 placeholder="Placa"
                 value={selectedKeys[0]}
                 onChange={e => setSelectedKeys(e.target.value ? [e.target.value] : [])}
+                //onChange={setSelectedKeys(e.target.value ? [e.target.value] : [])}
                 onPressEnter={this.handleSearch(selectedKeys, confirm)}         
               /> 
               <Button type='primary' onClick={this.handleSearch(selectedKeys, confirm )}>Buscar </Button>
@@ -295,8 +394,9 @@ export default class index extends Component {
             }
           },
           render: (text) => {
+            
             const { searchText } = this.state
-            return searchText ? (
+            return  searchText ? (
               <span>
               {text.split(new RegExp(`(?<=${searchText})|(?=${searchText})`, 'i')).map((fragment, i) => (
                 fragment.toLowerCase() === searchText.toLowerCase()
@@ -315,13 +415,10 @@ export default class index extends Component {
           defaultSortOrder: 'descend',
           sorter: (a, b) => a.status -b.status,
           render: (text, status) => {
-            let className, userStatus;
+            let userStatus;
             if (status.status !== 0 ) {
-              className = "Ativo";
                userStatus =  <Icon type="check-circle"  style={{ fontSize: 20, color: '#52c41a'}}/>
-               /*<StatusTagAtivo>{className}</StatusTagAtivo>*/
             } else{
-              className = "Inativo";
               userStatus = <Icon type="close-circle"  style={{ fontSize: 20, color: '#f5222d'}}/>
             }
             return userStatus
@@ -332,16 +429,16 @@ export default class index extends Component {
           dataIndex: "view",
           key: "view",
           width: "20%",
-          render: (text, cartsInfo) => (
+          render: (text, itinerariesInfo) => (
             <div className="isoInvoiceBtnView">
               <Icon 
               type="search"  
               style={{ fontSize: 25, color: '#1890ff' }} 
               onClick={() => {
-                console.log(cartsInfo)
+                console.log(itinerariesInfo)
                 this.showModalView()
-                this.setState({ uuid: cartsInfo.uuid, cartsInfo:{
-                  brand: cartsInfo.brand,
+                this.setState({ uuid: itinerariesInfo.uuid, itinerariesInfo:{
+                  /*brand: cartsInfo.brand,
                   model: cartsInfo.model,
                   description: cartsInfo.description,
                   capacity: cartsInfo.capacity,
@@ -353,7 +450,7 @@ export default class index extends Component {
                   purchase_price: cartsInfo.purchase_price,
                   //purchase_date:  moment(new Date(cartsInfo.purchase_date)).format('YYYY-MM-DD'),
                   sale_value: cartsInfo.sale_value,
-                  status: cartsInfo.status,
+                  status: cartsInfo.status,*/
                   }
                  
                 })
@@ -363,23 +460,17 @@ export default class index extends Component {
               type="form"  
               style={{ fontSize: 25, color: '#faad14' , marginLeft: 20}}
               onClick={() => {
-                console.log(cartsInfo)
+                console.log(itinerariesInfo)
                 this.showModalEdit()
-                this.setState({ uuid: cartsInfo.uuid, cartsInfo:{
-                  brand: cartsInfo.brand,
-                  model: cartsInfo.model,
-                  description: cartsInfo.description,
-                  capacity: cartsInfo.capacity,
-                  type: cartsInfo.type,
-                  km_current: cartsInfo.km_current,
-                  year: cartsInfo.year,
-                  plate: cartsInfo.plate,
-                  chassis_number: cartsInfo.chassis_number,
-                  purchase_price: cartsInfo.purchase_price,
-                  //purchase_date:  moment(new Date(cartsInfo.purchase_date)).format('YYYY-MM-DD'),
-                  sale_value: cartsInfo.sale_value,
-                  status: cartsInfo.status,
-                  } 
+                this.setState({ uuid: itinerariesInfo.uuid, itinerariesInfo:{
+                  route_name: itinerariesInfo.route_name,
+                  end_point: itinerariesInfo.end_point,
+                  initial_point: itinerariesInfo.initial_point,
+                  observation: itinerariesInfo.observation,
+                  status: itinerariesInfo.status
+                  },
+                  distance: this.state.distance,
+                  
                 })
               }}
               />
@@ -388,9 +479,32 @@ export default class index extends Component {
         }
     ]
     
-    
     render() {
         const { list } = this.state
+        const { selected } = this.state
+        const rowSelection = {
+          hideDefaultSelections: true,
+          selectedRowKeys: selected,
+          onChange: selected => this.setState({ selected }),
+          selections: [
+            {
+              key: 'index',
+              text: "Select All Invoices",
+              onSelect: () =>
+                this.setState({
+                  selected: this.props.list.map(list => list.id)
+                })
+              
+            },
+            {
+              key: 'index1',
+              text: "Unselect all",
+              onSelect: () => this.setState({ selected: [] })
+            },
+          
+          ],
+          onSelection: selected => this.setState({ selected })
+        };
         return(
             <LayoutWrapper>
             <PageHeader>
@@ -411,7 +525,7 @@ export default class index extends Component {
                 <div className='isoInvoiceTable'>
                     <Scrollbars style={{ width: '100%'}}>
                     <TableWrapper rowKey='id'
-                        //rowSelection={rowSelection}
+                        rowSelection={rowSelection}
                         dataSource={list}
                         columns={this.columns}
                         pagination={true}
@@ -437,6 +551,24 @@ export default class index extends Component {
                  time={this.state.time}//update={this.state.update}
                  markerA={this.state.markerA}
                  markerB={this.state.markerB}
+                 />
+                 <EditItinerary 
+                setMarkerA={this.setMarkerA.bind(this)}
+                setMarkerB={this.setMarkerB.bind(this)}
+                open={this.state.visibleEdit}
+                close={this.handleEditClose}
+                editItinerary={this.editItinerary}
+                onChangeAddItinerariesInfo={this.onChangeAddItinerariesInfo.bind(this)}
+                confirmLoading={this.state.confirmLoading}
+                origin={this.state.markerA}
+                destination={this.state.markerB}
+                currentLocation={this.state.currentLocation}
+                setText={this.setText.bind(this)}
+                itinerariesInfo={this.state.itinerariesInfo}
+                distance={this.state.distance}
+                time={this.state.time}//update={this.state.update}
+                markerA={this.state.markerA}
+                markerB={this.state.markerB}
                  />
             </Box>
             </LayoutWrapper>

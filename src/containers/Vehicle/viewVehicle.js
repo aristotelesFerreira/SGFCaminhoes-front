@@ -1,7 +1,7 @@
 import React, { Component } from 'react'
 import { Button, Modal, Row, Col, Input, Switch, Icon, Tooltip, Select } from 'antd'
 import Form from '../../components/uielements/form'
-import InputMask from 'react-input-mask'
+//import InputMask from 'react-input-mask'
 
 const FormItem = Form.Item
 const Option = Select.Option
@@ -241,7 +241,7 @@ class viewVehicle extends Component {
                         style={{color: 'black', fontWeight: 'bold'}}
                         disabled
                         checkedChildren={<Icon type="check" />}
-                        unCheckedChildren= {<Icon type="cross" />} defaultChecked
+                        unCheckedChildren= {<Icon type="cross" />}
                         defaultChecked = {this.props.vehicleInfo.status === 1 ? this.defaultChecked = true : this.defaultChecked = false}
                         name='status'
                         onChange={e => this.props.onChangeAddVehicleInfo('status', e)}

@@ -1,4 +1,4 @@
-import React, {Component} from "react"
+import React from "react"
 import GoogleMapLoader from "react-google-maps-loader"
 import GooglePlacesSuggest from "react-google-places-suggest"
 import { Input } from 'antd'
@@ -14,19 +14,23 @@ export default class GoogleSuggest extends React.Component {
     }
 
     handleInputChange = e => {
-        this.setState({search: e.target.value, value: e.target.value})
+        this.setState({
+            search: e.target.value, value: e.target.value}) 
     }
 
     handleSelectSuggest = (geocodedPrediction) => {
+        console.log(this.state.value)
         this.setState({search: "", value: geocodedPrediction.formatted_address,
                         lat: geocodedPrediction.geometry.location.lat(),
                         lng: geocodedPrediction.geometry.location.lng()
                     })
-        this.props.setMarkerA(geocodedPrediction)
+       
+            this.props.setMarkerA(geocodedPrediction)
+        
     }
     
     render() {
-        const {search, value, searchB, valueB } = this.state
+        const {search, value } = this.state
         return (
             <GoogleMapLoader
                 params={{
@@ -38,7 +42,7 @@ export default class GoogleSuggest extends React.Component {
                         <GooglePlacesSuggest
                             googleMaps={googleMaps}
                             autocompletionRequest={{
-                                input: search, searchB
+                                input: search,
                                 
                                 // Optional options
                                 // https://developers.google.com/maps/documentation/javascript/reference?hl=fr#AutocompletionRequest

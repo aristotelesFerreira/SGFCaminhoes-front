@@ -10,16 +10,16 @@ import PlacesTwo from './placesTwo'
 const FormItem = Form.Item
 
 
-class addItinerary extends Component {
-    
+class editItinerary extends Component {
+
     render() {
         const { getFieldDecorator } = this.props.form;
 
         return (
             <Modal
-            title='Adicionar Itinerário'
+            title='Editar Itinerário'
             visible={this.props.open}
-            onOk={this.props.addItinerary}
+            onOk={this.props.editItinerary}
             confirmLoading={this.props.confirmLoading}
             onClose={this.props.close}
             onCancel={this.props.close}
@@ -29,7 +29,7 @@ class addItinerary extends Component {
             footer={ [
                 <Button key='back' onClick={this.props.close}> Cancelar </Button>,
                 <Button key='submit' type='primary' loading={this.props.confirmLoading} 
-                        onClick={this.props.addItinerary}> Salvar 
+                        onClick={this.props.editItinerary}> Salvar 
                  </Button>
             ]}
             >
@@ -38,7 +38,6 @@ class addItinerary extends Component {
                     <Col sm={24} xs={24} md={6}>
                         <FormItem label="Origem" hasFeedback>
                         {getFieldDecorator('initial_point', {
-                          
                             rules: [
                                 {
                                     required: true,
@@ -47,17 +46,18 @@ class addItinerary extends Component {
                             ]
                         })(
                             <Places  
-                            itinerariesInfo={this.props.itinerariesInfo}
                             setMarkerA={this.props.setMarkerA}
+                            itinerariesInfo={this.props.itinerariesInfo}
                            />
+                          
                         )}
+                         {this.props.itinerariesInfo.initial_point}
                         </FormItem>
                     </Col>
                 
                     <Col sm={24} xs={24} md={6}>
                         <FormItem label="Destino" hasFeedback>
-
-                         {getFieldDecorator('end_point', {
+                        {getFieldDecorator('end_point', {
                             rules: [
                                 {
                                     required: true,
@@ -68,8 +68,12 @@ class addItinerary extends Component {
                             <PlacesTwo style={{borderWidth: 50}}
                             itinerariesInfo={this.props.itinerariesInfo}
                             setMarkerB={this.props.setMarkerB}
+                            //value={this.props.itinerariesInfo.end_point} 
                             />
+                          
                         )}
+                           
+                         {this.props.itinerariesInfo.end_point}
                         </FormItem>
                     </Col>
                     <Col sm={24} xs={24} md={3}>
@@ -109,6 +113,7 @@ class addItinerary extends Component {
                     <Col sm={24} xs={24} md={9}>
                       <FormItem label='Nome da rota' hasFeedback>
                         {getFieldDecorator('route_name', {
+                            initialValue: this.props.itinerariesInfo.route_name,
                             rules: [
                                 {
                                     required: true,
@@ -128,6 +133,7 @@ class addItinerary extends Component {
                     <Col sm={24} xs={24} md={10}>
                       <FormItem label='Observações' hasFeedback>
                         {getFieldDecorator('observation', {
+                             initialValue: this.props.itinerariesInfo.observation,
                         })(
                             <Input
                               type='text'
@@ -142,9 +148,11 @@ class addItinerary extends Component {
                         <FormItem label="Ativo" hasFeedback>
                         <Switch
                         checkedChildren={<Icon type="check" />}
-                        unCheckedChildren= {<Icon type="cross" />} defaultChecked
+                        unCheckedChildren= {<Icon type="cross" />}
                         name='status'
                         onChange={e => this.props.onChangeAddItinerariesInfo('status', e)}
+                        setTime
+                        defaultChecked = {this.props.itinerariesInfo.status === 1 ? this.defaultChecked = true : this.defaultChecked = false}
                         />
                         </FormItem>
                     </Col>
@@ -164,5 +172,5 @@ class addItinerary extends Component {
     }
 };
 
-const WrappedAddItinerary = Form.create()(addItinerary)
-export default WrappedAddItinerary
+const WrappedEditItinerary = Form.create()(editItinerary)
+export default WrappedEditItinerary

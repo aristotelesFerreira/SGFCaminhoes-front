@@ -7,16 +7,12 @@ import CardWrapper, { Box } from "./index.style";
 import IntlMessages from "../../components/utility/intlMessages";
 import PageHeader from "../../components/utility/pageHeader";
 import Scrollbars from "../../components/utility/customScrollBar";
-import { Link } from "react-router-dom";
 import { Button, Input, Icon, notification } from 'antd';
-
-import { palette } from 'styled-theme';
 import axios from '../../helpers/axios'
 import AddDriver from './addDriver'
 import EditDriver from './editDriver'
 import ViewDriver from './viewDriver'
 import moment from 'moment';
-import { Ionicons } from 'react-icons/io'
 
 export default class index extends Component {
 
@@ -218,13 +214,10 @@ export default class index extends Component {
       defaultSortOrder: 'descend',
       sorter: (a, b) => a.status -b.status,
       render: (text, status) => {
-        let className, userStatus;
+        let userStatus;
         if (status.status !== 0 ) {
-          className = "Ativo";
            userStatus =  <Icon type="check-circle"  style={{ fontSize: 20, color: '#52c41a'}}/>
-           /*<StatusTagAtivo>{className}</StatusTagAtivo>*/
         } else{
-          className = "Inativo";
           userStatus = <Icon type="close-circle"  style={{ fontSize: 20, color: '#f5222d'}}/>
         }
         return userStatus
@@ -287,7 +280,6 @@ export default class index extends Component {
   render() {
     const { list } = this.state
     const { selected } = this.state
-    const { deleteInvoice } = this.props;
     const rowSelection = {
       hideDefaultSelections: true,
       selectedRowKeys: selected,
