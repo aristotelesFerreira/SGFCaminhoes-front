@@ -12,7 +12,7 @@ import AddItinerary from './addItinerary'
 import EditItinerary from './editItinerary'
 
 export default class index extends Component {
-  
+
     newLat = parseFloat(localStorage.getItem('latitude'))
     newLng = parseFloat(localStorage.getItem('longitude'))
     state = {
@@ -50,22 +50,10 @@ export default class index extends Component {
             lat: this.newLat,
             lng: this.newLng,
         },
-        markerA: {
-            address: '',
-            lat: '',
-            lng: '',
-           // teste: []
-        },
-        markerB: {
-            address: '',
-            lat: '',
-            lng: ''
-        },
         distance: [],
         time: [],
         
     }
-
 
     componentWillMount = () => {
         axios.get('itineraries')
@@ -117,16 +105,6 @@ export default class index extends Component {
           visible: false,
           distance: [''],
           time: [''],
-          markerA: {
-            address: '',
-              lat: '',
-              lng: ''
-          },
-          markerB: {
-            address: '',
-              lat: '',
-              lng: ''
-          },
           itinerariesInfo: {...this.state.initialState} 
         });
     }
@@ -140,16 +118,6 @@ export default class index extends Component {
         visibleEdit: false,
         distance: [''],
         time: [''],
-        markerA: {
-          address: '',
-            lat: '',
-            lng: ''
-        },
-        markerB: {
-          address: '',
-            lat: '',
-            lng: ''
-        },
         itinerariesInfo: {...this.state.initialState} 
       });
     }
@@ -162,17 +130,7 @@ export default class index extends Component {
       this.setState({
         visibleView: false,
         distance: [''],
-          time: [''],
-          markerA: {
-            address: '',
-              lat: '',
-              lng: ''
-          },
-          markerB: {
-            address: '',
-              lat: '',
-              lng: ''
-          },
+        time: [''],
         itinerariesInfo: {...this.state.initialState} 
       });
     }
@@ -185,18 +143,10 @@ export default class index extends Component {
         });
     }
     addItinerary = () => {
-        if(this.state.itinerariesInfo.route_name !== '' && this.state.markerA.lat !== '' && this.state.markerB.lat !== ''){
+      console.log(this.state)
+        if(this.state.itinerariesInfo.route_name !== '' && this.state.itinerariesInfo.lat_initial !== '' && this.state.itinerariesInfo.lat_end !== ''){
         let newItineraryInfo = {
-            route_name: this.state.itinerariesInfo.route_name,
-            initial_point: this.state.markerA.address,
-            lat_initial: this.state.markerA.lat,
-            lng_initial: this.state.markerA.lng,
-            end_point: this.state.markerB.address,
-            lat_end: this.state.markerB.lat,
-            lng_end: this.state.markerB.lng,
-            distance: this.state.distance.value,
-            observation: this.state.itinerariesInfo.observation,
-            status: this.state.itinerariesInfo.status
+            ...this.state.itinerariesInfo
         }
         axios.post('itineraries', newItineraryInfo)
             .then(response => {
@@ -221,18 +171,9 @@ export default class index extends Component {
         }
     }
     editItinerary = () => {
-      if(this.state.itinerariesInfo.route_name !== '' && this.state.markerA.lat !== '' && this.state.markerB.lat !== ''){
+      if(this.state.itinerariesInfo.route_name !== '' && this.state.itinerariesInfo.lat_initial !== '' && this.state.itinerariesInfo.lat_end !== ''){
       let newItineraryInfo = {
-          route_name: this.state.itinerariesInfo.route_name,
-          initial_point: this.state.markerA.address,
-          lat_initial: this.state.markerA.lat,
-          lng_initial: this.state.markerA.lng,
-          end_point: this.state.markerB.address,
-          lat_end: this.state.markerB.lat,
-          lng_end: this.state.markerB.lng,
-          distance: this.state.distance.value,
-          observation: this.state.itinerariesInfo.observation,
-          status: this.state.itinerariesInfo.status
+        ...this.state.itinerariesInfo
       }
       axios.put(`itineraries/${this.state.uuid}`, newItineraryInfo)
           .then(response => {
@@ -260,31 +201,35 @@ export default class index extends Component {
     
     setMarkerA = (geocodedPrediction) => {
         this.setState({ 
-        markerA: {
-            address: geocodedPrediction.formatted_address,
-            lat: geocodedPrediction.geometry.location.lat(),
-            lng: geocodedPrediction.geometry.location.lng(),
+        itinerariesInfo: {
+            ...this.state.itinerariesInfo,
+            initial_point: geocodedPrediction.formatted_address,
+            lat_initial: geocodedPrediction.geometry.location.lat(),
+            lng_initial: geocodedPrediction.geometry.location.lng(),
             }
         })
-        console.log(this.state.markerA)
     }
     setMarkerB = (geocodedPrediction) => {
         this.setState({ 
-        markerB: {
-            address: geocodedPrediction.formatted_address,
-            lat: geocodedPrediction.geometry.location.lat(),
-            lng: geocodedPrediction.geometry.location.lng()
+        itinerariesInfo: {
+            ...this.state.itinerariesInfo,
+            end_point: geocodedPrediction.formatted_address,
+            lat_end: geocodedPrediction.geometry.location.lat(),
+            lng_end: geocodedPrediction.geometry.location.lng()
             }
         })
     }
-
     setText = (text) => {
         this.setState({
             distance: text.legs[0].distance,
-            time: text.legs[0].duration
+            time: text.legs[0].duration,
+            itinerariesInfo: {
+              ...this.state.itinerariesInfo,
+              distance: text.legs[0].distance.value
+            }
         })
-       // console.log(this.state.distance)
     }
+    
     
     columns = [
         {
@@ -460,12 +405,16 @@ export default class index extends Component {
               type="form"  
               style={{ fontSize: 25, color: '#faad14' , marginLeft: 20}}
               onClick={() => {
-                console.log(itinerariesInfo)
+               // console.log(itinerariesInfo)
                 this.showModalEdit()
                 this.setState({ uuid: itinerariesInfo.uuid, itinerariesInfo:{
                   route_name: itinerariesInfo.route_name,
-                  end_point: itinerariesInfo.end_point,
                   initial_point: itinerariesInfo.initial_point,
+                  lat_initial: itinerariesInfo.lat_initial,
+                  lng_initial: itinerariesInfo.lng_initial,
+                  end_point: itinerariesInfo.end_point,
+                  lat_end: itinerariesInfo.lat_end,
+                  lng_end: itinerariesInfo.lng_end,
                   observation: itinerariesInfo.observation,
                   status: itinerariesInfo.status
                   },
@@ -542,15 +491,11 @@ export default class index extends Component {
                  addItinerary={this.addItinerary}
                  onChangeAddItinerariesInfo={this.onChangeAddItinerariesInfo.bind(this)}
                  confirmLoading={this.state.confirmLoading}
-                 origin={this.state.markerA}
-                 destination={this.state.markerB}
                  currentLocation={this.state.currentLocation}
                  setText={this.setText.bind(this)}
                  itinerariesInfo={this.state.itinerariesInfo}
                  distance={this.state.distance}
                  time={this.state.time}//update={this.state.update}
-                 markerA={this.state.markerA}
-                 markerB={this.state.markerB}
                  />
                  <EditItinerary 
                 setMarkerA={this.setMarkerA.bind(this)}
@@ -560,8 +505,6 @@ export default class index extends Component {
                 editItinerary={this.editItinerary}
                 onChangeAddItinerariesInfo={this.onChangeAddItinerariesInfo.bind(this)}
                 confirmLoading={this.state.confirmLoading}
-                origin={this.state.markerA}
-                destination={this.state.markerB}
                 currentLocation={this.state.currentLocation}
                 setText={this.setText.bind(this)}
                 itinerariesInfo={this.state.itinerariesInfo}

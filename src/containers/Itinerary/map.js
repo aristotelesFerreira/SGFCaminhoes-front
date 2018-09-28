@@ -20,19 +20,18 @@ const MapWithADirectionsRenderer = compose(
  
   withScriptjs,
   withGoogleMap,
+  
   lifecycle({
-    componentDidUpdate() {
-      //console.log('teste '+this.props.origin.lat + ' '+ this.props.or)
-      if(this.props.origin.lat !== '' && this.props.destination.lat !== ''){
+    componentDidMount() {
+      if(this.props.itinerariesInfo.lat_initial !== '' && this.props.itinerariesInfo.lat_end !== ''){
         const DirectionsService = new google.maps.DirectionsService();
        
         DirectionsService.route({
-          origin: new google.maps.LatLng(this.props.origin.lat, this.props.origin.lng),//{lat: this.props.origin.lat , lng: this.props.origin.lng} ,
-          destination: new google.maps.LatLng(this.props.destination.lat, this.props.destination.lng),//{lat: this.props.destination.lat, lng: this.props.destination.lng},
+          origin: new google.maps.LatLng(this.props.itinerariesInfo.lat_initial, this.props.itinerariesInfo.lng_initial),//{lat: this.props.origin.lat , lng: this.props.origin.lng} ,
+          destination: new google.maps.LatLng(this.props.itinerariesInfo.lat_end, this.props.itinerariesInfo.lng_end),//{lat: this.props.destination.lat, lng: this.props.destination.lng},
           travelMode: google.maps.TravelMode.DRIVING,
           
         }, (result, status) => {
-          
           if (status === google.maps.DirectionsStatus.OK) {
               this.setState({
                 directions: result,
@@ -40,13 +39,29 @@ const MapWithADirectionsRenderer = compose(
 
             this.props.setText(result.routes[0])
           } else {
-            //console.error(`error fetching directions ${result}`);
+            console.error(`error fetching directions ${result}`);
           } 
         });
-        } else {
-          console.log('erro n entrou')
+        setTimeout(() => {
+          this.componentDidMount()
+        }, 10000)
+        } 
+        else {
+          //console.log('Aguardando coordenadas')
+          setTimeout(() => {
+            this.componentDidMount()
+          }, 5000)
       }
+     
     },
+    componentWillUnmount(){
+      console.log('desmontou')
+    },
+   /* componentDidUpdate(){
+      this.componentDidMount()
+      console.log('teste')
+    }*/
+
   })
 )(props =>
 

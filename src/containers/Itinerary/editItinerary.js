@@ -151,7 +151,6 @@ class editItinerary extends Component {
                         unCheckedChildren= {<Icon type="cross" />}
                         name='status'
                         onChange={e => this.props.onChangeAddItinerariesInfo('status', e)}
-                        setTime
                         defaultChecked = {this.props.itinerariesInfo.status === 1 ? this.defaultChecked = true : this.defaultChecked = false}
                         />
                         </FormItem>
@@ -159,11 +158,10 @@ class editItinerary extends Component {
                 </Row>
             </Form>
             <MapWithADirectionsRenderer 
-                origin={this.props.origin}
-                destination={this.props.destination}
+                itinerariesInfo={this.props.itinerariesInfo}
                 currentLocation={this.props.currentLocation}
                 setText={this.props.setText}
-                //update={this.state.update}
+                
                
             />
                             

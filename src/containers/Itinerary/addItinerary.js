@@ -36,9 +36,8 @@ class addItinerary extends Component {
             <Form>
                 <Row gutter={12}> 
                     <Col sm={24} xs={24} md={6}>
-                        <FormItem label="Origem" hasFeedback>
+                        <FormItem label="Origem" >
                         {getFieldDecorator('initial_point', {
-                          
                             rules: [
                                 {
                                     required: true,
@@ -47,7 +46,6 @@ class addItinerary extends Component {
                             ]
                         })(
                             <Places  
-                            itinerariesInfo={this.props.itinerariesInfo}
                             setMarkerA={this.props.setMarkerA}
                            />
                         )}
@@ -55,7 +53,7 @@ class addItinerary extends Component {
                     </Col>
                 
                     <Col sm={24} xs={24} md={6}>
-                        <FormItem label="Destino" hasFeedback>
+                        <FormItem label="Destino">
 
                          {getFieldDecorator('end_point', {
                             rules: [
@@ -66,7 +64,6 @@ class addItinerary extends Component {
                             ]
                         })(
                             <PlacesTwo style={{borderWidth: 50}}
-                            itinerariesInfo={this.props.itinerariesInfo}
                             setMarkerB={this.props.setMarkerB}
                             />
                         )}
@@ -151,11 +148,9 @@ class addItinerary extends Component {
                 </Row>
             </Form>
             <MapWithADirectionsRenderer 
-                origin={this.props.origin}
-                destination={this.props.destination}
+                 itinerariesInfo={this.props.itinerariesInfo}
                 currentLocation={this.props.currentLocation}
                 setText={this.props.setText}
-                //update={this.state.update}
                
             />
                             
