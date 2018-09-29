@@ -48,6 +48,7 @@ class editItinerary extends Component {
                             <Places  
                             setMarkerA={this.props.setMarkerA}
                             itinerariesInfo={this.props.itinerariesInfo}
+                            
                            />
                           
                         )}

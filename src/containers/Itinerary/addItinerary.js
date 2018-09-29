@@ -148,11 +148,11 @@ class addItinerary extends Component {
                 </Row>
             </Form>
             <MapWithADirectionsRenderer 
-                 itinerariesInfo={this.props.itinerariesInfo}
+                itinerariesInfo={this.props.itinerariesInfo}
                 currentLocation={this.props.currentLocation}
                 setText={this.props.setText}
                
-            />
+            />            
                             
             </Modal>
         )

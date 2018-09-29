@@ -9,7 +9,9 @@ import Scrollbars from "../../components/utility/customScrollBar";
 
 import axios from '../../helpers/axios'
 import AddItinerary from './addItinerary'
-import EditItinerary from './editItinerary'
+import EditItinerary from './editItinerary' 
+import ViewItinerary from './viewItinerary'
+
 
 export default class index extends Component {
 
@@ -206,8 +208,10 @@ export default class index extends Component {
             initial_point: geocodedPrediction.formatted_address,
             lat_initial: geocodedPrediction.geometry.location.lat(),
             lng_initial: geocodedPrediction.geometry.location.lng(),
-            }
+            },
+        buscar: true
         })
+       
     }
     setMarkerB = (geocodedPrediction) => {
         this.setState({ 
@@ -216,9 +220,11 @@ export default class index extends Component {
             end_point: geocodedPrediction.formatted_address,
             lat_end: geocodedPrediction.geometry.location.lat(),
             lng_end: geocodedPrediction.geometry.location.lng()
-            }
+            },
+        buscar: true
         })
     }
+
     setText = (text) => {
         this.setState({
             distance: text.legs[0].distance,
@@ -383,20 +389,17 @@ export default class index extends Component {
                 console.log(itinerariesInfo)
                 this.showModalView()
                 this.setState({ uuid: itinerariesInfo.uuid, itinerariesInfo:{
-                  /*brand: cartsInfo.brand,
-                  model: cartsInfo.model,
-                  description: cartsInfo.description,
-                  capacity: cartsInfo.capacity,
-                  type: cartsInfo.type,
-                  km_current: cartsInfo.km_current,
-                  year: cartsInfo.year,
-                  plate: cartsInfo.plate,
-                  chassis_number: cartsInfo.chassis_number,
-                  purchase_price: cartsInfo.purchase_price,
-                  //purchase_date:  moment(new Date(cartsInfo.purchase_date)).format('YYYY-MM-DD'),
-                  sale_value: cartsInfo.sale_value,
-                  status: cartsInfo.status,*/
-                  }
+                  route_name: itinerariesInfo.route_name,
+                  initial_point: itinerariesInfo.initial_point,
+                  lat_initial: itinerariesInfo.lat_initial,
+                  lng_initial: itinerariesInfo.lng_initial,
+                  end_point: itinerariesInfo.end_point,
+                  lat_end: itinerariesInfo.lat_end,
+                  lng_end: itinerariesInfo.lng_end,
+                  observation: itinerariesInfo.observation,
+                  status: itinerariesInfo.status
+                  },
+                  distance: this.state.distance,
                  
                 })
               }}
@@ -455,6 +458,7 @@ export default class index extends Component {
           onSelection: selected => this.setState({ selected })
         };
         return(
+           
             <LayoutWrapper>
             <PageHeader>
               <IntlMessages id='header.itineraries'/>
@@ -479,10 +483,10 @@ export default class index extends Component {
                         columns={this.columns}
                         pagination={true}
                         className='invoiceListTable'
-                        />
+                    /> 
                     </Scrollbars>
                 </div>
-                </CardWrapper>
+                </CardWrapper> 
                 <AddItinerary
                  setMarkerA={this.setMarkerA.bind(this)}
                  setMarkerB={this.setMarkerB.bind(this)}
@@ -512,9 +516,22 @@ export default class index extends Component {
                 time={this.state.time}//update={this.state.update}
                 markerA={this.state.markerA}
                 markerB={this.state.markerB}
-                 />
+                />
+                <ViewItinerary 
+                 open={this.state.visibleView}
+                 close={this.handleViewClose}
+                 //editItinerary={this.editItinerary}
+                 onChangeAddItinerariesInfo={this.onChangeAddItinerariesInfo.bind(this)}
+                 confirmLoading={this.state.confirmLoading}
+                 currentLocation={this.state.currentLocation}
+                 setText={this.setText.bind(this)}
+                 itinerariesInfo={this.state.itinerariesInfo}
+                 distance={this.state.distance}
+                 time={this.state.time}//update={this.state.update}
+                /> 
+              
             </Box>
-            </LayoutWrapper>
+              </LayoutWrapper> 
         )
     }
 };

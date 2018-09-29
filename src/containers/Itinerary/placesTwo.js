@@ -1,6 +1,7 @@
 import React from "react"
 import GoogleMapLoader from "react-google-maps-loader"
-import GooglePlacesSuggest from "react-google-places-suggest"
+//import GooglePlacesSuggest from "react-google-places-suggest"
+import ReactGooglePlacesSuggest from "react-google-places-suggest"
 import { Input } from 'antd'
 const MY_API_KEY = "AIzaSyC-ZSkQXDE7HBQf7a6umNX39pUnbB1kMhI" 
 
@@ -38,7 +39,7 @@ export default class GoogleSuggest extends React.Component {
                 }}
                 render={googleMaps =>
                     googleMaps && (
-                        <GooglePlacesSuggest
+                        <ReactGooglePlacesSuggest 
                             googleMaps={googleMaps}
                             autocompletionRequest={{
                                 input: search
@@ -64,7 +65,7 @@ export default class GoogleSuggest extends React.Component {
                                 onChange={this.handleInputChange}
                                 
                             />
-                        </GooglePlacesSuggest>
+                        </ReactGooglePlacesSuggest >
                         
                     )
                 }
