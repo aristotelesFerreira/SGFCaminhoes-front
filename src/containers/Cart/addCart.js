@@ -1,10 +1,11 @@
 import React, { Component } from 'react'
 import { Button, Modal, Row, Col, Input, Switch, Icon, Tooltip, Select } from 'antd'
 import Form from '../../components/uielements/form'
-//import InputMask from 'react-input-mask'
+import InputMask from 'react-input-mask'
 
 const FormItem = Form.Item
 const Option = Select.Option
+//className="ant-input"
 
 class addCart extends Component {
     
@@ -41,7 +42,8 @@ class addCart extends Component {
                                 }
                             ]
                         })(
-                            <Input
+                            <Input 
+                             
                               type='text'
                               placeholder='Marca'
                               name='brand'
