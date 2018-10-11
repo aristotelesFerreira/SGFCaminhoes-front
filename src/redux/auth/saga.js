@@ -19,10 +19,10 @@ export function* loginRequest() {
         history
       });
     } else {
-      notification('error', result.error || result);
-      yield put({ type: actions.LOGIN_ERROR });
+      notification('error', result.error || result)
+      yield put({ type: actions.LOGIN_ERROR })
     }
-  });
+  })
 }
 
 export function* loginSuccess() {

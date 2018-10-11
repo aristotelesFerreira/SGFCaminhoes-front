@@ -12,6 +12,6 @@ const axiosInstance = axios.create({
     
 })
 
-console.log(localStorage.getItem('id_token'))
+//console.log(localStorage.getItem('id_token'))
 
 export default axiosInstance 
