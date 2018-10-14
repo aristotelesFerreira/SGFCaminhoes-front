@@ -21,7 +21,7 @@ const options = [
     leftIcon: 'ion-android-pin'
   },
   {
-    key: 'travel',
+    key: 'travels',
     label: 'sidebar.travel',
     leftIcon: 'ion-ios-world-outline'
   }

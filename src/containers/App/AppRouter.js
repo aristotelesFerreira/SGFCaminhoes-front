@@ -22,6 +22,10 @@ const routes = [
   {
     path: 'itineraries',
     component: asyncComponent(() => import('../Itinerary'))
+  },
+  {
+    path: 'travels',
+    component: asyncComponent(() => import('../Travel'))
   }
 ];
 
