@@ -1,7 +1,8 @@
 import React, { Component } from 'react'
 import { Button, Modal, Row, Col, Input, Switch, Icon, Tooltip, Select } from 'antd'
 import Form from '../../components/uielements/form'
-//import InputMask from 'react-input-mask'
+import InputMask from 'react-input-mask'
+import CurrencyInput from 'react-currency-input';
 
 const FormItem = Form.Item
 const Option = Select.Option
@@ -94,6 +95,8 @@ class addVehicle extends Component {
                                     <Option value="Leve">3/4 (Leve)</Option>
                                     <Option value="Semi Pesado">Toco (Semi Pesado)</Option>
                                     <Option value="Pesado">Truck (Pesado)</Option>
+                                    <Option value="Cavalo Mecanico">Cavalo Mecanico</Option>
+                                    <Option value="Cavalo Mecanico Truck">Cavalo Mec. Truck</Option>
                                 </Select>
                             )}
                         </FormItem>
@@ -122,12 +125,6 @@ class addVehicle extends Component {
                     <Col sm={24} xs={24} md={5}>
                             <FormItem label='KM atual' hasFeedback>
                                 {getFieldDecorator('km_current', {
-                                    rules: [
-                                        /*{
-                                            required: true,
-                                            message: 'Campo obrigatório'
-                                        }*/
-                                    ]
                                 })(
                                     <Input 
                                         type='number'
@@ -148,7 +145,8 @@ class addVehicle extends Component {
                                        }
                                     ]
                                 })(
-                                    <Input 
+                                    <InputMask  className="ant-input"
+                                            mask={'aaa-9999'} 
                                             type='text'
                                             placeholder='Placa'
                                             name='plate'

@@ -1,7 +1,7 @@
 import React, { Component } from 'react'
 import { Button, Modal, Row, Col, Input, Switch, Icon, Tooltip, Select } from 'antd'
 import Form from '../../components/uielements/form'
-//import InputMask from 'react-input-mask'
+import InputMask from 'react-input-mask'
 
 const FormItem = Form.Item
 const Option = Select.Option
@@ -170,12 +170,13 @@ class editCart extends Component {
                                        }
                                     ]
                                 })(
-                                    <Input 
-                                            type='text'
-                                            placeholder='Placa'
-                                            name='plate'
-                                            onChange={e => this.props.onChangeAddCartInfo('plate', e.target.value)}
-                                        />
+                                    <InputMask  className="ant-input"
+                                        mask={'aaa-9999'} 
+                                        type='text'
+                                        placeholder='Placa'
+                                        name='plate'
+                                        onChange={e => this.props.onChangeAddCartInfo('plate', e.target.value)}
+                                    />
                                 )}
                         </FormItem>
                     </Col>

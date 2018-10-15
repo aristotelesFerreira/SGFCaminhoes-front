@@ -7,6 +7,7 @@ import IntlMessages from "../../components/utility/intlMessages";
 import PageHeader from "../../components/utility/pageHeader";
 import { Button, Input, Icon, notification } from 'antd';
 import Scrollbars from "../../components/utility/customScrollBar";
+import { Link } from "react-router-dom";
 
 import axios from '../../helpers/axios'
 import moment from 'moment';
@@ -52,16 +53,21 @@ export default class index extends Component {
       purchase_date: null,
       sale_value: '0',
       status: true
-    }
+    },
+
   }
 
   componentWillMount = () => {
     axios.get('travels')
     .then(response => {
       this.setState({
-        list: response.data
+        list: response.data,
       })
-      console.log(this.state.list)
+  
+      console.log(this.state.list[0])
+
+      //moment(new Date(this.state.list.departureDate)).format('YYYY-MM-DD'),
+      
     })
     .catch(error => {
       console.log(error)
@@ -284,8 +290,10 @@ export default class index extends Component {
     },
    
     {
-      title: 'Data',
-      dataIndex: 'departureDate',//colocar data
+      title: 'Data de Partida',
+      //data = moment(new Date(this.state.list[0].departureDate)).format('DD-MM-YYYY'),
+     // dataIndex: moment('departureDate').format('DD-MM-YYYY'),
+      dataIndex: 'departureDate', //arrumar isso
       key: 'departureDate',
       width: '10%',
       filterDropdown: ({ setSelectedKeys, selectedKeys, confirm, clearFilters }) => (
@@ -437,14 +445,17 @@ export default class index extends Component {
       </PageHeader>
       <Box>
         <div className='BtnAdd' align='right'>
-            <Button
-             onClick={this.showAddModal}
-             style={{ top: -10 }}
-             >
-            <Icon type="plus-circle"  style={{ fontSize: 20, color: '#52c41a'}}/>
-             Adicionar
+          <Link to='new_travel'>
+              <Button
+              onClick={this.showAddModal}
+              style={{ top: -10 }}
+              >
+              <Icon type="plus-circle"  style={{ fontSize: 20, color: '#52c41a'}}/>
             
-             </Button>
+              Adicionar
+            
+              </Button>
+            </Link>
         </div>
         <CardWrapper title='Viagens'>
           <div className='isoInvoiceTable'>

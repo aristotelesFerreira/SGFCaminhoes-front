@@ -171,12 +171,13 @@ class addCart extends Component {
                                        }
                                     ]
                                 })(
-                                    <Input 
-                                            type='text'
-                                            placeholder='Placa'
-                                            name='plate'
-                                            onChange={e => this.props.onChangeAddCartInfo('plate', e.target.value)}
-                                        />
+                                    <InputMask  className="ant-input"
+                                        mask={'aaa-9999'} 
+                                        type='text'
+                                        placeholder='Placa'
+                                        name='plate'
+                                        onChange={e => this.props.onChangeAddCartInfo('plate', e.target.value)}
+                                    />
                                 )}
                         </FormItem>
                     </Col>

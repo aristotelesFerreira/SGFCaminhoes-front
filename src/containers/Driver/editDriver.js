@@ -1,6 +1,7 @@
 import React, { Component } from 'react'
 import { Button, Modal, Row, Col, Input, Switch, Icon, Tooltip, Select } from 'antd'
 import Form from '../../components/uielements/form'
+import InputMask from 'react-input-mask'
 
 const Option = Select.Option;
 const FormItem = Form.Item
@@ -65,9 +66,9 @@ class editDriver extends Component {
                                     }
                                 ]
                             })(
-                                <Input 
+                                <InputMask className="ant-input"
+                                    mask={'999.999.999-99'}
                                     type='text'
-                                    maxLength={11}
                                     placeholder='CPF'
                                     name='cpf_number'
                                     onChange={e => this.props.onChangeAddDriverInfo('cpf_number', e.target.value)}
@@ -78,7 +79,7 @@ class editDriver extends Component {
                     <Col sm={24} xs={24} md={5}>
                         <FormItem label={( <span>
                             CNH&nbsp;
-                            <Tooltip title="Exemplos: ABCD">
+                            <Tooltip title="Exemplos: AD">
                                 <Icon type="question-circle-o" />
                             </Tooltip>
                             </span> )} hasFeedback>
@@ -100,9 +101,9 @@ class editDriver extends Component {
                                 >
                                     <Option value="a">A</Option>
                                     <Option value="ab">AB</Option>
-                                    <Option value="abc">ABC</Option>
-                                    <Option value="abcd">ABCD</Option>
-                                    <Option value="abcde">ABCDE</Option>
+                                    <Option value="ac">AC</Option>
+                                    <Option value="ad">AD</Option>
+                                    <Option value="ae">AE</Option>
                                     
                                 </Select>
                                 
@@ -122,7 +123,8 @@ class editDriver extends Component {
                                         }*/
                                     ]
                                 })(
-                                    <Input 
+                                    <InputMask className="ant-input"
+                                        mask={'(99) 99999-9999'}
                                         type='text'
                                         placeholder='Telefone'
                                         name='phone_1'
@@ -142,7 +144,8 @@ class editDriver extends Component {
                                         }*/
                                     ]
                                 })(
-                                    <Input 
+                                    <InputMask className="ant-input"
+                                        mask={'(99) 99999-9999'} 
                                         type='text'
                                         placeholder='Telefone Opcional'
                                         name='phone_2'

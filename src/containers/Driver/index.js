@@ -29,7 +29,7 @@ export default class index extends Component {
         drivers_license: '',
         admission_date: null,
         resignation_date: null,
-        driversLicense_validate: null,
+        driversLicense_validate: '',
         phone_1: '',
         phone_2: '',
         status: true
@@ -40,7 +40,7 @@ export default class index extends Component {
         drivers_license: '',
         admission_date: null,
         resignation_date: null,
-        driversLicense_validate: null,
+        driversLicense_validate: '',
         phone_1: '',
         phone_2: '',
         status: true
@@ -59,8 +59,8 @@ export default class index extends Component {
   }
   
   addDriver = () => {
-    const { name } = this.state.driversInfo;
-    if (name !== '') {
+    const { name, cpf_number, drivers_license, driversLicense_validate } = this.state.driversInfo;
+    if (name !== '' && cpf_number !== '' && drivers_license !== '' && driversLicense_validate !== '') {
       let newDriverInfo = {
         ...this.state.driversInfo
       };
@@ -88,8 +88,8 @@ export default class index extends Component {
     }
   }
   editDriver = () => {
-    const { name } = this.state.driversInfo
-    if( name!== ''){
+    const {name, cpf_number, drivers_license, driversLicense_validate } = this.state.driversInfo
+    if(name !== '' && cpf_number !== '' && drivers_license !== '' && driversLicense_validate !== ''){
       let newDriverInfo = {
         ...this.state.driversInfo
       }
@@ -104,7 +104,7 @@ export default class index extends Component {
         notification.error({message:'Não foi possivel editar !'})
       })
     } else {
-      notification.warning({message: "Campo 'nome' obrigatório !"})
+      notification.warning({message: "Preencha os campos obrigatórios !"})
     }
   }
   handleSearch = (selectedKeys, confirm) => () => {

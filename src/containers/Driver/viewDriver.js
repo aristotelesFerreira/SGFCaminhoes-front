@@ -1,6 +1,7 @@
 import React, { Component } from 'react'
 import { Button, Modal, Row, Col, Input, Switch, Icon, Tooltip, Select } from 'antd'
 import Form from '../../components/uielements/form'
+import InputMask from 'react-input-mask'
 
 const FormItem = Form.Item
 const Option = Select.Option;
@@ -62,11 +63,11 @@ class viewDriver extends Component {
                                     }
                                 ]
                             })(
-                                <Input 
+                                <InputMask className="ant-input"
+                                    mask={'999.999.999-99'}
                                     disabled
                                     style={{color: 'black', fontWeight: 'bold'}}
                                     type='text'
-                                    maxLength={11}
                                     placeholder='CPF'
                                     name='cpf_number'
                                    
@@ -77,7 +78,7 @@ class viewDriver extends Component {
                     <Col sm={24} xs={24} md={5}>
                         <FormItem label={( <span>
                             CNH&nbsp;
-                            <Tooltip title="Exemplos: ABCD">
+                            <Tooltip title="Exemplos: AD">
                                 <Icon type="question-circle-o" />
                             </Tooltip>
                             </span> )} >
@@ -100,9 +101,9 @@ class viewDriver extends Component {
                                 >
                                     <Option value="a">A</Option>
                                     <Option value="ab">AB</Option>
-                                    <Option value="abc">ABC</Option>
-                                    <Option value="abcd">ABCD</Option>
-                                    <Option value="abcde">ABCDE</Option>
+                                    <Option value="ac">AC</Option>
+                                    <Option value="ad">AD</Option>
+                                    <Option value="ae">AE</Option>
                                     
                                 </Select>
                                 
@@ -116,7 +117,8 @@ class viewDriver extends Component {
                                 {getFieldDecorator('phone_1', {
                                     initialValue: this.props.driversInfo.phone_1,
                                 })(
-                                    <Input 
+                                    <InputMask className="ant-input"
+                                        mask={'(99) 9-9999-9999'}
                                         type='text'
                                         placeholder='Telefone'
                                         name='phone_1'
@@ -131,7 +133,8 @@ class viewDriver extends Component {
                                 {getFieldDecorator('phone_2', {
                                     initialValue: this.props.driversInfo.phone_2,
                                 })(
-                                    <Input 
+                                    <InputMask className="ant-input"
+                                        mask={'(99) 9-9999-9999'} 
                                         type='text'
                                         placeholder='Telefone Opcional'
                                         name='phone_2'

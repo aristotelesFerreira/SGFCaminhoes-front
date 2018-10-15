@@ -29,7 +29,7 @@ class viewVehicle extends Component {
             <Form>
                 <Row gutter={12}>
                     <Col sm={24} xs={24} md={7}>
-                      <FormItem label='Marca' hasFeedback>
+                      <FormItem label='Marca'>
                         {getFieldDecorator('brand', {
                             initialValue: this.props.vehicleInfo.brand,
                             rules: [
@@ -50,7 +50,7 @@ class viewVehicle extends Component {
                       </FormItem>
                     </Col>
                     <Col sm={24} xs={24} md={7}>
-                        <FormItem label='Modelo' hasFeedback>
+                        <FormItem label='Modelo' >
                             {getFieldDecorator('model', {
                                  initialValue: this.props.vehicleInfo.model,
                                 rules: [
@@ -77,7 +77,7 @@ class viewVehicle extends Component {
                             <Tooltip title="Exemplos: Cavalo Mecanico">
                                 <Icon type="question-circle-o" />
                             </Tooltip>
-                            </span> )} hasFeedback>
+                            </span> )} >
                             {getFieldDecorator('type', {
                                  initialValue: this.props.vehicleInfo.type,
                                 rules: [
@@ -105,7 +105,7 @@ class viewVehicle extends Component {
                 </Row>
                 <Row gutter={12}>
                     <Col sm={24} xs={24} md={4}>
-                            <FormItem label='Ano' hasFeedback>
+                            <FormItem label='Ano' >
                                 {getFieldDecorator('year', {
                                     initialValue: this.props.vehicleInfo.year,
                                 })(
@@ -121,7 +121,7 @@ class viewVehicle extends Component {
                             </FormItem>
                     </Col>
                     <Col sm={24} xs={24} md={5}>
-                            <FormItem label='KM atual' hasFeedback>
+                            <FormItem label='KM atual' >
                                 {getFieldDecorator('km_current', {
                                     initialValue: this.props.vehicleInfo.km_current,
                                 })(
@@ -137,7 +137,7 @@ class viewVehicle extends Component {
                             </FormItem>
                     </Col>
                     <Col sm={24} xs={24} md={5}>
-                        <FormItem label='Placa' hasFeedback>
+                        <FormItem label='Placa' >
                                 {getFieldDecorator('plate', {
                                      initialValue: this.props.vehicleInfo.plate,
                                     rules: [
@@ -159,7 +159,7 @@ class viewVehicle extends Component {
                         </FormItem>
                     </Col>
                     <Col sm={24} xs={24} md={7}>
-                        <FormItem label='Número do Chassis' hasFeedback>
+                        <FormItem label='Número do Chassis' >
                                 {getFieldDecorator('chassis_number', {
                                      initialValue: this.props.vehicleInfo.chassis_number,
                                     rules: [
@@ -184,7 +184,7 @@ class viewVehicle extends Component {
                 </Row>
                 <Row gutter={12}>
                     <Col sm={24} xs={24} md={7}>
-                        <FormItem label='Preço de Compra' hasFeedback>
+                        <FormItem label='Preço de Compra' >
                                 {getFieldDecorator('purchase_price', {
                                     initialValue: this.props.vehicleInfo.purchase_price,
                                 })(
@@ -200,7 +200,7 @@ class viewVehicle extends Component {
                         </FormItem>
                     </Col>
                     <Col sm={24} xs={24} md={7}>
-                            <FormItem label='Data da Compra' hasFeedback>
+                            <FormItem label='Data da Compra' >
                                     {getFieldDecorator('purchase_date', {
                                         initialValue: this.props.vehicleInfo.purchase_date,
                                     })(
@@ -220,7 +220,7 @@ class viewVehicle extends Component {
                 </Row>
                 <Row gutter={12}> 
                     <Col sm={24} xs={24} md={7}>
-                        <FormItem label='Preço de Venda' hasFeedback>
+                        <FormItem label='Preço de Venda' >
                                 {getFieldDecorator('sale_value', {
                                     initialValue: this.props.vehicleInfo.sale_value,
                                 })(
