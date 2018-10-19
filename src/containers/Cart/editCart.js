@@ -94,7 +94,6 @@ class editCart extends Component {
                                 >       
                                     <Option value='Dois Eixos'>Dois Eixos</Option>
                                     <Option value="Três Eixos">Três Eixos</Option>
-                                    <Option value="Dolly">Dolly</Option>
                                 </Select>
                             )}
                         </FormItem>

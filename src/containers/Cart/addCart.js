@@ -92,9 +92,9 @@ class addCart extends Component {
                                 name='type'
                                 onChange={e => this.props.onChangeAddCartInfo('type', e)}
                                 >       
-                                    <Option value='dois eixos'>Dois Eixos</Option>
-                                    <Option value="tres eixos">Três Eixos</Option>
-                                    <Option value="dolly">Dolly</Option>
+                                    <Option value='Dois eixos'>Dois Eixos</Option>
+                                    <Option value="Três eixos">Três Eixos</Option>
+                                    
                                 </Select>
                             )}
                         </FormItem>
