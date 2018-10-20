@@ -12,10 +12,15 @@ const Option = AutoComplete.Option;
 const FormItem = Form.Item
 const Step = Steps.Step;
 
-  
-class addTravel extends Component {
+
+class editTravel extends Component {
     state = {
+        novo: [],
         current: 0,
+        driver: [],
+        vehicle: [],
+        carts: [],
+        itinerary: [],
         travelInfo: {
             driver_id: '',
             vehicle_id: '',
@@ -30,15 +35,37 @@ class addTravel extends Component {
         vehiclesData: [],
         cartsData: [],
         itinerariesData: [],
-        teste: [],
         confirmLoading: false
     }
 
     componentWillMount = () => {
+        axios.get(`travels/${this.props.match.params.id}`)
+        .then(response => {
+          this.setState({
+            travelInfo: {
+                driver_id: response.data.driver.id,
+                vehicle_id: response.data.vehicle.id,
+                carts_id: response.data.carts,
+                itinerary_id: response.data.itinerary.id,
+                departureDate: response.data.departureDate,
+                arrivalDate: response.data.arrivalDate,
+                status: response.data.status
+            },
+            /*driver: response.data.driver,
+            vehicle: response.data.vehicle,
+            carts: response.data.carts,
+            itinerary: response.data.itinerary*/
+          })
+        })
+        .catch(error => {
+          console.log(error)
+        })
        this.getAllDrivers()
        this.getAllVehicles()
        this.getAllCarts()
        this.getAllItineraries()
+       
+       
     }
     next() {
         if(this.state.travelInfo.driver_id !== '') {
@@ -94,6 +121,7 @@ class addTravel extends Component {
           notification.warning({message: 'Campos inválidos', description: 'Preencha todos os campos obrigatórios (*)'})
         }
     }
+
     getAllDrivers() {
         axios.get('drivers?status=1')
         .then(response => {
@@ -137,6 +165,7 @@ class addTravel extends Component {
         .catch(error => {
             console.log(error)
         })
+       
     }
 
     handleSearch = (value) => {
@@ -145,8 +174,47 @@ class addTravel extends Component {
     handleIndex() {
         this.props.history.push("travels");
     }
+   
 
     render() {
+
+        const driversOptions = []
+        const cartsOptions = []
+        const vehicleOptions = []
+        const cartsIds = []
+
+        for (let i = 0; i < this.state.travelInfo.carts_id.length; i++){
+           cartsIds.push(this.state.travelInfo.carts_id[i].id)
+          
+          
+        }
+        console.log(this.state.travelInfo.carts_id)
+       
+        for (let i = 0; i < this.state.driversData.length; i++) {
+            driversOptions.push(<Option key={this.state.driversData[i].id} value={this.state.driversData[i].id}>
+            { this.state.driversData[i].name+' '} 
+            | CPF: {this.state.driversData[i].cpf_number}
+            </Option>);
+        }
+ 
+        for (let i = 0; i < this.state.vehiclesData.length; i++) {
+            vehicleOptions.push(<Option key={this.state.vehiclesData[i].id} value={this.state.vehiclesData[i].id}>
+             {this.state.vehiclesData[i].brand+' '} 
+            | Modelo: {this.state.vehiclesData[i].model+' '}
+            | Placa: {this.state.vehiclesData[i].plate+' '}
+            </Option>);
+        }
+
+        for (let i = 0; i < this.state.cartsData.length; i++) {
+            cartsOptions.push(<Option key={this.state.cartsData[i].id} value={this.state.cartsData[i].id}>
+             {this.state.cartsData[i].brand+' '} 
+            | Modelo: {this.state.cartsData[i].model+' '}
+            | Tipo: {this.state.cartsData[i].type+' '}
+            | Placa: {this.state.cartsData[i].plate+' '}
+            </Option>);
+        }
+
+     
         const { current } = this.state;
         const { getFieldDecorator } = this.props.form;
         const steps = [{
@@ -156,9 +224,9 @@ class addTravel extends Component {
                 <Form>
                 <Row gutter={12}>
                     <Col sm={24} xs={24} md={12}>
-                    <FormItem label='Nome' hasFeedback>
+                    <FormItem label='Motorista' hasFeedback>
                         
-                        {getFieldDecorator('name', {
+                    {getFieldDecorator('driver', {
                             initialValue: this.state.travelInfo.driver_id,
                             rules: [
                                 {
@@ -172,22 +240,14 @@ class addTravel extends Component {
                         showSearch
                         optionFilterProp="children"
                         placeholder={'Escolha o motorista'}
-                        onChange={e => this.onChangeAddTravelInfo('driver_id', e) }
+                        onChange={e => this.onChangeAddTravelInfo('driver_id', e)}
                         >
                        
-                        {this.state.driversData.map(driver => 
-                        <Option key={driver.id} >
+                       {driversOptions}
                         
-                        
-                        {driver.name+' '} 
-                         | CPF: {driver.cpf_number}
-
-                         </Option>
-
-                        )}
                         </Select> 
-                            
-                        )}
+                         )}   
+                      
                       
                     </FormItem>
                     </Col>
@@ -197,7 +257,6 @@ class addTravel extends Component {
           }, {
             title: 'Escolha o Veículo',
             content:
-           
             <Form>
                 <Row gutter={12}>
                     <Col sm={24} xs={24} md={12}>
@@ -218,26 +277,13 @@ class addTravel extends Component {
                         optionFilterProp="children"
                         onChange={e => this.onChangeAddTravelInfo('vehicle_id', e) }
                         >
-                        {this.state.vehiclesData.map(vehicle => 
-                        <Option key={vehicle.id}>
-                        {vehicle.brand+' '} 
-                         | Modelo: {vehicle.model+' '} 
-                         | Placa: {vehicle.plate+' '}
-                        
-                        </Option>
+                        {vehicleOptions}
+                        </Select>    
                         )}
-                            
-                        </Select> 
-                            
-                        )}
-                      
                     </FormItem>
                     </Col>
-                    </Row>
-                    
-                </Form>
-
-          
+                    </Row>  
+                </Form>      
           }, 
           {
             title: 'Escolha as Carretas',
@@ -248,30 +294,26 @@ class addTravel extends Component {
                     <Col sm={24} xs={24} md={12}>
                     <FormItem label='Carretas' hasFeedback>
                         {getFieldDecorator('carts', {
-                            initialValue: this.state.travelInfo.carts_id,
+                            initialValue:cartsIds
+                            //initialValue:[4,3],
+                        
+                           
                         })(
-
                         <Select
+                        
                         showSearch
                         optionFilterProp="children"
                         placeholder={'Escolha a carreta'}
                         mode='multiple'
                         onChange={e => this.onChangeAddTravelInfo('carts_id', e) }
-                        
+                       
                         >
-                          {this.state.cartsData.map(cart => 
-                          <Option key={cart.id}>
-                          {cart.brand+' '} 
-                          | Modelo: {cart.model+' '}
-                          | Tipo: {cart.type+' '}
-                          | Placa: {cart.plate+' '}
-                          </Option>)}
-
+                        {cartsOptions}
                          
                             
                         </Select> 
-                            
-                        )}
+                        )} 
+                    
                       
                     </FormItem>
                     </Col>
@@ -289,7 +331,7 @@ class addTravel extends Component {
                 <Col sm={24} xs={24} md={12}>
                 <FormItem label='Itinerário' hasFeedback>
                     {getFieldDecorator('itinerary', {
-                        initialValue: this.state.travelInfo.itinerary_id,
+                        initialValue: this.state.itinerary.route_name+' | '+this.state.itinerary.initial_point+ 'até '+this.state.itinerary.end_point,
                         rules: [
                             {
                                 required: true,
@@ -455,5 +497,5 @@ class addTravel extends Component {
         )
     }
 };
-const WrappedAddTravel = Form.create()(addTravel)
-export default WrappedAddTravel
+const WrappedEditTravel = Form.create()(editTravel)
+export default WrappedEditTravel

@@ -10,11 +10,11 @@ import Scrollbars from "../../components/utility/customScrollBar";
 import { Link } from "react-router-dom";
 
 import axios from '../../helpers/axios'
-import moment from 'moment';
+import moment from 'moment-timezone';
 
 //import AddCart from './addCart'
 //import ViewCart from './viewCart'
-//import EditCart from './editCart'
+//moment.tz(value, 'America/Sao_Paulo').format('DD/MM/YYYY')
 
 export default class index extends Component {
   state = {
@@ -23,6 +23,7 @@ export default class index extends Component {
     visibleEdit: false,
     visibleView: false,
     confirmLoading: false,
+    alts: [],
     list: [],
     initialState: {
       description: '',
@@ -39,20 +40,15 @@ export default class index extends Component {
       sale_value: '0',
       status: true
     },
-    cartsInfo: {
+    travelInfo: {
+      driver_id: '',
+      vehicle_id: '',
+      carts_id: [],
+      itinerary_id: '',
+      departureDate: '',
+      arrivalDate: '',
       description: '',
-      brand: '',
-      model: '',
-      type: '',
-      capacity: '0',
-      km_current: '0',
-      year: '0',
-      plate: '',
-      chassis_number: '',
-      purchase_price: '0',
-      purchase_date: null,
-      sale_value: '0',
-      status: true
+      status: '',
     },
 
   }
@@ -63,15 +59,12 @@ export default class index extends Component {
       this.setState({
         list: response.data,
       })
-  
-      console.log(this.state.list[0])
-
-      //moment(new Date(this.state.list.departureDate)).format('YYYY-MM-DD'),
-      
+      this.teste()
     })
     .catch(error => {
       console.log(error)
     })
+    
   }
 
   onChangeAddCartInfo(key, value) {
@@ -91,8 +84,30 @@ export default class index extends Component {
     clearFilters()
     this.setState({searchText: ''})
   }
+  handleEditTravel = () => {
+    return (
+    <Link to='edit_travel/'> </Link>
+    )
+    
+  }
+
+  teste = () => {
+      const newDate = []
+      for (let i = 0; i < this.state.list.length; i++){
+        
+        newDate.push(moment.tz(this.state.list[i].departureDate, 'America/Sao_Paulo').format('DD/MM/YYYY'))
+        let list = {...this.state.list}
+        this.setState({
+          alts: {...this.state.list[i], departureDate: newDate.toString()}
+        })
+     }
+     console.log(this.state.alts)
+    
+  
+  }
 
   columns = [
+    
     {
       title: "Motorista",
       dataIndex: "driver.name",
@@ -291,9 +306,7 @@ export default class index extends Component {
    
     {
       title: 'Data de Partida',
-      //data = moment(new Date(this.state.list[0].departureDate)).format('DD-MM-YYYY'),
-     // dataIndex: moment('departureDate').format('DD-MM-YYYY'),
-      dataIndex: 'departureDate', //arrumar isso
+      dataIndex: 'newDate', //arrumar isso
       key: 'departureDate',
       width: '10%',
       filterDropdown: ({ setSelectedKeys, selectedKeys, confirm, clearFilters }) => (
@@ -356,57 +369,27 @@ export default class index extends Component {
       dataIndex: "view",
       key: "view",
       width: "20%",
-      render: (text, cartsInfo) => (
+      render: (text, travelInfo) => (
         <div className="isoInvoiceBtnView">
           <Icon 
           type="search"  
           style={{ fontSize: 25, color: '#1890ff' }} 
           onClick={() => {
-            console.log(cartsInfo)
+            console.log(travelInfo)
             this.showModalView()
-            this.setState({ uuid: cartsInfo.uuid, cartsInfo:{
-              brand: cartsInfo.brand,
-              model: cartsInfo.model,
-              description: cartsInfo.description,
-              capacity: cartsInfo.capacity,
-              type: cartsInfo.type,
-              km_current: cartsInfo.km_current,
-              year: cartsInfo.year,
-              plate: cartsInfo.plate,
-              chassis_number: cartsInfo.chassis_number,
-              purchase_price: cartsInfo.purchase_price,
-              purchase_date:  moment(new Date(cartsInfo.purchase_date)).format('YYYY-MM-DD'),
-              sale_value: cartsInfo.sale_value,
-              status: cartsInfo.status,
-              }
-             
-            })
+            
           }}
           />
+          
+          <Link to={`edit_travel/${travelInfo.uuid}`}>
           <Icon 
           type="form"  
           style={{ fontSize: 25, color: '#faad14' , marginLeft: 20}}
           onClick={() => {
-            console.log(cartsInfo)
-            this.showModalEdit()
-            this.setState({ uuid: cartsInfo.uuid, cartsInfo:{
-              brand: cartsInfo.brand,
-              model: cartsInfo.model,
-              description: cartsInfo.description,
-              capacity: cartsInfo.capacity,
-              type: cartsInfo.type,
-              km_current: cartsInfo.km_current,
-              year: cartsInfo.year,
-              plate: cartsInfo.plate,
-              chassis_number: cartsInfo.chassis_number,
-              purchase_price: cartsInfo.purchase_price,
-              purchase_date:  moment(new Date(cartsInfo.purchase_date)).format('YYYY-MM-DD'),
-              sale_value: cartsInfo.sale_value,
-              status: cartsInfo.status,
-              } 
-            })
+           
           }}
           />
+          </Link>
         </div>
       )
     }
@@ -462,7 +445,7 @@ export default class index extends Component {
             <Scrollbars style={{ width: '100%'}}>
               <TableWrapper rowKey='id'
                 rowSelection={rowSelection}
-                dataSource={list}
+               // dataSource={list}
                 columns={this.columns}
                 pagination={true}
                 className='invoiceListTable'
@@ -470,6 +453,7 @@ export default class index extends Component {
             </Scrollbars>
           </div>
         </CardWrapper>
+       
         {/*<AddCart 
         open={this.state.visible}
         close={this.handleAddClose}

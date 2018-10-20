@@ -30,6 +30,10 @@ const routes = [
   {
     path: 'new_travel',
     component: asyncComponent(() => import('../Travel/addTravel'))
+  },
+  {
+    path: 'edit_travel/:id',
+    component: asyncComponent(() => import('../Travel/editTravel'))
   }
 ];
 
