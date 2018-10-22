@@ -13,7 +13,8 @@ const { login } = authAction;
 
 class SignIn extends Component {
   state = {
-    redirectToReferrer: false
+    redirectToReferrer: false,
+    loading: false
   };
   componentWillReceiveProps(nextProps) {
     if (
@@ -29,6 +30,7 @@ class SignIn extends Component {
       email: document.getElementById('inputEmail').value || '',
       password: document.getElementById('inputPassword').value || ''
     }
+
     login({history, userInfo})
     //this.props.SignInAction(userInfo, this.props.history)
     //login();

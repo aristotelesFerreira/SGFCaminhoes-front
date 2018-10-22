@@ -7,13 +7,16 @@ import IntlMessages from "../../components/utility/intlMessages";
 import PageHeader from "../../components/utility/pageHeader";
 import { AutoComplete, Button, Form, Row, Col, Input, Switch, Icon, Tooltip, Select, message, notification, Steps } from 'antd'
 import axios from '../../helpers/axios'
+import moment from 'moment-timezone';
 
 const Option = AutoComplete.Option;
 const FormItem = Form.Item
 const Step = Steps.Step;
 
 
+
 class editTravel extends Component {
+    
     state = {
         novo: [],
         current: 0,
@@ -42,19 +45,18 @@ class editTravel extends Component {
         axios.get(`travels/${this.props.match.params.id}`)
         .then(response => {
           this.setState({
+              
+            carts: response.data.carts,
             travelInfo: {
                 driver_id: response.data.driver.id,
                 vehicle_id: response.data.vehicle.id,
-                carts_id: response.data.carts,
+                //carts_id: response.data.carts,
+                //carts_id: cartsIds,
                 itinerary_id: response.data.itinerary.id,
-                departureDate: response.data.departureDate,
-                arrivalDate: response.data.arrivalDate,
+                departureDate:  moment.tz(response.data.departureDate, 'America/Sao_Paulo').format('YYYY-MM-DD'),
+                arrivalDate: moment.tz(response.data.arrivalDate, 'America/Sao_Paulo').format('YYYY-MM-DD'),
                 status: response.data.status
             },
-            /*driver: response.data.driver,
-            vehicle: response.data.vehicle,
-            carts: response.data.carts,
-            itinerary: response.data.itinerary*/
           })
         })
         .catch(error => {
@@ -65,7 +67,6 @@ class editTravel extends Component {
        this.getAllCarts()
        this.getAllItineraries()
        
-       
     }
     next() {
         if(this.state.travelInfo.driver_id !== '') {
@@ -75,7 +76,7 @@ class editTravel extends Component {
         else{
             notification.warning({message: 'Campos inválidos', description: 'Preencha todos os campos obrigatórios (*)'})
         }
-        
+        this.teste()
       }
     
       prev() {
@@ -93,13 +94,13 @@ class editTravel extends Component {
         });
 
     }
-    addTravel = () => {
-        const { driver_id, vehicle_id, itinerary_id, departureDate, arrivalDate, status } = this.state.travelInfo;
-        if (driver_id !== '' && vehicle_id !== '' && itinerary_id !== '' && departureDate !== '' && arrivalDate !== '' && status !== '') {
+    editTravel = () => {
+        const { driver_id, vehicle_id, itinerary_id, carts_id, departureDate, arrivalDate, status } = this.state.travelInfo;
+        if (driver_id !== '' && carts_id !== '' && vehicle_id !== '' && itinerary_id !== '' && departureDate !== '' && arrivalDate !== '' && status !== '') {
             let newTravelInfo = {
-            ...this.state.travelInfo
+            ...this.state.travelInfo,
           };
-          axios.post("travels", newTravelInfo)
+          axios.put(`travels/${this.props.match.params.id}`, newTravelInfo)
             .then(response => {
               this.setState({
                 confirmLoading: true
@@ -110,11 +111,12 @@ class editTravel extends Component {
                 });
                 this.handleIndex()
               }, 2000);
-              notification.success({message: 'Cadastrado com sucesso !'})
+              console.log(this.state.travelInfo)
+              notification.success({message: 'Editado com sucesso !'})
               
             })
             .catch(error => {
-              notification.error({message: 'Não foi possivel cadastrar !'})
+              notification.error({message: 'Não foi possivel editar !'})
               console.log(error);
             });
         } else {
@@ -167,12 +169,36 @@ class editTravel extends Component {
         })
        
     }
+    teste = () => {
+        const cartsIds = []
+        
+        if(this.state.carts[0].model !== '') {
+            console.log(this.state.carts[0].model)
+            for (let i = 0; i < this.state.carts.length; i++){
+                console.log(this.state.carts[i].id)
+                cartsIds.push(this.state.carts[i].id)
+                //console.log(cartsIds)
+                
+            }
+            this.setState({
+                carts: cartsIds
+             })
+             console.log(this.state.carts)
+            
+        }
+        
+        else{
+            console.log('array vazio')
+        }
+         
+    }
+        
 
     handleSearch = (value) => {
         fetch(value, data => this.setState({ data }));
     }
     handleIndex() {
-        this.props.history.push("travels");
+        //this.props.history.push("travels");
     }
    
 
@@ -181,14 +207,10 @@ class editTravel extends Component {
         const driversOptions = []
         const cartsOptions = []
         const vehicleOptions = []
+        const itirariesOptions = []
         const cartsIds = []
-
-        for (let i = 0; i < this.state.travelInfo.carts_id.length; i++){
-           cartsIds.push(this.state.travelInfo.carts_id[i].id)
-          
-          
-        }
-        console.log(this.state.travelInfo.carts_id)
+       
+        
        
         for (let i = 0; i < this.state.driversData.length; i++) {
             driversOptions.push(<Option key={this.state.driversData[i].id} value={this.state.driversData[i].id}>
@@ -211,6 +233,14 @@ class editTravel extends Component {
             | Modelo: {this.state.cartsData[i].model+' '}
             | Tipo: {this.state.cartsData[i].type+' '}
             | Placa: {this.state.cartsData[i].plate+' '}
+            </Option>);
+        }
+
+        for (let i = 0; i < this.state.itinerariesData.length; i++) {
+            itirariesOptions.push(<Option key={this.state.itinerariesData[i].id} value={this.state.itinerariesData[i].id}>
+             {this.state.itinerariesData[i].route_name+' '} 
+            |  {this.state.itinerariesData[i].initial_point+' '}
+            |  {this.state.itinerariesData[i].end_point+' '}
             </Option>);
         }
 
@@ -294,9 +324,8 @@ class editTravel extends Component {
                     <Col sm={24} xs={24} md={12}>
                     <FormItem label='Carretas' hasFeedback>
                         {getFieldDecorator('carts', {
-                            initialValue:cartsIds
-                            //initialValue:[4,3],
-                        
+                            //initialValue:cartsIds
+                            initialValue:this.state.travelInfo.carts_id
                            
                         })(
                         <Select
@@ -331,7 +360,7 @@ class editTravel extends Component {
                 <Col sm={24} xs={24} md={12}>
                 <FormItem label='Itinerário' hasFeedback>
                     {getFieldDecorator('itinerary', {
-                        initialValue: this.state.itinerary.route_name+' | '+this.state.itinerary.initial_point+ 'até '+this.state.itinerary.end_point,
+                        initialValue: this.state.travelInfo.itinerary_id,
                         rules: [
                             {
                                 required: true,
@@ -346,15 +375,9 @@ class editTravel extends Component {
                     optionFilterProp="children"
                     onChange={e => this.onChangeAddTravelInfo('itinerary_id', e)}
                     >
-                    {this.state.itinerariesData.map(itinerary => 
-                        <Option 
-                        key={itinerary.id}>
-                        {itinerary.route_name+' '} | 
-                        {itinerary.initial_point} até {itinerary.end_point}
-                        
-                        </Option>
+                   
+                    {itirariesOptions}
                           
-                    )}
                     </Select> 
                         
                     )}
@@ -447,12 +470,11 @@ class editTravel extends Component {
        
           }
           
-          
         ]
         return(
             <LayoutWrapper>
             <PageHeader>
-              <IntlMessages id='header.new_travel'/>
+              <IntlMessages id='header.edit_travel'/>
             </PageHeader>
             <Box>
             <div>
@@ -468,7 +490,7 @@ class editTravel extends Component {
           {
             current === steps.length - 1
             &&  <Button key='submit' type='primary' loading={this.state.confirmLoading} 
-                onClick={this.addTravel}> Cadastrar
+                onClick={this.editTravel}> Salvar
                 </Button>
                 /*
                  <Link to ="travels">

@@ -1,11 +1,56 @@
 import React, { Component } from 'react';
-import LayoutContentWrapper from '../components/utility/layoutWrapper';
-import LayoutContent from '../components/utility/layoutContent';
+import LayoutWrapper from "../components/utility/layoutWrapper.js";
+import { Progress } from 'antd';
+import axios from '../helpers/axios'
+import { Box } from "./Cart/index.style";
+import { AutoComplete, Button, Form, Row, Col, Input, Switch, Icon, Tooltip, Select, message, notification, Steps } from 'antd'
 
+const FormItem = Form.Item
 export default class extends Component {
 
+  state = {
+    travelInProgress: [],
+    travelFinished: [],
+    travelCanceled: []
+  }
   componentWillMount() {
     this.getLocalization()
+    this.contTravelInProgress()
+    this.contTravelFinished()
+    this.contTravelCanceled()
+  }
+  contTravelInProgress(){
+    axios.get('travels?status=in_progress')
+    .then(response => {
+      this.setState({
+        travelInProgress: response.data,
+      })
+    })
+    .catch(error => {
+      console.log(error)
+    })
+  }
+  contTravelFinished(){
+    axios.get('travels?status=finished')
+    .then(response => {
+      this.setState({
+        travelFinished: response.data,
+      })
+    })
+    .catch(error => {
+      console.log(error)
+    })
+  }
+  contTravelCanceled(){
+    axios.get('travels?status=canceled')
+    .then(response => {
+      this.setState({
+        travelCanceled: response.data,
+      })
+    })
+    .catch(error => {
+      console.log(error)
+    })
   }
 
   getLocalization() {
@@ -32,11 +77,48 @@ export default class extends Component {
   render() {
     
     return (
-      <LayoutContentWrapper style={{ height: '100vh' }}>
-        <LayoutContent>
-          <h1>Sistema para Gerenciamento de Frotas de Caminhões</h1>
-        </LayoutContent>
-      </LayoutContentWrapper>
+        <LayoutWrapper>
+          <h1>Olá, {localStorage.getItem('userName')}</h1>
+          <Box>
+            <Box>
+              <h2>Informações sobre as viagens</h2>
+             <Form>
+                  <Row gutter={12}>
+                      <Col sm={24} xs={24} md={8}>
+                        <div>
+                          <h2>Concluídas</h2>
+                          <Progress 
+                          type="circle" 
+                          percent={100} 
+                          format={percent =>  this.state.travelFinished.length }/>
+                        </div>
+                      </Col>
+                      
+                      <Col sm={24} xs={24} md={8}>
+                        <div>
+                          <h2>Em andamento</h2>
+                          <Progress 
+                          type="circle" 
+                          percent={99}
+                          format={percent =>  this.state.travelInProgress.length }/>
+
+                        </div>
+                      </Col>
+                      <Col sm={24} xs={24} md={8}>
+                        <div>
+                          <h2>Canceladas</h2>
+                          <Progress 
+                          type="circle" 
+                          percent={100} 
+                          status="exception" 
+                          format={percent =>  this.state.travelCanceled.length }/>
+                        </div>
+                      </Col>
+                  </Row>
+            </Form>
+          </Box>
+        </Box>
+        </LayoutWrapper>
     );
   }
 }

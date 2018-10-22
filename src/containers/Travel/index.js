@@ -306,7 +306,7 @@ export default class index extends Component {
    
     {
       title: 'Data de Partida',
-      dataIndex: 'newDate', //arrumar isso
+      dataIndex: 'departureDate', //arrumar isso
       key: 'departureDate',
       width: '10%',
       filterDropdown: ({ setSelectedKeys, selectedKeys, confirm, clearFilters }) => (
@@ -399,27 +399,14 @@ export default class index extends Component {
     const { list } = this.state
     const { selected } = this.state
     const rowSelection = {
-      hideDefaultSelections: true,
-      selectedRowKeys: selected,
-      onChange: selected => this.setState({ selected }),
-      selections: [
-        {
-          key: 'index',
-          text: "Select All Invoices",
-          onSelect: () =>
-            this.setState({
-              selected: this.props.list.map(list => list.id)
-            })
-           
-        },
-        {
-          key: 'index1',
-          text: "Unselect all",
-          onSelect: () => this.setState({ selected: [] })
-        },
-       
-      ],
-      onSelection: selected => this.setState({ selected })
+     
+      onChange: (selectedRowKeys, selectedRows) => {
+        console.log(`selectedRowKeys: ${selectedRowKeys}`, 'selectedRows: ', selectedRows);
+      },
+      getCheckboxProps: record => ({
+        disabled: record.name === 'Disabled User', // Column configuration not to be checked
+        name: record.name,
+      }),
     };
     return (
       <LayoutWrapper>
@@ -445,7 +432,7 @@ export default class index extends Component {
             <Scrollbars style={{ width: '100%'}}>
               <TableWrapper rowKey='id'
                 rowSelection={rowSelection}
-               // dataSource={list}
+                dataSource={list}
                 columns={this.columns}
                 pagination={true}
                 className='invoiceListTable'

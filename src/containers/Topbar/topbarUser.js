@@ -27,17 +27,7 @@ class TopbarUser extends Component {
 
   render() {
     const content = (
-      <TopbarDropdownWrapper className="isoUserDropdown">
-        <a className="isoDropdownLink">
-          <IntlMessages id="themeSwitcher.settings" />
-        </a>
-        <a className="isoDropdownLink">
-          <IntlMessages id="sidebar.feedback" />
-        </a>
-        <a className="isoDropdownLink">
-          <IntlMessages id="topbar.help" />
-        </a>
-        <a
+      <a
           className="isoDropdownLink"
           onClick={() => {
             this.props.logout();
@@ -47,7 +37,6 @@ class TopbarUser extends Component {
         >
           <IntlMessages id="topbar.logout" />
         </a>
-      </TopbarDropdownWrapper>
     );
 
     return (
@@ -59,10 +48,9 @@ class TopbarUser extends Component {
         arrowPointAtCenter={true}
         placement="bottomLeft"
       >
-        <div className="isoImgWrapper">
-          <img alt="user" src={userpic} />
-          <span className="userActivity online" />
-        </div>
+        
+    {localStorage.getItem('userName')}
+        
       </Popover>
     );
   }

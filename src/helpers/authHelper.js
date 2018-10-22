@@ -8,6 +8,7 @@ class AuthHelper {
         }
         return await axios.post('http://127.0.0.1:3333/auth', userInfo)
             .then(response => {
+            localStorage.setItem('userName', response.data.user.name)
             return this.checkExpirity(response.data.token);
            
           }).catch(error => {
