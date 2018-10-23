@@ -356,7 +356,7 @@ export default class index extends Component {
            userStatus =  <Icon type="check-circle"  style={{ fontSize: 20, color: '#52c41a'}}/>
         }
         else if (status.status == 'in_progress')  {
-          userStatus = <Icon type="clock-circle"  style={{ fontSize: 20, color: '#ff9900'}}/>
+          userStatus = <Icon type="clock-circle"  style={{ fontSize: 20, color: '#307af2'}}/>
         }
         else {
           userStatus = <Icon type="close-circle"  style={{ fontSize: 20, color: '#f5222d'}}/>
@@ -381,15 +381,24 @@ export default class index extends Component {
           }}
           />
           
-          <Link to={`edit_travel/${travelInfo.uuid}`}>
+         
           <Icon 
           type="form"  
           style={{ fontSize: 25, color: '#faad14' , marginLeft: 20}}
           onClick={() => {
+           if(travelInfo.status == 'in_progress'){
+            this.props.history.push(`edit_travel/${travelInfo.uuid}`);
+           }
+           else if(travelInfo.status == 'finished'){
+            notification.warning({message: 'Não é possivel editar uma viagem concluída !'})
+           }
+           else{
+            notification.warning({message: 'Não é possivel editar uma viagem cancelada !'})
+           }
            
           }}
           />
-          </Link>
+        
         </div>
       )
     }

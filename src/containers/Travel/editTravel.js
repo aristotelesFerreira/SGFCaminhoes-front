@@ -34,6 +34,7 @@ class editTravel extends Component {
             description: '',
             status: '',
         },
+        initialStatus: '',
         driversData: [],
         vehiclesData: [],
         cartsData: [],
@@ -47,11 +48,10 @@ class editTravel extends Component {
           this.setState({
               
             carts: response.data.carts,
+            initialStatus: response.data.status,
             travelInfo: {
                 driver_id: response.data.driver.id,
                 vehicle_id: response.data.vehicle.id,
-                //carts_id: response.data.carts,
-                //carts_id: cartsIds,
                 itinerary_id: response.data.itinerary.id,
                 departureDate:  moment.tz(response.data.departureDate, 'America/Sao_Paulo').format('YYYY-MM-DD'),
                 arrivalDate: moment.tz(response.data.arrivalDate, 'America/Sao_Paulo').format('YYYY-MM-DD'),
@@ -92,35 +92,48 @@ class editTravel extends Component {
           }
           
         });
-
     }
+
+    onChangeAddCarts(value) {
+        this.setState({
+            carts: value,
+        })
+        console.log(this.state.carts)
+    }
+
     editTravel = () => {
         const { driver_id, vehicle_id, itinerary_id, carts_id, departureDate, arrivalDate, status } = this.state.travelInfo;
-        if (driver_id !== '' && carts_id !== '' && vehicle_id !== '' && itinerary_id !== '' && departureDate !== '' && arrivalDate !== '' && status !== '') {
-            let newTravelInfo = {
-            ...this.state.travelInfo,
-          };
-          axios.put(`travels/${this.props.match.params.id}`, newTravelInfo)
-            .then(response => {
-              this.setState({
-                confirmLoading: true
-              });
-              setTimeout(() => {
-                this.setState({
-                  confirmLoading: false
-                });
-                this.handleIndex()
-              }, 2000);
-              console.log(this.state.travelInfo)
-              notification.success({message: 'Editado com sucesso !'})
-              
-            })
-            .catch(error => {
-              notification.error({message: 'Não foi possivel editar !'})
-              console.log(error);
-            });
-        } else {
-          notification.warning({message: 'Campos inválidos', description: 'Preencha todos os campos obrigatórios (*)'})
+        if(this.state.initialStatus == 'in_progress'){
+            if (driver_id !== '' && carts_id !== '' && vehicle_id !== '' && itinerary_id !== '' && departureDate !== '' && arrivalDate !== '' && status !== '') {
+                    let newTravelInfo = {
+                    ...this.state.travelInfo, carts_id: this.state.carts
+                };
+                console.log(newTravelInfo)
+                axios.put(`travels/${this.props.match.params.id}`, newTravelInfo)
+                    .then(response => {
+                    this.setState({
+                        confirmLoading: true
+                    });
+                    setTimeout(() => {
+                        this.setState({
+                        confirmLoading: false
+                        });
+                        this.handleIndex()
+                    }, 2000);
+                    
+                    notification.success({message: 'Editado com sucesso !'})
+                    
+                    })
+                    .catch(error => {
+                    notification.error({message: 'Não foi possivel editar !'})
+                    console.log(error);
+                    });
+                } else {
+                notification.warning({message: 'Campos inválidos', description: 'Preencha todos os campos obrigatórios (*)'})
+                }
+            }
+        else{
+            notification.warning({message: 'Não é possivel editar uma viagem concluída ou cancelada !'})
         }
     }
 
@@ -172,25 +185,17 @@ class editTravel extends Component {
     teste = () => {
         const cartsIds = []
         
-        if(this.state.carts[0].model !== '') {
-            console.log(this.state.carts[0].model)
-            for (let i = 0; i < this.state.carts.length; i++){
-                console.log(this.state.carts[i].id)
-                cartsIds.push(this.state.carts[i].id)
-                //console.log(cartsIds)
-                
+        if(this.state.carts.length !== 0){
+            if(this.state.carts[0].id !== undefined) {
+                for (let i = 0; i < this.state.carts.length; i++){
+                cartsIds.push(this.state.carts[i].id) 
+                }
+                this.setState({
+                    carts: cartsIds
+                }) 
             }
-            this.setState({
-                carts: cartsIds
-             })
-             console.log(this.state.carts)
-            
         }
         
-        else{
-            console.log('array vazio')
-        }
-         
     }
         
 
@@ -198,7 +203,7 @@ class editTravel extends Component {
         fetch(value, data => this.setState({ data }));
     }
     handleIndex() {
-        //this.props.history.push("travels");
+        this.props.history.push("/dashboard/travels");
     }
    
 
@@ -208,9 +213,9 @@ class editTravel extends Component {
         const cartsOptions = []
         const vehicleOptions = []
         const itirariesOptions = []
-        const cartsIds = []
+        //const cartsIds = []
        
-        
+           
        
         for (let i = 0; i < this.state.driversData.length; i++) {
             driversOptions.push(<Option key={this.state.driversData[i].id} value={this.state.driversData[i].id}>
@@ -325,7 +330,7 @@ class editTravel extends Component {
                     <FormItem label='Carretas' hasFeedback>
                         {getFieldDecorator('carts', {
                             //initialValue:cartsIds
-                            initialValue:this.state.travelInfo.carts_id
+                            initialValue:this.state.carts
                            
                         })(
                         <Select
@@ -334,12 +339,10 @@ class editTravel extends Component {
                         optionFilterProp="children"
                         placeholder={'Escolha a carreta'}
                         mode='multiple'
-                        onChange={e => this.onChangeAddTravelInfo('carts_id', e) }
-                       
+                        onChange={e => this.onChangeAddCarts(e) }
                         >
                         {cartsOptions}
-                         
-                            
+
                         </Select> 
                         )} 
                     
@@ -442,6 +445,7 @@ class editTravel extends Component {
                 <FormItem label='Status' hasFeedback>
                     {getFieldDecorator('status', {
                          initialValue: this.state.travelInfo.status,
+                         
                         rules: [
                             {
                                 required: true,
@@ -449,7 +453,7 @@ class editTravel extends Component {
                             }
                         ]
                     })(
-
+                   
                     <Select
                     placeholder={'Status'}
                     showSearch
@@ -460,7 +464,6 @@ class editTravel extends Component {
                     <Option value='finished'>Concluída </Option>
                     <Option value='canceled'>Cancelada </Option>
                     </Select> 
-                    
                         
                     )}
                 </FormItem>
@@ -490,7 +493,7 @@ class editTravel extends Component {
           {
             current === steps.length - 1
             &&  <Button key='submit' type='primary' loading={this.state.confirmLoading} 
-                onClick={this.editTravel}> Salvar
+                onClick={ this.editTravel }> Salvar
                 </Button>
                 /*
                  <Link to ="travels">
