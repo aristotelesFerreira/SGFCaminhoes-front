@@ -93,16 +93,16 @@ export default class index extends Component {
 
   teste = () => {
       const newDate = []
+      var list = []
+      
       for (let i = 0; i < this.state.list.length; i++){
-        
         newDate.push(moment.tz(this.state.list[i].departureDate, 'America/Sao_Paulo').format('DD/MM/YYYY'))
-        let list = {...this.state.list}
-        this.setState({
-          alts: {...this.state.list[i], departureDate: newDate.toString()}
-        })
+        list = [...this.state.list ]
+        console.log(list)
      }
-     console.log(this.state.alts)
-    
+    /* this.setState({
+      list: list
+    })*/
   
   }
 
@@ -375,7 +375,6 @@ export default class index extends Component {
           type="search"  
           style={{ fontSize: 25, color: '#1890ff' }} 
           onClick={() => {
-            console.log(travelInfo)
             this.showModalView()
             
           }}

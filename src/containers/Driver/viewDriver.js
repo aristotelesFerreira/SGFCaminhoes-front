@@ -2,11 +2,30 @@ import React, { Component } from 'react'
 import { Button, Modal, Row, Col, Input, Switch, Icon, Tooltip, Select } from 'antd'
 import Form from '../../components/uielements/form'
 import InputMask from 'react-input-mask'
+import axios from '../../helpers/axios'
+import { notification } from 'antd';
+import { Document, Page } from 'react-pdf';
 
 const FormItem = Form.Item
 const Option = Select.Option;
 
 class viewDriver extends Component {
+    
+    report = () => {
+        axios.get(`report/driver/${this.props.uuid}`)
+        .then(response => {
+            notification.success({message: 'Relatório criado com sucesso !'})
+            return(
+                <Document 
+                file='./motorista.pdf'
+                />
+            )
+          })
+          .catch(error => {
+            console.log(error)
+        })
+
+    }
     
     render() {
         
@@ -24,7 +43,7 @@ class viewDriver extends Component {
             centered
             footer={ [
                 <Button key='back' onClick={this.props.close}> Voltar </Button>,
-                <Button key='primary' type='primary' onClick={window.print}> Imprimir </Button>,
+                <Button key='primary' type='primary' onClick={this.report}> Imprimir </Button>,
             ]}
             >
             <Form>

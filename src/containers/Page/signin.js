@@ -55,7 +55,7 @@ class SignIn extends Component {
 
             <div className="isoSignInForm">
               <div className="isoInputWrapper">
-                <Input size="large" placeholder="Username" id="inputEmail"  defaultValue="admin@admin.com" />
+                <Input size="large" placeholder="E-mail" id="inputEmail"  defaultValue="admin@admin.com" />
               </div>
 
               <div className="isoInputWrapper">

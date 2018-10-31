@@ -35,6 +35,7 @@ export default class index extends Component {
         status: true
     },
     driversInfo: {
+        uuid: '',
         name: '',
         cpf_number: '',
         drivers_license: '',
@@ -255,7 +256,6 @@ export default class index extends Component {
           type="form"  
           style={{ fontSize: 25, color: '#faad14' , marginLeft: 20}}
           onClick={() => {
-            console.log(driversInfo)
             this.showModalEdit()
             this.setState({ uuid: driversInfo.uuid, driversInfo:{
               name: driversInfo.name,
@@ -351,6 +351,7 @@ export default class index extends Component {
         confirmLoading={this.state.confirmLoading}
         />
         <ViewDriver
+        uuid={this.state.uuid}
         driversInfo={this.state.driversInfo}
         open={this.state.visibleView}
         close={this.handleViewClose}

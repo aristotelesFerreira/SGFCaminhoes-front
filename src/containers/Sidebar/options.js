@@ -1,5 +1,6 @@
 
 const options = [
+
   {
     key: "drivers",
     label: "sidebar.drivers",
@@ -24,6 +25,11 @@ const options = [
     key: 'travels',
     label: 'sidebar.travel',
     leftIcon: 'ion-ios-world-outline'
+  },
+  {
+    key: "users",
+    label: "sidebar.users",
+    leftIcon: "ion-android-contact"
   }
 ];
 export default options;
