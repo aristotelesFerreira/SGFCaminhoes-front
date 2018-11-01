@@ -4,7 +4,7 @@ import Form from '../../components/uielements/form'
 import InputMask from 'react-input-mask'
 import axios from '../../helpers/axios'
 import { notification } from 'antd';
-import { Document, Page } from 'react-pdf';
+
 
 const FormItem = Form.Item
 const Option = Select.Option;
@@ -15,13 +15,13 @@ class viewDriver extends Component {
         axios.get(`report/driver/${this.props.uuid}`)
         .then(response => {
             notification.success({message: 'Relatório criado com sucesso !'})
-            return(
-                <Document 
-                file='./motorista.pdf'
-                />
-            )
-          })
+            setTimeout(() => {
+                window.open("http://localhost/laragon/uploads/motorista.pdf")
+            }, 2000);
+           
+        })
           .catch(error => {
+            notification.success({error: 'Não foi possivel criar o relatório !'})
             console.log(error)
         })
 
@@ -44,7 +44,8 @@ class viewDriver extends Component {
             footer={ [
                 <Button key='back' onClick={this.props.close}> Voltar </Button>,
                 <Button key='primary' type='primary' onClick={this.report}> Imprimir </Button>,
-            ]}
+            
+                ]}
             >
             <Form>
                 <Row gutter={12}>

@@ -37,6 +37,7 @@ export default class index extends Component {
         status: true
     },
     vehicleInfo: {
+        uuid: '',
         brand: '',
         model: '',
         type: '',
@@ -284,9 +285,9 @@ export default class index extends Component {
           type="search"  
           style={{ fontSize: 25, color: '#1890ff' }} 
           onClick={() => {
-            console.log(vehicleInfo)
             this.showModalView()
             this.setState({ uuid: vehicleInfo.uuid, vehicleInfo:{
+              uuid: vehicleInfo.uuid,
               brand: vehicleInfo.brand,
               model: vehicleInfo.model,
               type: vehicleInfo.type,

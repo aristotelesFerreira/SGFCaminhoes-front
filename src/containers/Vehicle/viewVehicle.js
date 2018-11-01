@@ -1,12 +1,31 @@
 import React, { Component } from 'react'
 import { Button, Modal, Row, Col, Input, Switch, Icon, Tooltip, Select } from 'antd'
 import Form from '../../components/uielements/form'
+import axios from '../../helpers/axios'
+import { notification } from 'antd';
+
 //import InputMask from 'react-input-mask'
 
 const FormItem = Form.Item
 const Option = Select.Option
 
 class viewVehicle extends Component {
+
+    report = () => {
+        axios.get(`report/vehicle/${this.props.vehicleInfo.uuid}`)
+        .then(response => {
+            notification.success({message: 'Relatório criado com sucesso !'})
+            setTimeout(() => {
+                window.open("http://localhost/laragon/uploads/veiculo.pdf")
+            }, 2000);
+           
+        })
+          .catch(error => {
+            notification.success({error: 'Não foi possivel criar o relatório !'})
+            console.log(error)
+        })
+
+    }
     
     render() {
         const { getFieldDecorator } = this.props.form;
@@ -23,7 +42,7 @@ class viewVehicle extends Component {
             centered
             footer={ [
                 <Button key='back' onClick={this.props.close}> Cancelar </Button>,
-                <Button key='primary' type='primary' onClick={window.print}> Imprimir </Button>,
+                <Button key='primary' type='primary' onClick={this.report}> Imprimir </Button>,
             ]}
             >
             <Form>

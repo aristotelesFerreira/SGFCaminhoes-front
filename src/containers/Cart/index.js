@@ -39,6 +39,7 @@ export default class index extends Component {
       status: true
     },
     cartsInfo: {
+      uuid: '',
       description: '',
       brand: '',
       model: '',
@@ -297,6 +298,7 @@ export default class index extends Component {
             console.log(cartsInfo)
             this.showModalView()
             this.setState({ uuid: cartsInfo.uuid, cartsInfo:{
+              uuid: cartsInfo.uuid,
               brand: cartsInfo.brand,
               model: cartsInfo.model,
               description: cartsInfo.description,
