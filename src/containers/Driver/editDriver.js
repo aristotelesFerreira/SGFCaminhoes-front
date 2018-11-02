@@ -99,11 +99,11 @@ class editDriver extends Component {
                                 name='drivers_license'
                                 onChange={e => this.props.onChangeAddDriverInfo('drivers_license', e)}
                                 >
-                                    <Option value="a">A</Option>
-                                    <Option value="ab">AB</Option>
-                                    <Option value="ac">AC</Option>
-                                    <Option value="ad">AD</Option>
-                                    <Option value="ae">AE</Option>
+                                    <Option value="A">A</Option>
+                                    <Option value="AB">AB</Option>
+                                    <Option value="AC">AC</Option>
+                                    <Option value="AD">AD</Option>
+                                    <Option value="AE">AE</Option>
                                     
                                 </Select>
                                 
