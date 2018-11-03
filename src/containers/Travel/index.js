@@ -375,7 +375,7 @@ export default class index extends Component {
           type="search"  
           style={{ fontSize: 25, color: '#1890ff' }} 
           onClick={() => {
-            this.showModalView()
+            this.props.history.push(`view_travel/${travelInfo.uuid}`)
             
           }}
           />

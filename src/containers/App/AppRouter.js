@@ -34,6 +34,10 @@ const routes = [
   {
     path: 'edit_travel/:id',
     component: asyncComponent(() => import('../Travel/editTravel'))
+  },
+  {
+    path: 'view_travel/:id',
+    component: asyncComponent(() => import('../Travel/viewTravel'))
   }
 ];
 
