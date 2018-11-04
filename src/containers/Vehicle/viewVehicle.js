@@ -14,11 +14,14 @@ class viewVehicle extends Component {
     report = () => {
         axios.get(`report/vehicle/${this.props.vehicleInfo.uuid}`)
         .then(response => {
+            if(response.data == 'sucesso'){
             notification.success({message: 'Relatório criado com sucesso !'})
             setTimeout(() => {
                 window.open("http://localhost/laragon/uploads/veiculo.pdf")
-            }, 2000);
-           
+            }, 3000);
+            }else {
+                notification.warning({message: 'Não foi possivel gerar o relatório !'})
+            }
         })
           .catch(error => {
             notification.success({error: 'Não foi possivel criar o relatório !'})
@@ -42,7 +45,7 @@ class viewVehicle extends Component {
             centered
             footer={ [
                 <Button key='back' onClick={this.props.close}> Cancelar </Button>,
-                <Button key='primary' type='primary' onClick={this.report}> Imprimir </Button>,
+                <Button key='primary' type='primary' onClick={this.report}> Gerar Relatório </Button>,
             ]}
             >
             <Form>

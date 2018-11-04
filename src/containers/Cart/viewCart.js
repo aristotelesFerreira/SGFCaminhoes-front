@@ -16,7 +16,7 @@ class viewCart extends Component {
             notification.success({message: 'Relatório criado com sucesso !'})
             setTimeout(() => {
                 window.open("http://localhost/laragon/uploads/carreta.pdf")
-            }, 2000);
+            }, 3000);
            
         })
           .catch(error => {
@@ -40,7 +40,7 @@ class viewCart extends Component {
             centered
             footer={ [
                 <Button key='back' onClick={this.props.close}> Cancelar </Button>,
-                <Button key='primary' type='primary' onClick={this.report}> Imprimir </Button>,
+                <Button key='primary' type='primary' onClick={this.report}> Gerar Relatório </Button>,
             ]}
             >
             <Form>

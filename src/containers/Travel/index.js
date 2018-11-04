@@ -5,25 +5,27 @@ import TableWrapper from "../Tables/antTables/antTable.style";
 import CardWrapper, { Box } from "./index.style";
 import IntlMessages from "../../components/utility/intlMessages";
 import PageHeader from "../../components/utility/pageHeader";
-import { Button, Input, Icon, notification } from 'antd';
+import { Button, Input, Icon, notification, Menu, Dropdown } from 'antd';
 import Scrollbars from "../../components/utility/customScrollBar";
 import { Link } from "react-router-dom";
 
 import axios from '../../helpers/axios'
 import moment from 'moment-timezone';
+import OpenCalendar from './openCalendar'
 
-//import AddCart from './addCart'
-//import ViewCart from './viewCart'
-//moment.tz(value, 'America/Sao_Paulo').format('DD/MM/YYYY')
+const SubMenu = Menu.SubMenu;
 
 export default class index extends Component {
   state = {
     selected: [],
-    visible: false,
-    visibleEdit: false,
-    visibleView: false,
+    visibleCalendar: false,
+    info: {
+      data1 : '',
+      data2: '',
+      key: 0,
+    },
+  
     confirmLoading: false,
-    alts: [],
     list: [],
     initialState: {
       description: '',
@@ -52,6 +54,7 @@ export default class index extends Component {
     },
 
   }
+  
 
   componentWillMount = () => {
     axios.get('travels')
@@ -74,6 +77,15 @@ export default class index extends Component {
         [key]: value
       }
     });
+  }
+  onChangeAddDateInfo(key, value) {
+    this.setState({
+        info: {
+        ...this.state.info,
+        [key]: value
+      }
+    });
+
   }
   
   handleSearch = (selectedKeys, confirm) => () => {
@@ -105,6 +117,32 @@ export default class index extends Component {
     })*/
   
   }
+  
+handleCalendarOpen = (e) => {
+  console.log(e.key)
+  this.setState({
+    info: {
+      data1: '',
+      data2: '',
+      key: e.key,
+    },
+    visibleCalendar: true
+
+  })
+  
+}
+handleCalendarClose = () => {
+  this.setState({
+    visibleCalendar: false,
+    info: {
+      data1: '',
+      data2: '',
+      key: 0
+    }
+  })
+  
+}
+
 
   columns = [
     
@@ -402,8 +440,20 @@ export default class index extends Component {
       )
     }
   ]
+  
+
 
   render() {
+    const menu = (
+      <Menu >
+        <Menu.Item key="1" onClick={ this.handleCalendarOpen}>Por data</Menu.Item>
+        <Menu.Item key="5" onClick={ this.handleCalendarOpen}>Por Motorista</Menu.Item>
+        <Menu.Item key="6" onClick={ this.handleCalendarOpen}>Por Veículo</Menu.Item>
+       
+      </Menu>
+      
+    
+    )
     const { list } = this.state
     const { selected } = this.state
     const rowSelection = {
@@ -422,6 +472,15 @@ export default class index extends Component {
         <IntlMessages id='header.travels'/>
       </PageHeader>
       <Box>
+      
+      <div>
+      <Dropdown overlay={menu}>
+        <Button style={{ marginLeft: 8 }}>
+          Relatórios <Icon type="down" />
+        </Button>
+      </Dropdown>
+      </div>
+
         <div className='BtnAdd' align='right'>
           <Link to='new_travel'>
               <Button
@@ -449,7 +508,17 @@ export default class index extends Component {
           </div>
         </CardWrapper>
        
-        {/*<AddCart 
+        {
+        <OpenCalendar
+        open={this.state.visibleCalendar}
+        info={this.state.info}
+        close={this.handleCalendarClose}
+        confirmLoading={this.state.confirmLoading}
+        onChangeAddDateInfo={this.onChangeAddDateInfo.bind(this)}
+        />
+
+        
+        /*<AddCart 
         open={this.state.visible}
         close={this.handleAddClose}
         addCart={this.addCart}

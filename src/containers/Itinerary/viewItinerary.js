@@ -27,7 +27,7 @@ class viewItinerary extends Component {
             centered
             footer={ [
                 <Button key='back' onClick={this.props.close}> Cancelar </Button>,
-                <Button key='primary' type='primary' onClick={window.print}> Imprimir </Button>,
+                <Button key='primary' type='primary' onClick={window.print}> Gerar Relatório </Button>,
             ]}
             >
             <Form>

@@ -68,14 +68,24 @@ class viewTravel extends Component {
        this.getAllItineraries()
        
     }
+    
     report = () => {
         axios.get(`report/travel/${this.props.match.params.id}`)
         .then(response => {
+           if(response.data == 'sucesso'){
             notification.success({message: 'Relatório criado com sucesso !'})
+            this.setState({
+                confirmLoading: true
+            })
             setTimeout(() => {
+                this.setState({
+                    confirmLoading: false
+                })
                 window.open("http://localhost/laragon/uploads/viagem.pdf")
-            }, 2000);
-           
+            }, 4000);
+            } else {
+                notification.warning({message: 'Não foi possivel gerar o relatório !'})
+            }
         })
           .catch(error => {
             notification.success({error: 'Não foi possivel criar o relatório !'})
@@ -457,7 +467,7 @@ class viewTravel extends Component {
         </div> 
        
       </div>
-      <Button  style={{ marginTop: 15 }}type="primary" onClick={this.report}>Imprimir</Button>
+      <Button  style={{ marginTop: 15 }}type="primary" onClick={this.report} loading={this.state.confirmLoading}>Gerar Relatório</Button>
                 
                       
         </Box>
