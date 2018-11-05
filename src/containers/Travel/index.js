@@ -23,6 +23,10 @@ export default class index extends Component {
       data1 : '',
       data2: '',
       key: 0,
+      driver: '',
+      vehicle: '',
+      itinerary: '',
+      cart: '',
     },
   
     confirmLoading: false,
@@ -119,12 +123,15 @@ export default class index extends Component {
   }
   
 handleCalendarOpen = (e) => {
-  console.log(e.key)
   this.setState({
     info: {
       data1: '',
       data2: '',
       key: e.key,
+      driver: '',
+      vehicle: '',
+      itinerary: '',
+      cart: '',
     },
     visibleCalendar: true
 
@@ -137,7 +144,11 @@ handleCalendarClose = () => {
     info: {
       data1: '',
       data2: '',
-      key: 0
+      key: 0,
+      driver: '',
+      vehicle: '',
+      itinerary: '',
+      cart: '',
     }
   })
   
@@ -449,6 +460,7 @@ handleCalendarClose = () => {
         <Menu.Item key="1" onClick={ this.handleCalendarOpen}>Por data</Menu.Item>
         <Menu.Item key="5" onClick={ this.handleCalendarOpen}>Por motorista</Menu.Item>
         <Menu.Item key="6" onClick={ this.handleCalendarOpen}>Por veículo</Menu.Item>
+        <Menu.Item key="8" onClick={ this.handleCalendarOpen}>Por carreta</Menu.Item>
         <Menu.Item key="7" onClick={ this.handleCalendarOpen}>Por itinerário</Menu.Item>
        
       </Menu>

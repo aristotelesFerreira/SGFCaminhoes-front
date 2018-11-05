@@ -18,17 +18,13 @@ class openCalendar extends Component {
         driversData: [],
         vehiclesData: [],
         itinerariesData: [],
-        travelInfo: {
-            driver: '',
-            vehicle: '',
-            itinerary: ''
-        }
+        cartsData: [],
        
     }
     componentDidMount = () => {
         this.getAllDrivers()
         this.getAllVehicles()
-       // this.getAllCarts()
+        this.getAllCarts()
         this.getAllItineraries()
      }
     getAllDrivers() {
@@ -91,21 +87,24 @@ class openCalendar extends Component {
             var url = this.state.value == 1 ? `report/traveldate/arrivalDate/${this.props.info.data1}/${this.props.info.data2}/?${status}` :
         `report/traveldate/departureDate/${this.props.info.data1}/${this.props.info.data2}/?${status}`
         } else if (this.props.info.key == 5) {
-            var url = this.state.value == 1 ? `report/traveldate/arrivalDate/${this.props.info.data1}/${this.props.info.data2}/?travels.driver_id=${this.state.travelInfo.driver}&${status}` :
-            `report/traveldate/departureDate/${this.props.info.data1}/${this.props.info.data2}/?travels.driver_id=${this.state.travelInfo.driver}&${status}`
+            var url = this.state.value == 1 ? `report/traveldate/arrivalDate/${this.props.info.data1}/${this.props.info.data2}/?travels.driver_id=${this.props.info.driver}&${status}` :
+            `report/traveldate/departureDate/${this.props.info.data1}/${this.props.info.data2}/?travels.driver_id=${this.props.info.driver}&${status}`
         } else if (this.props.info.key == 6) {
-            var url = this.state.value == 1 ? `report/traveldate/arrivalDate/${this.props.info.data1}/${this.props.info.data2}/?travels.vehicle_id=${this.state.travelInfo.vehicle}&${status}` :
-            `report/traveldate/departureDate/${this.props.info.data1}/${this.props.info.data2}/?travels.vehicle_id=${this.state.travelInfo.vehicle}&${status}`
+            var url = this.state.value == 1 ? `report/traveldate/arrivalDate/${this.props.info.data1}/${this.props.info.data2}/?travels.vehicle_id=${this.props.info.vehicle}&${status}` :
+            `report/traveldate/departureDate/${this.props.info.data1}/${this.props.info.data2}/?travels.vehicle_id=${this.props.info.vehicle}&${status}`
         } else if (this.props.info.key == 7) {
-            var url = this.state.value == 1 ? `report/traveldate/arrivalDate/${this.props.info.data1}/${this.props.info.data2}/?travels.itinerary_id=${this.state.travelInfo.itinerary}&${status}` :
-            `report/traveldate/departureDate/${this.props.info.data1}/${this.props.info.data2}/?travels.itinerary_id=${this.state.travelInfo.itinerary}&${status}`
+            var url = this.state.value == 1 ? `report/traveldate/arrivalDate/${this.props.info.data1}/${this.props.info.data2}/?travels.itinerary_id=${this.props.info.itinerary}&${status}` :
+            `report/traveldate/departureDate/${this.props.info.data1}/${this.props.info.data2}/?travels.itinerary_id=${this.props.info.itinerary}&${status}`
+        } else if (this.props.info.key == 8) {//alterar aqui para Carreta
+            var url = this.state.value == 1 ? `report/traveldate/arrivalDate/${this.props.info.data1}/${this.props.info.data2}/?travels.itinerary_id=${this.props.info.itinerary}&${status}` :
+            `report/traveldate/departureDate/${this.props.info.data1}/${this.props.info.data2}/?travels.itinerary_id=${this.props.info.itinerary}&${status}`
         }
 
         
         if(this.props.info.data1 !== '' && this.props.info.data2 !== ''){
-            if(this.props.info.key == 5 &&this.state.travelInfo.driver == ''){
+            if(this.props.info.key == 5 &&this.props.info.driver == ''){
                 notification.warning({message: 'Selecione um motorista !'})
-            }else if(this.props.info.key == 6 && this.state.travelInfo.vehicle == ''){
+            }else if(this.props.info.key == 6 && this.props.info.vehicle == ''){
                 notification.warning({message: 'Selecione um veículo !'})
             }
             else{
@@ -150,19 +149,8 @@ class openCalendar extends Component {
         this.setState({
           valueStatus: e.target.value,
         });
-        console.log(this.state.valueStatus)
     }
-    onChangeAddTravelInfo(key, value) {
-        this.setState({
-          travelInfo: {
-            ...this.state.travelInfo,
-            [key]: value
-          }
-          
-        });
-        console.log(this.state.travelInfo)
 
-    }
     
     render() {
        
@@ -196,8 +184,8 @@ class openCalendar extends Component {
              <RadioGroup onChange={this.onChangeStatus} value={this.state.valueStatus}>
                 <Radio style={radioStyle} value={1}>Concluída </Radio>
                 <Radio style={radioStyle} value={2} >Em andamento</Radio>
-                <Radio  style={radioStyle}value={3}>Cancelada</Radio>
-                <Radio  style={radioStyle}value={4}>Todas</Radio>
+                <Radio style={radioStyle} value={3}>Cancelada</Radio>
+                <Radio style={radioStyle} value={4}>Todas</Radio>
              </RadioGroup>
             
              
@@ -211,7 +199,7 @@ class openCalendar extends Component {
                         showSearch
                         optionFilterProp="children"
                         placeholder={'Escolha o motorista'}
-                        onChange={e => this.onChangeAddTravelInfo('driver', e) }
+                        onChange={e => this.props.onChangeAddDateInfo('driver', e) }
                         >
                      
                         {this.state.driversData.map(driver => 
@@ -238,7 +226,7 @@ class openCalendar extends Component {
                         showSearch
                         optionFilterProp="children"
                         placeholder={'Escolha um veículo'}
-                        onChange={e => this.onChangeAddTravelInfo('vehicle', e) }
+                        onChange={e => this.props.onChangeAddDateInfo('vehicle', e) }
                         >
                        
                        {this.state.vehiclesData.map(vehicle => 
@@ -263,7 +251,7 @@ class openCalendar extends Component {
                         showSearch
                         optionFilterProp="children"
                         placeholder={'Escolha um itinerário'}
-                        onChange={e => this.onChangeAddTravelInfo('itinerary', e) }
+                        onChange={e => this.props.onChangeAddDateInfo('itinerary', e) }
                         >
                        
                        {this.state.itinerariesData.map(itinerary => 
@@ -275,6 +263,34 @@ class openCalendar extends Component {
                         </Option>
                           
                     )}
+                        </Select> 
+                        
+                        
+                            
+                </FormItem>
+                </Col>
+                :
+                    <div> </div>
+                }
+                {this.props.info.key == 8 ? 
+                <Col sm={20} xs={24} md={24}> 
+                <FormItem label='Carreta' >
+                <Select
+                        showSearch
+                        optionFilterProp="children"
+                        placeholder={'Escolha uma carreta'}
+                        onChange={e => this.props.onChangeAddDateInfo('cart', e) }
+                        >
+                       
+                       {this.state.cartsData.map(cart => 
+                          <Option key={cart.id}>
+                          {cart.brand+' '} 
+                          | Modelo: {cart.model+' '}
+                          | Tipo: {cart.type+' '}
+                          | Placa: {cart.plate+' '}
+                        </Option>
+                    )}  
+                
                         </Select> 
                         
                         
