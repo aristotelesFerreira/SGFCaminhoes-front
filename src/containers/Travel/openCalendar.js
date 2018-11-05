@@ -17,9 +17,11 @@ class openCalendar extends Component {
         valueStatus: 1,
         driversData: [],
         vehiclesData: [],
+        itinerariesData: [],
         travelInfo: {
             driver: '',
             vehicle: '',
+            itinerary: ''
         }
        
     }
@@ -27,7 +29,7 @@ class openCalendar extends Component {
         this.getAllDrivers()
         this.getAllVehicles()
        // this.getAllCarts()
-       // this.getAllItineraries()
+        this.getAllItineraries()
      }
     getAllDrivers() {
         axios.get('drivers?status=1')
@@ -52,7 +54,28 @@ class openCalendar extends Component {
             console.log(error)
         })
     }
-
+    getAllCarts() {
+        axios.get('carts?status=1')
+        .then(response => {
+            this.setState({
+                cartsData: response.data
+            })
+        })
+        .catch(error => {
+            console.log(error)
+        })
+    }
+    getAllItineraries() {
+        axios.get('itineraries?status=1')
+        .then(response => {
+            this.setState({
+                itinerariesData: response.data
+            })
+        })
+        .catch(error => {
+            console.log(error)
+        })
+    }
     report = () => {
         if(this.state.valueStatus == 1){
             var status = 'travels.status=finished'
@@ -73,6 +96,9 @@ class openCalendar extends Component {
         } else if (this.props.info.key == 6) {
             var url = this.state.value == 1 ? `report/traveldate/arrivalDate/${this.props.info.data1}/${this.props.info.data2}/?travels.vehicle_id=${this.state.travelInfo.vehicle}&${status}` :
             `report/traveldate/departureDate/${this.props.info.data1}/${this.props.info.data2}/?travels.vehicle_id=${this.state.travelInfo.vehicle}&${status}`
+        } else if (this.props.info.key == 7) {
+            var url = this.state.value == 1 ? `report/traveldate/arrivalDate/${this.props.info.data1}/${this.props.info.data2}/?travels.itinerary_id=${this.state.travelInfo.itinerary}&${status}` :
+            `report/traveldate/departureDate/${this.props.info.data1}/${this.props.info.data2}/?travels.itinerary_id=${this.state.travelInfo.itinerary}&${status}`
         }
 
         
@@ -154,7 +180,7 @@ class openCalendar extends Component {
             onClose={this.props.close}
             onCancel={this.props.close}
             destroyOnClose={true}
-            width={300}
+            width={400}
             centered
             footer={ [
                 <Button key='back' onClick={this.props.close}> Voltar </Button>,
@@ -224,6 +250,34 @@ class openCalendar extends Component {
                         </Option>
                         )}
                         </Select> 
+                            
+                </FormItem>
+                </Col>
+                :
+                    <div> </div>
+                }
+                {this.props.info.key == 7 ? 
+                <Col sm={20} xs={24} md={24}> 
+                <FormItem label='Itinerário' >
+                <Select
+                        showSearch
+                        optionFilterProp="children"
+                        placeholder={'Escolha um itinerário'}
+                        onChange={e => this.onChangeAddTravelInfo('itinerary', e) }
+                        >
+                       
+                       {this.state.itinerariesData.map(itinerary => 
+                        <Option 
+                        key={itinerary.id}>
+                        {itinerary.route_name+' '} | 
+                        {itinerary.initial_point} até {itinerary.end_point}
+                        
+                        </Option>
+                          
+                    )}
+                        </Select> 
+                        
+                        
                             
                 </FormItem>
                 </Col>

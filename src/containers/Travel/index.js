@@ -447,8 +447,9 @@ handleCalendarClose = () => {
     const menu = (
       <Menu >
         <Menu.Item key="1" onClick={ this.handleCalendarOpen}>Por data</Menu.Item>
-        <Menu.Item key="5" onClick={ this.handleCalendarOpen}>Por Motorista</Menu.Item>
-        <Menu.Item key="6" onClick={ this.handleCalendarOpen}>Por Veículo</Menu.Item>
+        <Menu.Item key="5" onClick={ this.handleCalendarOpen}>Por motorista</Menu.Item>
+        <Menu.Item key="6" onClick={ this.handleCalendarOpen}>Por veículo</Menu.Item>
+        <Menu.Item key="7" onClick={ this.handleCalendarOpen}>Por itinerário</Menu.Item>
        
       </Menu>
       
