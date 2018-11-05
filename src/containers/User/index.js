@@ -10,7 +10,9 @@ import { Button, Input, Icon, notification } from 'antd';
 import Scrollbars from "../../components/utility/customScrollBar";
 import axios from '../../helpers/axios'
 
-const type = localStorage.getItem('type')
+import AddUser from './addUser'
+
+
 export default class index extends Component {
     state = {
         visible: false,
@@ -24,10 +26,18 @@ export default class index extends Component {
             password: '',
             acess: '',
             status: 1
+        },
+        initialState: {
+            name: '',
+            email: '',
+            password: '',
+            acess: '',
+            status: 1
         }
 
     }
     componentWillMount = () => {
+
         axios.get('users')
         .then(response => {
           this.setState({
@@ -38,16 +48,86 @@ export default class index extends Component {
           console.log(error)
         })
       
+    }
+    handleAddClose = () => {
+        this.setState({
+          visible: false,
+          userInfo: {...this.state.initialState} 
+        });
       }
+    handleEditClose = () => {
+        this.setState({
+          visibleEdit: false,
+          userInfo: {...this.state.initialState} 
+        });
+    }
+    handleViewClose = () => {
+        this.setState({
+          visibleView: false,
+          userInfo: {...this.state.initialState} 
+        });
+    }
+    showAddModal = () => {
+        this.setState({
+          visible: true
+        })
+    }
+    showModalEdit = () => {
+        this.setState({
+          visibleEdit:true
+        })
+    }
+    showModalView = () => {
+        this.setState({
+          visibleView:true
+        })
+    }
+    onChangeAddUserInfo(key, value) {
+        this.setState({
+          userInfo: {
+            ...this.state.userInfo,
+            [key]: value
+          }
+        });
+    }
     handleSearch = (selectedKeys, confirm) => () => {
         confirm();
         this.setState({ searchText: selectedKeys[0]})
-      }
+    }
     
       handleReset = clearFilters => () => {
         clearFilters()
         this.setState({searchText: ''})
-      }
+    }
+    addUser = () => {
+        const { name, email, password, type, status } = this.state.userInfo;
+        if (name !== '' && email !== '' && password !== '' && type !== '' && status !== '') {
+          let newUserInfo = {
+            ...this.state.userInfo
+          };
+          axios.post("users", newUserInfo)
+            .then(response => {
+              this.setState({
+                confirmLoading: true
+              });
+              setTimeout(() => {
+                this.setState({
+                  confirmLoading: false
+                });
+                this.handleAddClose();
+                this.componentWillMount()
+              }, 2000);
+              notification.success({message: 'Cadastrado com sucesso !'})
+              
+            })
+            .catch(error => {
+              notification.error({message: 'Não foi possivel cadastrar !'})
+              console.log(error);
+            });
+        } else {
+          notification.warning({message: 'Campos inválidos', description: 'Preencha todos os campos obrigatórios (*)'})
+        }
+    }
     
     columns = [
         {
@@ -133,7 +213,7 @@ export default class index extends Component {
           title: "Status",
           dataIndex: "status",
           key: 'status',
-          width: "20%",
+          width: "10%",
           defaultSortOrder: 'descend',
           sorter: (a, b) => a.status -b.status,
           render: (text, status) => {
@@ -150,7 +230,7 @@ export default class index extends Component {
           title: "Ações",
           dataIndex: "view",
           key: "view",
-          width: "20%",
+          width: "10%",
           render: (text, driversInfo) => (
             <div className="isoInvoiceBtnView">
               <Icon 
@@ -200,7 +280,7 @@ export default class index extends Component {
       ]
    
     render() {
-
+    const type = localStorage.getItem('type')
        const {list} = this.state
         return (
            
@@ -240,9 +320,18 @@ export default class index extends Component {
                         </Scrollbars>
                     </div>
                     </CardWrapper>
+                    <AddUser 
+                        openAddModal={this.state.visible}
+                        userInfo={this.state.userInfo}
+                        close={this.handleAddClose}
+                        addUser={this.addUser}
+                        onChangeAddUserInfo={this.onChangeAddUserInfo.bind(this)}
+                        confirmLoading={this.state.confirmLoading}
+                    />
                 </div>
                 
                 : <div>Você não tem permissão</div>}
+                
                 </Box>
             </LayoutWrapper>
         )

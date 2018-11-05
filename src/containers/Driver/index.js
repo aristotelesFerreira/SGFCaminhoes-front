@@ -337,6 +337,7 @@ export default class index extends Component {
         </CardWrapper>
         <AddDriver 
         openAddModal={this.state.visible}
+        driversInfo={this.state.driversInfo}
         close={this.handleAddClose}
         addDriver={this.addDriver}
         onChangeAddDriverInfo={this.onChangeAddDriverInfo.bind(this)}

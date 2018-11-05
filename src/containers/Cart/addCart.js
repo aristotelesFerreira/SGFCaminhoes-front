@@ -164,6 +164,7 @@ class addCart extends Component {
                     <Col sm={24} xs={24} md={5}>
                         <FormItem label='Placa' hasFeedback>
                                 {getFieldDecorator('plate', {
+                                     initialValue: this.props.cartsInfo.plate,
                                     rules: [
                                        {
                                            required: true,

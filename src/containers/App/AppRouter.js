@@ -27,7 +27,7 @@ const routes = [
     path: 'travels',
     component: asyncComponent(() => import('../Travel'))
   },
-  {
+  { 
     path: 'users',
     component: asyncComponent(() => import('../User'))
   },

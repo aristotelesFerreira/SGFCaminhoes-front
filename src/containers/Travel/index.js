@@ -114,7 +114,6 @@ export default class index extends Component {
       for (let i = 0; i < this.state.list.length; i++){
         newDate.push(moment.tz(this.state.list[i].departureDate, 'America/Sao_Paulo').format('DD/MM/YYYY'))
         list = [...this.state.list ]
-        console.log(list)
      }
     /* this.setState({
       list: list

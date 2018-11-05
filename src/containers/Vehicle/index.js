@@ -390,6 +390,7 @@ export default class index extends Component {
         openAddModal={this.state.visible}
         close={this.handleAddClose}
         addVehicle={this.addVehicle}
+        vehicleInfo={this.state.vehicleInfo}
         onChangeAddVehicleInfo={this.onChangeAddVehicleInfo.bind(this)}
         confirmLoading={this.state.confirmLoading}
         />

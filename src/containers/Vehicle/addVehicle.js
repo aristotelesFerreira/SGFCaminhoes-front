@@ -138,6 +138,7 @@ class addVehicle extends Component {
                     <Col sm={24} xs={24} md={5}>
                         <FormItem label='Placa' hasFeedback>
                                 {getFieldDecorator('plate', {
+                                    initialValue: this.props.vehicleInfo.plate,
                                     rules: [
                                        {
                                            required: true,

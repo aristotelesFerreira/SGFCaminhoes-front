@@ -407,6 +407,7 @@ export default class index extends Component {
         addCart={this.addCart}
         onChangeAddCartInfo={this.onChangeAddCartInfo.bind(this)}
         confirmLoading={this.state.confirmLoading}
+        cartsInfo={this.state.cartsInfo}
         />
         <EditCart 
         cartsInfo={this.state.cartsInfo}

@@ -53,6 +53,7 @@ class addDriver extends Component {
                     <Col sm={24} xs={24} md={7}>
                         <FormItem label='CPF' hasFeedback>
                             {getFieldDecorator('cpf_number', {
+                                initialValue: this.props.driversInfo.cpf_number,
                                 rules: [
                                     {
                                         required: true,
@@ -109,6 +110,7 @@ class addDriver extends Component {
                     <Col sm={24} xs={24} md={6}>
                             <FormItem label='Telefone' hasFeedback>
                                 {getFieldDecorator('phone_1', {
+                                     initialValue: this.props.driversInfo.phone_1,
                                     rules: [
                                         /*{
                                             required: true,
@@ -129,6 +131,7 @@ class addDriver extends Component {
                     <Col sm={24} xs={24} md={6}>
                             <FormItem label='Telefone Opcional' hasFeedback>
                                 {getFieldDecorator('phone_2', {
+                                     initialValue: this.props.driversInfo.phone_2,
                                     rules: [
                                         /*{
                                             required: true,
