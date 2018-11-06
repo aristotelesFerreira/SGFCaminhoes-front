@@ -23,14 +23,14 @@ export default class index extends Component {
         userInfo: {
             name: '',
             email: '',
-            password: '',
+            password: 'coisasnadaaver',
             acess: '',
             status: 1
         },
         initialState: {
             name: '',
             email: '',
-            password: '',
+            password: 'coisasnadaaver',
             acess: '',
             status: 1
         }
@@ -102,6 +102,7 @@ export default class index extends Component {
     addUser = () => {
         const { name, email, password, type, status } = this.state.userInfo;
         if (name !== '' && email !== '' && password !== '' && type !== '' && status !== '') {
+          let emailUser = email
           let newUserInfo = {
             ...this.state.userInfo
           };
@@ -117,7 +118,23 @@ export default class index extends Component {
                 this.handleAddClose();
                 this.componentWillMount()
               }, 2000);
+              
               notification.success({message: 'Cadastrado com sucesso !'})
+              setTimeout(() => {
+                axios.post("recovery", {email : emailUser})
+                .then(response => {
+                  if(response.data !== 'e-mail não encontrado'){
+                  this.setState({
+                    confirmLoading: true
+                  });
+                  notification.success({message: `Email enviado para ${emailUser}`})
+                }
+                else {
+                  notification.warning({message: `${emailUser} não encontrado `})
+                }
+                })
+
+              }, 5000);
               
             })
             .catch(error => {

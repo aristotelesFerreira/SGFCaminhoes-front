@@ -72,7 +72,7 @@ class SignIn extends Component {
               </div>
 
               <p className="isoHelperText">
-              <Link to="" className="isoForgotPass">
+              <Link to="/recovery_password" className="isoForgotPass">
                   <IntlMessages id="page.signInForgotPass" />
                 </Link>
               </p>

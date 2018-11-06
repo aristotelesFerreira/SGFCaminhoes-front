@@ -107,7 +107,12 @@ class addUser extends Component {
                 </Row>
                 <Row gutter={12}>
                     <Col sm={24} xs={24} md={6}>
-                            <FormItem label='Senha' hasFeedback>
+                            <FormItem label={( <span>
+                            Senha&nbsp;
+                            <Tooltip title="Será enviado e-mail contendo um link para gerar a senha">
+                                <Icon type="question-circle-o" />
+                            </Tooltip>
+                            </span> )}hasFeedback>
                                 {getFieldDecorator('password', {
                                     initialValue:  this.props.userInfo.password,
                                     rules: [
@@ -121,6 +126,7 @@ class addUser extends Component {
                                         type='password'
                                         placeholder='Senha'
                                         name='password'
+                                        disabled
                                         onChange={e => this.props.onChangeAddUserInfo('password', e.target.value)}
                                     />
                                 )}
