@@ -84,20 +84,29 @@ class openCalendar extends Component {
         }
 
         if(this.props.info.key == 1) {
-            var url = this.state.value == 1 ? `report/traveldate/arrivalDate/${this.props.info.data1}/${this.props.info.data2}/?${status}` :
+            var url = this.state.value == 2 ? `report/traveldate/arrivalDate/${this.props.info.data1}/${this.props.info.data2}/?${status}` :
         `report/traveldate/departureDate/${this.props.info.data1}/${this.props.info.data2}/?${status}`
         } else if (this.props.info.key == 5) {
-            var url = this.state.value == 1 ? `report/traveldate/arrivalDate/${this.props.info.data1}/${this.props.info.data2}/?travels.driver_id=${this.props.info.driver}&${status}` :
+            var url = this.state.value == 2 ? `report/traveldate/arrivalDate/${this.props.info.data1}/${this.props.info.data2}/?travels.driver_id=${this.props.info.driver}&${status}` :
             `report/traveldate/departureDate/${this.props.info.data1}/${this.props.info.data2}/?travels.driver_id=${this.props.info.driver}&${status}`
         } else if (this.props.info.key == 6) {
-            var url = this.state.value == 1 ? `report/traveldate/arrivalDate/${this.props.info.data1}/${this.props.info.data2}/?travels.vehicle_id=${this.props.info.vehicle}&${status}` :
+            var url = this.state.value == 2 ? `report/traveldate/arrivalDate/${this.props.info.data1}/${this.props.info.data2}/?travels.vehicle_id=${this.props.info.vehicle}&${status}` :
             `report/traveldate/departureDate/${this.props.info.data1}/${this.props.info.data2}/?travels.vehicle_id=${this.props.info.vehicle}&${status}`
         } else if (this.props.info.key == 7) {
-            var url = this.state.value == 1 ? `report/traveldate/arrivalDate/${this.props.info.data1}/${this.props.info.data2}/?travels.itinerary_id=${this.props.info.itinerary}&${status}` :
+            var url = this.state.value == 2 ? `report/traveldate/arrivalDate/${this.props.info.data1}/${this.props.info.data2}/?travels.itinerary_id=${this.props.info.itinerary}&${status}` :
             `report/traveldate/departureDate/${this.props.info.data1}/${this.props.info.data2}/?travels.itinerary_id=${this.props.info.itinerary}&${status}`
         } else if (this.props.info.key == 8) {//alterar aqui para Carreta
-            var url = this.state.value == 1 ? `report/traveldate/arrivalDate/${this.props.info.data1}/${this.props.info.data2}/?travels.itinerary_id=${this.props.info.itinerary}&${status}` :
-            `report/traveldate/departureDate/${this.props.info.data1}/${this.props.info.data2}/?travels.itinerary_id=${this.props.info.itinerary}&${status}`
+            if(this.state.valueStatus == 1){
+                var status = 'travels_status=finished'
+            } else if (this.state.valueStatus == 2){
+                var status = 'travels_status=in_progress'
+            } else if (this.state.valueStatus == 3 ){
+                var status = 'travels_status=canceled'
+            }else {
+                var status = ''
+            }
+            var url = this.state.value == 2 ? `report/traveldate/arrivalDate/${this.props.info.data1}/${this.props.info.data2}/?cart_id=${this.props.info.cart}&${status}` :
+            `report/traveldate/departureDate/${this.props.info.data1}/${this.props.info.data2}/?cart_id=${this.props.info.cart}&${status}`
         }
 
         
@@ -108,6 +117,7 @@ class openCalendar extends Component {
                 notification.warning({message: 'Selecione um veículo !'})
             }
             else{
+                console.log(url)
             axios.get(url)
             .then(response => {
                 if(response.data == 'sucesso'){
@@ -279,7 +289,7 @@ class openCalendar extends Component {
                         showSearch
                         optionFilterProp="children"
                         placeholder={'Escolha uma carreta'}
-                        onChange={e => this.props.onChangeAddDateInfo('cart', e) }
+                        onChange={e => this.props.onChangeAddDateInfo('cart', e)}
                         >
                        
                        {this.state.cartsData.map(cart => 
