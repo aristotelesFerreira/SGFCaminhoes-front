@@ -125,13 +125,18 @@ class addVehicle extends Component {
                     <Col sm={24} xs={24} md={5}>
                             <FormItem label='KM atual' hasFeedback>
                                 {getFieldDecorator('km_current', {
+                                    initialValue: this.props.vehicleInfo.km_current,
+                                    
                                 })(
-                                    <Input 
-                                        type='number'
-                                        placeholder='KM atual'
-                                        name='km_current'
-                                        onChange={e => this.props.onChangeAddVehicleInfo('km_current', e.target.value)}
+                                    <CurrencyInput  className="ant-input"
+                                    decimalSeparator="," 
+                                    placeholder='KM atual'
+                                    name='km_current'
+                                    thousandSeparator="."
+                                    onChange={e => this.props.onChangeAddVehicleInfo('km_current', e)}
+                                    maxLength={14}
                                     />
+                                 
                                 )}
                             </FormItem>
                     </Col>
@@ -179,15 +184,20 @@ class addVehicle extends Component {
                 </Row>
                 <Row gutter={12}>
                     <Col sm={24} xs={24} md={7}>
-                        <FormItem label='Preço de Compra' hasFeedback>
+                        <FormItem label='Preço de Compra R$' hasFeedback>
                                 {getFieldDecorator('purchase_price', {
+                                    initialValue: this.props.vehicleInfo.purchase_price,
                                 })(
-                                    <Input 
-                                            type='number'
-                                            placeholder='Preço de Compra'
-                                            name='purchase_price'
-                                            onChange={e => this.props.onChangeAddVehicleInfo('purchase_price', e.target.value)}
-                                        />
+                                    
+                                    <CurrencyInput  className="ant-input"
+                                    decimalSeparator="," 
+                                    placeholder='Preço de Compra'
+                                    name='purchase_price'
+                                    thousandSeparator="."
+                                    onChange={e => this.props.onChangeAddVehicleInfo('purchase_price', e)}
+                                    maxLength={14}
+                                    />
+                                  
                                 )}
                         </FormItem>
                     </Col>
@@ -209,15 +219,20 @@ class addVehicle extends Component {
                 </Row>
                 <Row gutter={12}> 
                     <Col sm={24} xs={24} md={7}>
-                        <FormItem label='Preço de Venda' hasFeedback>
+                        <FormItem label='Preço de Venda R$' hasFeedback>
                                 {getFieldDecorator('sale_value', {
+                                    initialValue: this.props.vehicleInfo.sale_value,
                                 })(
-                                    <Input 
-                                            type='number'
-                                            placeholder='Preço de Venda'
-                                            name='sale_value'
-                                            onChange={e => this.props.onChangeAddVehicleInfo('sale_value', e.target.value)}
-                                        />
+
+                                    <CurrencyInput  className="ant-input"
+                                    decimalSeparator="," 
+                                    placeholder='Preço de Venda'
+                                    name='sale_value'
+                                    thousandSeparator="."
+                                    onChange={e => this.props.onChangeAddVehicleInfo('sale_value', e)}
+                                    maxLength={14}
+                                    />
+                                  
                                 )}
                         </FormItem>
                     </Col>

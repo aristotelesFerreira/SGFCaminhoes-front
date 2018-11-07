@@ -64,10 +64,23 @@ export default class index extends Component {
     })
   }
   addVehicle = () => {
+
     const { brand, model, type, plate, chassis_number } = this.state.vehicleInfo;
     if (brand !== '' && model !== '' && type !== '' && plate !== '' && chassis_number !== '') {
+      
+      let km_current = this.state.vehicleInfo.km_current.replace('.','')
+      km_current =  km_current.replace('.','')
+      let purchase_price = this.state.vehicleInfo.purchase_price.replace('.','')
+      purchase_price = purchase_price.replace('.', '')
+      let sale_value = this.state.vehicleInfo.sale_value.replace('.','')
+      sale_value = sale_value.replace('.', '')
+
       let newVehicleInfo = {
-        ...this.state.vehicleInfo
+        ...this.state.vehicleInfo, 
+        km_current: km_current.replace(',', '.'),
+        purchase_price: purchase_price.replace(',','.'),
+        sale_value: sale_value.replace(',', '.'),
+
       };
       axios.post("vehicles", newVehicleInfo)
         .then(response => {
@@ -94,11 +107,29 @@ export default class index extends Component {
   }
   
   editVehicle = () => {
+    
     const { brand, model, type, plate, chassis_number } = this.state.vehicleInfo;
     if (brand !== '' && model !== '' && type !== '' && plate !== '' && chassis_number !== '') {
+
+      var km_current = this.state.vehicleInfo.km_current.toString()
+      var purchase_price = this.state.vehicleInfo.purchase_price.toString()
+      var sale_value =  this.state.vehicleInfo.sale_value.toString()
+      console.log(km_current.length)
+      km_current = km_current.replace('.','')
+      km_current = km_current.replace('.','')
+      purchase_price = purchase_price.replace('.','')
+      purchase_price = purchase_price.replace('.','')
+      sale_value = sale_value.replace('.','')
+      sale_value = sale_value.replace('.','')
+      console.log(km_current.length)
+      
       let newVehicleInfo = {
-        ...this.state.vehicleInfo
-      };
+        ...this.state.vehicleInfo, 
+        km_current: km_current.replace(',', '.'),
+        purchase_price: purchase_price.replace(',','.'),
+        sale_value: sale_value.replace(',', '.'),
+      }
+     
       axios.put(`vehicles/${this.state.uuid}`, newVehicleInfo)
       .then(response => {
         notification.success({message: 'Editado com sucesso'})

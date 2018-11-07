@@ -3,7 +3,7 @@ import { Button, Modal, Row, Col, Input, Switch, Icon, Tooltip, Select } from 'a
 import Form from '../../components/uielements/form'
 import axios from '../../helpers/axios'
 import { notification } from 'antd';
-
+import CurrencyInput from 'react-currency-input';
 //import InputMask from 'react-input-mask'
 
 const FormItem = Form.Item
@@ -88,7 +88,7 @@ class viewVehicle extends Component {
                                     type='text'
                                     placeholder='Modelo'
                                     name='model'
-                                    onChange={e => this.props.onChangeAddVehicleInfo('model', e.target.value)}
+                                  
                                 />
                             )}
                         </FormItem>
@@ -112,7 +112,7 @@ class viewVehicle extends Component {
                                 <Select 
                                 placeholder='Tipo'
                                 name='type'
-                                onChange={e => this.props.onChangeAddVehicleInfo('type', e)}
+                               
                                 disabled
                                 style={{color: 'black', fontWeight: 'bold'}}
                                 >       
@@ -137,7 +137,7 @@ class viewVehicle extends Component {
                                         type='number'
                                         placeholder='Ano'
                                         name='year'
-                                        onChange={e => this.props.onChangeAddVehicleInfo('year', e.target.value)}
+                                        
                                     />
                                 )}
                             </FormItem>
@@ -147,14 +147,16 @@ class viewVehicle extends Component {
                                 {getFieldDecorator('km_current', {
                                     initialValue: this.props.vehicleInfo.km_current,
                                 })(
-                                    <Input 
-                                        disabled
-                                        style={{color: 'black', fontWeight: 'bold'}}
-                                        type='number'
-                                        placeholder='KM atual'
-                                        name='km_current'
-                                        onChange={e => this.props.onChangeAddVehicleInfo('km_current', e.target.value)}
+                                    <CurrencyInput  className="ant-input"
+                                    style={{color: 'black', fontWeight: 'bold'}}
+                                    decimalSeparator="," 
+                                    placeholder='KM atual'
+                                    name='purchase_price'
+                                    thousandSeparator="."
+                                    disabled
+                                    
                                     />
+                                   
                                 )}
                             </FormItem>
                     </Col>
@@ -175,7 +177,7 @@ class viewVehicle extends Component {
                                         type='text'
                                         placeholder='Placa'
                                         name='plate'
-                                        onChange={e => this.props.onChangeAddVehicleInfo('plate', e.target.value)}
+                                       
                                         />
                                 )}
                         </FormItem>
@@ -198,7 +200,7 @@ class viewVehicle extends Component {
                                         maxLength={17}
                                         placeholder='Número do Chassis'
                                         name='chassis_number'
-                                        onChange={e => this.props.onChangeAddVehicleInfo('chassis_number', e.target.value)}
+                                       
                                         />
                                 )}
                         </FormItem>
@@ -210,14 +212,16 @@ class viewVehicle extends Component {
                                 {getFieldDecorator('purchase_price', {
                                     initialValue: this.props.vehicleInfo.purchase_price,
                                 })(
-                                    <Input 
-                                        disabled
-                                        style={{color: 'black', fontWeight: 'bold'}}
-                                        type='number'
-                                        placeholder='Preço de Compra'
-                                        name='purchase_price'
-                                        onChange={e => this.props.onChangeAddVehicleInfo('purchase_price', e.target.value)}
-                                        />
+                                    <CurrencyInput  className="ant-input"
+                                    style={{color: 'black', fontWeight: 'bold'}}
+                                    decimalSeparator="," 
+                                    prefix="R$"
+                                    placeholder='Preço de Compra'
+                                    name='purchase_price'
+                                    thousandSeparator="."
+                                    disabled
+                                    />
+                                   
                                 )}
                         </FormItem>
                     </Col>
@@ -233,7 +237,7 @@ class viewVehicle extends Component {
                                         type='date'
                                         placeholder='Data da Compra'
                                         name='purchase_date'
-                                        onChange={e => this.props.onChangeAddVehicleInfo('purchase_date', e.target.value)}
+                                      
                                     />
                                           
                                     )}
@@ -246,14 +250,15 @@ class viewVehicle extends Component {
                                 {getFieldDecorator('sale_value', {
                                     initialValue: this.props.vehicleInfo.sale_value,
                                 })(
-                                    <Input 
-                                        disabled
-                                        style={{color: 'black', fontWeight: 'bold'}}
-                                        type='number'
-                                        placeholder='Preço de Venda'
-                                        name='sale_value'
-                                        onChange={e => this.props.onChangeAddVehicleInfo('sale_value', e.target.value)}
-                                        />
+                                    <CurrencyInput  className="ant-input"
+                                    style={{color: 'black', fontWeight: 'bold'}}
+                                    decimalSeparator="," 
+                                    prefix="R$"
+                                    placeholder='Preço de Venda'
+                                    name='purchase_price'
+                                    thousandSeparator="."
+                                    disabled
+                                    />
                                 )}
                         </FormItem>
                     </Col>
@@ -266,7 +271,7 @@ class viewVehicle extends Component {
                         unCheckedChildren= {<Icon type="cross" />}
                         defaultChecked = {this.props.vehicleInfo.status === 1 ? this.defaultChecked = true : this.defaultChecked = false}
                         name='status'
-                        onChange={e => this.props.onChangeAddVehicleInfo('status', e)}
+                     
                         />
                         </FormItem>
                     </Col>
