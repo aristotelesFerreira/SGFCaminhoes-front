@@ -5,7 +5,7 @@ import TableWrapper from "../Tables/antTables/antTable.style";
 import CardWrapper, { Box } from "./index.style";
 import IntlMessages from "../../components/utility/intlMessages";
 import PageHeader from "../../components/utility/pageHeader";
-import { Button, Input, Icon, notification } from 'antd';
+import { Button, Input, Icon, notification, Dropdown, Menu } from 'antd';
 import Scrollbars from "../../components/utility/customScrollBar";
 
 import axios from '../../helpers/axios'
@@ -14,15 +14,21 @@ import moment from 'moment';
 import AddVehicle from './addVehicle'
 import EditVehicle from './editVehicle'
 import ViewVehicle from './viewVehicle'
+import OpenFilters from './openFilters'
 
 export default class index extends Component {
   state = {
     selected: [],
+    visibleCalendar: false,
     visible: false,
     visibleEdit: false,
     visibleView: false,
     confirmLoading: false,
     list: [],
+    info: {
+      key: 0,
+      driver: '',
+    },
     initialState: {
         brand: '',
         model: '',
@@ -144,6 +150,26 @@ export default class index extends Component {
       notification.warning({message: "Campo 'nome' obrigatório !"})
     }
   }
+  handleCalendarOpen = () => {
+    this.setState({
+      visibleCalendar: true,
+      info: {
+        key: 1,
+        driver: '',
+      }
+    })
+    
+  }
+  handleCalendarClose = () => {
+    this.setState({
+      visibleCalendar: false,
+      info: {
+        key: 0,
+        driver: '',
+      }
+    })
+    
+  }
   
   handleAddClose = () => {
     this.setState({
@@ -185,6 +211,15 @@ export default class index extends Component {
         [key]: value
       }
     });
+  }
+  onChangeAddDateInfo(key, value) {
+    this.setState({
+        info: {
+        ...this.state.info,
+        [key]: value
+      }
+    });
+
   }
   handleSearch = (selectedKeys, confirm) => () => {
     confirm();
@@ -363,6 +398,14 @@ export default class index extends Component {
   ]
 
   render() {
+    const menu = (
+      <Menu >
+        <Menu.Item key="1" onClick={ this.handleCalendarOpen}>Status</Menu.Item>
+       
+      </Menu>
+      
+    
+    )
     const { list } = this.state
     const { selected } = this.state
     const rowSelection = {
@@ -394,6 +437,13 @@ export default class index extends Component {
         <IntlMessages id='header.vehicles'/>
       </PageHeader>
       <Box>
+      <div>
+        <Dropdown overlay={menu}>
+          <Button style={{ marginLeft: 8 }}>
+            Relatórios <Icon type="down" />
+          </Button>
+        </Dropdown>
+        </div>
         <div className='BtnAdd' align='right'>
             <Button
              onClick={this.showAddModal}
@@ -438,6 +488,13 @@ export default class index extends Component {
         open={this.state.visibleView}
         close={this.handleViewClose}
         confirmLoading={this.state.confirmLoading} 
+        />
+        <OpenFilters
+        open={this.state.visibleCalendar}
+        info={this.state.info}
+        close={this.handleCalendarClose}
+        confirmLoading={this.state.confirmLoading}
+        onChangeAddDateInfo={this.onChangeAddDateInfo.bind(this)}
         />
       </Box>
       </LayoutWrapper>

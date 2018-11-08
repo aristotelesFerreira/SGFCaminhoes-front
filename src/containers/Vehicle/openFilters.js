@@ -28,8 +28,8 @@ class openFilters extends Component {
         }
 
         if(this.props.info.key == 1) {
-            var url = this.state.value == 1 ? `report/drivers/?${status}` :
-        `report/drivers/?${status}`
+            var url = this.state.value == 1 ? `report/vehicles/?${status}` :
+        `report/vehicles/?${status}`
         }
           axios.get(url)
             .then(response => {
@@ -42,7 +42,7 @@ class openFilters extends Component {
                     this.setState({
                         confirmLoading: false
                     })
-                    window.open("http://localhost/laragon/uploads/motoristas_filtros.pdf")
+                    window.open("http://localhost/laragon/uploads/veiculos_filtros.pdf")
                 }, 4000);
             
                 } else if (response.data == 'Não existe dados'){

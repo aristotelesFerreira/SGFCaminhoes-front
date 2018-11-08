@@ -9,10 +9,11 @@ import PageHeader from "../../components/utility/pageHeader";
 import Scrollbars from "../../components/utility/customScrollBar";
 import { Button, Input, Icon, notification, Dropdown, Menu } from 'antd';
 import axios from '../../helpers/axios'
+import moment from 'moment'
+
 import AddDriver from './addDriver'
 import EditDriver from './editDriver'
 import ViewDriver from './viewDriver'
-import moment from 'moment'
 import OpenFilters from './openFilters'
 
 export default class index extends Component {
