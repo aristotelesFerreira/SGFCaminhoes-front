@@ -334,7 +334,7 @@ export default class index extends Component {
                 </PageHeader>
                
                 <Box>
-                { type == 'admin' ? 
+                { type === 'admin' ? 
                 <div>
 
                     <div className='BtnAdd' align='right'>

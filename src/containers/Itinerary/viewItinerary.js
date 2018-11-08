@@ -1,11 +1,8 @@
 import React, { Component } from 'react'
-import { Button, Modal, Row, Col, Input, Switch, Icon } from 'antd'
+import { Button, Modal, Row, Col, Switch, Icon } from 'antd'
 import Form from '../../components/uielements/form'
-//import InputMask from 'react-input-mask'
-
 import MapWithADirectionsRenderer from './map'
-import Places from './places'
-import PlacesTwo from './placesTwo'
+
 
 const FormItem = Form.Item
 
@@ -13,7 +10,6 @@ const FormItem = Form.Item
 class viewItinerary extends Component {
 
     render() {
-        const { getFieldDecorator } = this.props.form;
 
         return (
             <Modal

@@ -1,13 +1,8 @@
 import React, { Component } from 'react'
-import { Button, Modal, Row, Col, Input, Switch, Icon, Tooltip, Select, notification, Radio  } from 'antd'
+import { Button, Modal, notification, Radio  } from 'antd'
 import Form from '../../components/uielements/form'
-import InputMask from 'react-input-mask'
 import axios from '../../helpers/axios'
 
-
-
-const FormItem = Form.Item
-const Option = Select.Option;
 const RadioGroup = Radio.Group;
 
 class openFilters extends Component {
@@ -19,21 +14,21 @@ class openFilters extends Component {
        
     }
     report = () => {
-        if(this.state.valueStatus == 1){
+        if(this.state.valueStatus === 1){
             var status = 'status=1'
-        } else if (this.state.valueStatus == 2){
-            var status = 'status=0'
+        } else if (this.state.valueStatus === 2){
+            status = 'status=0'
         }else {
-            var status = ''
+            status = ''
         }
 
-        if(this.props.info.key == 1) {
-            var url = this.state.value == 1 ? `report/drivers/?${status}` :
+        if(this.props.info.key === 1) {
+            var url = this.state.value === 1 ? `report/drivers/?${status}` :
         `report/drivers/?${status}`
         }
           axios.get(url)
             .then(response => {
-                if(response.data == 'sucesso'){
+                if(response.data === 'sucesso'){
                 notification.success({message: 'Relatório criado com sucesso !'})
                 this.setState({
                     confirmLoading: true
@@ -45,7 +40,7 @@ class openFilters extends Component {
                     window.open("http://localhost/laragon/uploads/motoristas_filtros.pdf")
                 }, 4000);
             
-                } else if (response.data == 'Não existe dados'){
+                } else if (response.data === 'Não existe dados'){
                     notification.warning({message: 'Não existe dados !'})
                 } else {
                     notification.error({message: 'Erro ao gerar relatório !'})
@@ -71,7 +66,6 @@ class openFilters extends Component {
     
     render() {
        
-        const { getFieldDecorator } = this.props.form;
         const radioStyle = {
             display: 'block',
             height: '30px',

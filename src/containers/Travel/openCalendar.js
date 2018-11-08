@@ -1,7 +1,6 @@
 import React, { Component } from 'react'
-import { Button, Modal, Row, Col, Input, Switch, Icon, Tooltip, Select, notification, Radio  } from 'antd'
+import { Button, Modal, Row, Col, Input, Select, notification, Radio  } from 'antd'
 import Form from '../../components/uielements/form'
-import InputMask from 'react-input-mask'
 import axios from '../../helpers/axios'
 
 
@@ -73,54 +72,54 @@ class openCalendar extends Component {
         })
     }
     report = () => {
-        if(this.state.valueStatus == 1){
+        if(this.state.valueStatus === 1){
             var status = 'travels.status=finished'
-        } else if (this.state.valueStatus == 2){
-            var status = 'travels.status=in_progress'
-        } else if (this.state.valueStatus == 3 ){
-            var status = 'travels.status=canceled'
+        } else if (this.state.valueStatus === 2){
+             status = 'travels.status=in_progress'
+        } else if (this.state.valueStatus === 3 ){
+             status = 'travels.status=canceled'
         }else {
-            var status = ''
+             status = ''
         }
 
-        if(this.props.info.key == 1) {
-            var url = this.state.value == 2 ? `report/traveldate/arrivalDate/${this.props.info.data1}/${this.props.info.data2}/?${status}` :
+        if(this.props.info.key === 1) {
+            var url = this.state.value === 2 ? `report/traveldate/arrivalDate/${this.props.info.data1}/${this.props.info.data2}/?${status}` :
         `report/traveldate/departureDate/${this.props.info.data1}/${this.props.info.data2}/?${status}`
-        } else if (this.props.info.key == 5) {
-            var url = this.state.value == 2 ? `report/traveldate/arrivalDate/${this.props.info.data1}/${this.props.info.data2}/?travels.driver_id=${this.props.info.driver}&${status}` :
+        } else if (this.props.info.key === 5) {
+             url = this.state.value === 2 ? `report/traveldate/arrivalDate/${this.props.info.data1}/${this.props.info.data2}/?travels.driver_id=${this.props.info.driver}&${status}` :
             `report/traveldate/departureDate/${this.props.info.data1}/${this.props.info.data2}/?travels.driver_id=${this.props.info.driver}&${status}`
-        } else if (this.props.info.key == 6) {
-            var url = this.state.value == 2 ? `report/traveldate/arrivalDate/${this.props.info.data1}/${this.props.info.data2}/?travels.vehicle_id=${this.props.info.vehicle}&${status}` :
+        } else if (this.props.info.key === 6) {
+             url = this.state.value === 2 ? `report/traveldate/arrivalDate/${this.props.info.data1}/${this.props.info.data2}/?travels.vehicle_id=${this.props.info.vehicle}&${status}` :
             `report/traveldate/departureDate/${this.props.info.data1}/${this.props.info.data2}/?travels.vehicle_id=${this.props.info.vehicle}&${status}`
-        } else if (this.props.info.key == 7) {
-            var url = this.state.value == 2 ? `report/traveldate/arrivalDate/${this.props.info.data1}/${this.props.info.data2}/?travels.itinerary_id=${this.props.info.itinerary}&${status}` :
+        } else if (this.props.info.key === 7) {
+             url = this.state.value === 2 ? `report/traveldate/arrivalDate/${this.props.info.data1}/${this.props.info.data2}/?travels.itinerary_id=${this.props.info.itinerary}&${status}` :
             `report/traveldate/departureDate/${this.props.info.data1}/${this.props.info.data2}/?travels.itinerary_id=${this.props.info.itinerary}&${status}`
-        } else if (this.props.info.key == 8) {
-            if(this.state.valueStatus == 1){
-                var status = 'travels_status=finished'
-            } else if (this.state.valueStatus == 2){
-                var status = 'travels_status=in_progress'
-            } else if (this.state.valueStatus == 3 ){
-                var status = 'travels_status=canceled' //arrumar status na api
+        } else if (this.props.info.key === 8) {
+            if(this.state.valueStatus === 1){
+                 status = 'travels_status=finished'
+            } else if (this.state.valueStatus === 2){
+                 status = 'travels_status=in_progress'
+            } else if (this.state.valueStatus === 3 ){
+                 status = 'travels_status=canceled' //arrumar status na api
             }else {
-                var status = ''
+                 status = ''
             }
-            var url = this.state.value == 2 ? `report/traveldate/arrivalDate/${this.props.info.data1}/${this.props.info.data2}/?cart_id=${this.props.info.cart}&${status}` :
+             url = this.state.value === 2 ? `report/traveldate/arrivalDate/${this.props.info.data1}/${this.props.info.data2}/?cart_id=${this.props.info.cart}&${status}` :
             `report/traveldate/departureDate/${this.props.info.data1}/${this.props.info.data2}/?cart_id=${this.props.info.cart}&${status}`
         }
 
         
         if(this.props.info.data1 !== '' && this.props.info.data2 !== ''){
-            if(this.props.info.key == 5 &&this.props.info.driver == ''){
+            if(this.props.info.key === 5 &&this.props.info.driver === ''){
                 notification.warning({message: 'Selecione um motorista !'})
-            }else if(this.props.info.key == 6 && this.props.info.vehicle == ''){
+            }else if(this.props.info.key === 6 && this.props.info.vehicle === ''){
                 notification.warning({message: 'Selecione um veículo !'})
             }
             else{
                 console.log(url)
             axios.get(url)
             .then(response => {
-                if(response.data == 'sucesso'){
+                if(response.data === 'sucesso'){
                 notification.success({message: 'Relatório criado com sucesso !'})
                 this.setState({
                     confirmLoading: true
@@ -132,7 +131,7 @@ class openCalendar extends Component {
                     window.open("http://localhost/laragon/uploads/viagem_data.pdf")
                 }, 4000);
             
-                } else if (response.data == 'Não existe dados'){
+                } else if (response.data === 'Não existe dados'){
                     notification.warning({message: 'Não existe dados !'})
                 } else {
                     notification.error({message: 'Erro ao gerar relatório !'})
@@ -164,7 +163,6 @@ class openCalendar extends Component {
     
     render() {
        
-        const { getFieldDecorator } = this.props.form;
         const radioStyle = {
             display: 'block',
             height: '30px',
@@ -202,7 +200,7 @@ class openCalendar extends Component {
             <Form>
                 
           
-                <Row> {this.props.info.key == 5 ? 
+                <Row> {this.props.info.key === 5 ? 
                 <Col sm={20} xs={24} md={24}> 
                 <FormItem label='Motorista' >
                 <Select
@@ -229,7 +227,7 @@ class openCalendar extends Component {
                 :
                     <div> </div>
                 }
-                {this.props.info.key == 6 ? 
+                {this.props.info.key === 6 ? 
                 <Col sm={20} xs={24} md={24}> 
                 <FormItem label='Veículo' >
                 <Select
@@ -254,7 +252,7 @@ class openCalendar extends Component {
                 :
                     <div> </div>
                 }
-                {this.props.info.key == 7 ? 
+                {this.props.info.key === 7 ? 
                 <Col sm={20} xs={24} md={24}> 
                 <FormItem label='Itinerário' >
                 <Select
@@ -282,7 +280,7 @@ class openCalendar extends Component {
                 :
                     <div> </div>
                 }
-                {this.props.info.key == 8 ? 
+                {this.props.info.key === 8 ? 
                 <Col sm={20} xs={24} md={24}> 
                 <FormItem label='Carreta' >
                 <Select

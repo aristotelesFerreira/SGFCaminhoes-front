@@ -8,7 +8,7 @@ class AuthHelper {
         }
         return await axios.post('http://127.0.0.1:3333/auth', userInfo)
             .then(response => {
-               if(response.data == 'Usuário desativado'){
+               if(response.data === 'Usuário desativado'){
                 return { error: 'Usuário desativado'}
               }else {
                 localStorage.setItem('userName', response.data.user.name)

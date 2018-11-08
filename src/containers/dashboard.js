@@ -3,9 +3,8 @@ import LayoutWrapper from "../components/utility/layoutWrapper.js";
 import { Progress } from 'antd';
 import axios from '../helpers/axios'
 import { Box } from "./Cart/index.style";
-import { AutoComplete, Button, Form, Row, Col, Input, Switch, Icon, Tooltip, Select, message, notification, Steps } from 'antd'
+import { Form, Row, Col } from 'antd'
 
-const FormItem = Form.Item
 export default class extends Component {
 
   state = {

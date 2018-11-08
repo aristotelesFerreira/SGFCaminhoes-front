@@ -10,14 +10,13 @@ import Scrollbars from "../../components/utility/customScrollBar";
 import { Link } from "react-router-dom";
 
 import axios from '../../helpers/axios'
-import moment from 'moment-timezone';
 import OpenCalendar from './openCalendar'
 
-const SubMenu = Menu.SubMenu;
+
 
 export default class index extends Component {
   state = {
-    selected: [],
+    //selected: [],
     visibleCalendar: false,
     info: {
       data1 : '',
@@ -65,7 +64,7 @@ export default class index extends Component {
       this.setState({
         list: response.data,
       })
-      this.teste()
+      //this.teste()
      
     })
     .catch(error => {
@@ -105,20 +104,6 @@ export default class index extends Component {
     <Link to='edit_travel/'> </Link>
     )
     
-  }
-
-  teste = () => {
-      const newDate = []
-      var list = []
-      
-      for (let i = 0; i < this.state.list.length; i++){
-        newDate.push(moment.tz(this.state.list[i].departureDate, 'America/Sao_Paulo').format('DD/MM/YYYY'))
-        list = [...this.state.list ]
-     }
-    /* this.setState({
-      list: list
-    })*/
-  
   }
   
 handleCalendarOpen = (e) => {
@@ -371,7 +356,7 @@ handleCalendarClose = () => {
         </div>
       ),
       filterIcon: filtered => <Icon type="filter" style={{fontSize:18, color: filtered ? 'red' : '#aaa' }} />,
-      onFilter: (value, record) => record.departureDate.route_name,
+      onFilter: (value, record) => record.departureDate,
       onFilterDropdownVisibleChange: (visible) => {
         if (visible) {
           setTimeout(() => {
@@ -400,10 +385,10 @@ handleCalendarClose = () => {
       sorter: (a, b) => a.status -b.status,
       render: (text, status) => {
         let userStatus;
-        if (status.status == 'finished' ) {
+        if (status.status === 'finished' ) {
            userStatus =  <Icon type="check-circle"  style={{ fontSize: 20, color: '#52c41a'}}/>
         }
-        else if (status.status == 'in_progress')  {
+        else if (status.status === 'in_progress')  {
           userStatus = <Icon type="clock-circle"  style={{ fontSize: 20, color: '#307af2'}}/>
         }
         else {
@@ -433,10 +418,10 @@ handleCalendarClose = () => {
           type="form"  
           style={{ fontSize: 25, color: '#faad14' , marginLeft: 20}}
           onClick={() => {
-           if(travelInfo.status == 'in_progress'){
+           if(travelInfo.status === 'in_progress'){
             this.props.history.push(`edit_travel/${travelInfo.uuid}`);
            }
-           else if(travelInfo.status == 'finished'){
+           else if(travelInfo.status === 'finished'){
             notification.warning({message: 'Não é possivel editar uma viagem concluída !'})
            }
            else{
@@ -467,7 +452,6 @@ handleCalendarClose = () => {
     
     )
     const { list } = this.state
-    const { selected } = this.state
     const rowSelection = {
      
       onChange: (selectedRowKeys, selectedRows) => {

@@ -1,11 +1,9 @@
 import React, { Component } from 'react'
-import {Link} from 'react-router-dom'
 import LayoutWrapper from "../../components/utility/layoutWrapper.js";
-import TableWrapper from "../Tables/antTables/antTable.style";
-import CardWrapper, { Box } from "./index.style";
+import { Box } from "./index.style";
 import IntlMessages from "../../components/utility/intlMessages";
 import PageHeader from "../../components/utility/pageHeader";
-import { AutoComplete, Button, Form, Row, Col, Input, Switch, Icon, Tooltip, Select, message, notification, Steps } from 'antd'
+import { AutoComplete, Button, Form, Row, Col, Input, Select, notification, Steps } from 'antd'
 import axios from '../../helpers/axios'
 import moment from 'moment-timezone';
 
@@ -72,7 +70,7 @@ class viewTravel extends Component {
     report = () => {
         axios.get(`report/travel/${this.props.match.params.id}`)
         .then(response => {
-           if(response.data == 'sucesso'){
+           if(response.data === 'sucesso'){
             notification.success({message: 'Relatório criado com sucesso !'})
             this.setState({
                 confirmLoading: true
