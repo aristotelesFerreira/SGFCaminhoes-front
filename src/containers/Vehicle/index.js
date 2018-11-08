@@ -374,7 +374,6 @@ export default class index extends Component {
           type="form"  
           style={{ fontSize: 25, color: '#faad14' , marginLeft: 20}}
           onClick={() => {
-            console.log(vehicleInfo)
             this.showModalEdit()
             this.setState({ uuid: vehicleInfo.uuid, vehicleInfo:{
               brand: vehicleInfo.brand,

@@ -14,7 +14,7 @@ class viewVehicle extends Component {
     report = () => {
         axios.get(`report/vehicle/${this.props.vehicleInfo.uuid}`)
         .then(response => {
-            if(response.data == 'sucesso'){
+            if(response.data === 'sucesso'){
             notification.success({message: 'Relatório criado com sucesso !'})
             setTimeout(() => {
                 window.open("http://localhost/laragon/uploads/veiculo.pdf")
