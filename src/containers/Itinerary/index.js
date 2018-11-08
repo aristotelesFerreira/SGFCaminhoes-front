@@ -148,7 +148,7 @@ export default class index extends Component {
       console.log(this.state)
         if(this.state.itinerariesInfo.route_name !== '' && this.state.itinerariesInfo.lat_initial !== '' && this.state.itinerariesInfo.lat_end !== ''){
         let newItineraryInfo = {
-            ...this.state.itinerariesInfo
+            ...this.state.itinerariesInfo, distance : this.state.itinerariesInfo.distance/1000
         }
         axios.post('itineraries', newItineraryInfo)
             .then(response => {
@@ -175,7 +175,7 @@ export default class index extends Component {
     editItinerary = () => {
       if(this.state.itinerariesInfo.route_name !== '' && this.state.itinerariesInfo.lat_initial !== '' && this.state.itinerariesInfo.lat_end !== ''){
       let newItineraryInfo = {
-        ...this.state.itinerariesInfo
+        ...this.state.itinerariesInfo, distance : this.state.itinerariesInfo.distance/1000
       }
       axios.put(`itineraries/${this.state.uuid}`, newItineraryInfo)
           .then(response => {

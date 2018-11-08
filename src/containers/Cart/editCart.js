@@ -2,6 +2,7 @@ import React, { Component } from 'react'
 import { Button, Modal, Row, Col, Input, Switch, Icon, Tooltip, Select } from 'antd'
 import Form from '../../components/uielements/form'
 import InputMask from 'react-input-mask'
+import CurrencyInput from 'react-currency-input'
 
 const FormItem = Form.Item
 const Option = Select.Option
@@ -119,11 +120,13 @@ class editCart extends Component {
                                 {getFieldDecorator('capacity', {
                                     initialValue: this.props.cartsInfo.capacity,
                                 })(
-                                    <Input 
-                                        type='number'
-                                        placeholder='Capacidade'
-                                        name='capacity'
-                                        onChange={e => this.props.onChangeAddCartInfo('capacity', e.target.value)}
+                                    <CurrencyInput  className="ant-input"
+                                    decimalSeparator="," 
+                                    placeholder='Capacidade'
+                                    name='capacity'
+                                    thousandSeparator="."
+                                    onChange={e => this.props.onChangeAddCartInfo('capacity', e)}
+                                    maxLength={14}
                                     />
                                 )}
                             </FormItem>
@@ -149,12 +152,16 @@ class editCart extends Component {
                                 {getFieldDecorator('km_current', {
                                     initialValue: this.props.cartsInfo.km_current,
                                 })(
-                                    <Input 
-                                        type='number'
-                                        placeholder='KM atual'
-                                        name='km_current'
-                                        onChange={e => this.props.onChangeAddCartInfo('km_current', e.target.value)}
+
+                                    <CurrencyInput  className="ant-input"
+                                    decimalSeparator="," 
+                                    placeholder='KM atual'
+                                    name='km_current'
+                                    thousandSeparator="."
+                                    onChange={e => this.props.onChangeAddCartInfo('km_current', e)}
+                                    maxLength={14}
                                     />
+                                  
                                 )}
                             </FormItem>
                     </Col>
@@ -203,16 +210,18 @@ class editCart extends Component {
                 </Row>
                 <Row gutter={12}>
                     <Col sm={24} xs={24} md={7}>
-                        <FormItem label='Preço de Compra' hasFeedback>
+                        <FormItem label='Preço de Compra R$' hasFeedback>
                                 {getFieldDecorator('purchase_price', {
                                     initialValue: this.props.cartsInfo.purchase_price,
                                 })(
-                                    <Input 
-                                            type='number'
-                                            placeholder='Preço de Compra'
-                                            name='purchase_price'
-                                            onChange={e => this.props.onChangeAddCartInfo('purchase_price', e.target.value)}
-                                        />
+                                    <CurrencyInput  className="ant-input"
+                                    decimalSeparator="," 
+                                    placeholder='Preço de Compra'
+                                    name='purchase_price'
+                                    thousandSeparator="."
+                                    onChange={e => this.props.onChangeAddCartInfo('purchase_price', e)}
+                                    maxLength={14}
+                                    />
                                 )}
                         </FormItem>
                     </Col>
@@ -235,16 +244,18 @@ class editCart extends Component {
                 </Row>
                 <Row gutter={12}> 
                     <Col sm={24} xs={24} md={7}>
-                        <FormItem label='Preço de Venda' hasFeedback>
+                        <FormItem label='Preço de Venda R$' hasFeedback>
                                 {getFieldDecorator('sale_value', {
                                     initialValue: this.props.cartsInfo.sale_value,
                                 })(
-                                    <Input 
-                                            type='number'
-                                            placeholder='Preço de Venda'
-                                            name='sale_value'
-                                            onChange={e => this.props.onChangeAddCartInfo('sale_value', e.target.value)}
-                                        />
+                                    <CurrencyInput  className="ant-input"
+                                    decimalSeparator="," 
+                                    placeholder='Preço de Venda'
+                                    name='sale_value'
+                                    thousandSeparator="."
+                                    onChange={e => this.props.onChangeAddCartInfo('sale_value', e)}
+                                    maxLength={14}
+                                    />
                                 )}
                         </FormItem>
                     </Col>

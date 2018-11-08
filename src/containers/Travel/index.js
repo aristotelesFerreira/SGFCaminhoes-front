@@ -59,7 +59,6 @@ export default class index extends Component {
 
   }
   
-
   componentWillMount = () => {
     axios.get('travels')
     .then(response => {
@@ -67,11 +66,12 @@ export default class index extends Component {
         list: response.data,
       })
       this.teste()
+     
     })
     .catch(error => {
       console.log(error)
     })
-    
+   
   }
 
   onChangeAddCartInfo(key, value) {
@@ -530,27 +530,7 @@ handleCalendarClose = () => {
         />
 
         
-        /*<AddCart 
-        open={this.state.visible}
-        close={this.handleAddClose}
-        addCart={this.addCart}
-        onChangeAddCartInfo={this.onChangeAddCartInfo.bind(this)}
-        confirmLoading={this.state.confirmLoading}
-        />
-        <EditCart 
-        cartsInfo={this.state.cartsInfo}
-        open={this.state.visibleEdit}
-        close={this.handleEditClose}
-        editCart={this.editCart}
-        onChangeAddCartInfo={this.onChangeAddCartInfo.bind(this)}
-        confirmLoading={this.state.confirmLoading}
-        />
-        <ViewCart
-        cartsInfo={this.state.cartsInfo}
-        open={this.state.visibleView}
-        close={this.handleViewClose}
-        confirmLoading={this.state.confirmLoading} 
-        />*/}
+        }
       </Box>
       </LayoutWrapper>
 

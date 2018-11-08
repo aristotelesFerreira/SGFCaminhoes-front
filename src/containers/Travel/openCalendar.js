@@ -95,13 +95,13 @@ class openCalendar extends Component {
         } else if (this.props.info.key == 7) {
             var url = this.state.value == 2 ? `report/traveldate/arrivalDate/${this.props.info.data1}/${this.props.info.data2}/?travels.itinerary_id=${this.props.info.itinerary}&${status}` :
             `report/traveldate/departureDate/${this.props.info.data1}/${this.props.info.data2}/?travels.itinerary_id=${this.props.info.itinerary}&${status}`
-        } else if (this.props.info.key == 8) {//alterar aqui para Carreta
+        } else if (this.props.info.key == 8) {
             if(this.state.valueStatus == 1){
                 var status = 'travels_status=finished'
             } else if (this.state.valueStatus == 2){
                 var status = 'travels_status=in_progress'
             } else if (this.state.valueStatus == 3 ){
-                var status = 'travels_status=canceled'
+                var status = 'travels_status=canceled' //arrumar status na api
             }else {
                 var status = ''
             }

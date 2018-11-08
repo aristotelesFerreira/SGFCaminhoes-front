@@ -4,6 +4,7 @@ import Form from '../../components/uielements/form'
 import axios from '../../helpers/axios'
 import { notification } from 'antd';
 //import InputMask from 'react-input-mask'
+import CurrencyInput from 'react-currency-input';
 
 const FormItem = Form.Item
 const Option = Select.Option
@@ -138,13 +139,15 @@ class viewCart extends Component {
                                 {getFieldDecorator('capacity', {
                                     initialValue: this.props.cartsInfo.capacity,
                                 })(
-                                    <Input
-                                        style={{color: 'black', fontWeight: 'bold'}}
-                                        type='number'
-                                        placeholder='Capacidade'
-                                        name='capacity'
-                                        disabled
+                                    <CurrencyInput  className="ant-input"
+                                    style={{color: 'black', fontWeight: 'bold'}}
+                                    decimalSeparator="," 
+                                    placeholder='Capacidade'
+                                    name='capacity'
+                                    thousandSeparator="."
+                                    disabled
                                     />
+                                   
                                 )}
                             </FormItem>
                     </Col>
@@ -170,12 +173,13 @@ class viewCart extends Component {
                                 {getFieldDecorator('km_current', {
                                     initialValue: this.props.cartsInfo.km_current,
                                 })(
-                                    <Input 
-                                        style={{color: 'black', fontWeight: 'bold'}}
-                                        type='number'
-                                        placeholder='KM atual'
-                                        name='km_current'
-                                        disabled
+                                    <CurrencyInput  className="ant-input"
+                                    style={{color: 'black', fontWeight: 'bold'}}
+                                    decimalSeparator="," 
+                                    placeholder='KM atual'
+                                    name='km_current'
+                                    thousandSeparator="."
+                                    disabled
                                     />
                                 )}
                             </FormItem>
@@ -226,17 +230,19 @@ class viewCart extends Component {
                 </Row>
                 <Row gutter={12}>
                     <Col sm={24} xs={24} md={7}>
-                        <FormItem label='Preço de Compra' hasFeedback>
+                        <FormItem label='Preço de Compra R$' hasFeedback>
                                 {getFieldDecorator('purchase_price', {
                                     initialValue: this.props.cartsInfo.purchase_price,
                                 })(
-                                    <Input
-                                        style={{color: 'black', fontWeight: 'bold'}}
-                                        type='number'
-                                        placeholder='Preço de Compra'
-                                        name='purchase_price'
-                                        disabled
-                                        />
+                                    <CurrencyInput  className="ant-input"
+                                    style={{color: 'black', fontWeight: 'bold'}}
+                                    decimalSeparator="," 
+                                    placeholder='Preço de Compra'
+                                    name='purchase_price'
+                                    thousandSeparator="."
+                                    disabled
+                                    />
+                               
                                 )}
                         </FormItem>
                     </Col>
@@ -260,17 +266,19 @@ class viewCart extends Component {
                 </Row>
                 <Row gutter={12}> 
                     <Col sm={24} xs={24} md={7}>
-                        <FormItem label='Preço de Venda' hasFeedback>
+                        <FormItem label='Preço de Venda R$' hasFeedback>
                                 {getFieldDecorator('sale_value', {
                                     initialValue: this.props.cartsInfo.sale_value,
                                 })(
-                                    <Input
-                                        style={{color: 'black', fontWeight: 'bold'}} 
-                                        type='number'
-                                        placeholder='Preço de Venda'
-                                        name='sale_value'
-                                        disabled
-                                        />
+                                    <CurrencyInput  className="ant-input"
+                                    style={{color: 'black', fontWeight: 'bold'}} 
+                                    decimalSeparator="," 
+                                    placeholder='Preço de Venda'
+                                    name='sale_value'
+                                    thousandSeparator="."
+                                    disabled
+                                    />
+                                   
                                 )}
                         </FormItem>
                     </Col>

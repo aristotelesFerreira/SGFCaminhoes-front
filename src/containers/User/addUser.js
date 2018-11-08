@@ -13,7 +13,7 @@ class addUser extends Component {
 
         return (
             <Modal
-            title='Adicionar Motorista'
+            title='Adicionar Usuário'
             visible={this.props.openAddModal}
             onOk={this.props.addUser}
             confirmLoading={this.props.confirmLoading}
@@ -113,23 +113,7 @@ class addUser extends Component {
                                 <Icon type="question-circle-o" />
                             </Tooltip>
                             </span> )}hasFeedback>
-                                {getFieldDecorator('password', {
-                                    initialValue:  this.props.userInfo.password,
-                                    rules: [
-                                        {
-                                            required: true,
-                                            message: 'Campo obrigatório'
-                                        }
-                                    ]
-                                })(
-                                    <InputMask className="ant-input"
-                                        type='password'
-                                        placeholder='Senha'
-                                        name='password'
-                                        disabled
-                                        onChange={e => this.props.onChangeAddUserInfo('password', e.target.value)}
-                                    />
-                                )}
+                               
                             </FormItem>
                     </Col>
                 </Row>

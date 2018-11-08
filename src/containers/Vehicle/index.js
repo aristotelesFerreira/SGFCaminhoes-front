@@ -114,7 +114,7 @@ export default class index extends Component {
       var km_current = this.state.vehicleInfo.km_current.toString()
       var purchase_price = this.state.vehicleInfo.purchase_price.toString()
       var sale_value =  this.state.vehicleInfo.sale_value.toString()
-      console.log(km_current.length)
+      console.log(km_current)
       km_current = km_current.replace('.','')
       km_current = km_current.replace('.','')
       purchase_price = purchase_price.replace('.','')

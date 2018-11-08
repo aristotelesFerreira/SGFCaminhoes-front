@@ -11,6 +11,8 @@ import Scrollbars from "../../components/utility/customScrollBar";
 import axios from '../../helpers/axios'
 
 import AddUser from './addUser'
+import EditUser from './editUser'
+import ViewUser from './viewUser'
 
 
 export default class index extends Component {
@@ -20,6 +22,7 @@ export default class index extends Component {
         visibleView: false,
         confirmLoading: false,
         list: [],
+        uuid: '',
         userInfo: {
             name: '',
             email: '',
@@ -145,6 +148,37 @@ export default class index extends Component {
           notification.warning({message: 'Campos inválidos', description: 'Preencha todos os campos obrigatórios (*)'})
         }
     }
+    editUser = () => {
+      const { name, email, password, type, status } = this.state.userInfo;
+      if (name !== '' && email !== '' && password !== '' && type !== '' && status !== '') {
+      
+        let newUserInfo = {
+          ...this.state.userInfo
+        };
+        axios.put(`users/uuid/${this.state.uuid}`, newUserInfo)
+          .then(response => {
+            this.setState({
+              confirmLoading: true
+            });
+            setTimeout(() => {
+              this.setState({
+                confirmLoading: false
+              });
+              this.handleEditClose();
+              this.componentWillMount()
+            }, 2000);
+            
+            notification.success({message: 'Editado com sucesso !'})
+            
+          })
+          .catch(error => {
+            notification.error({message: 'Não foi possivel editar !'})
+            console.log(error);
+          });
+      } else {
+        notification.warning({message: 'Campos inválidos', description: 'Preencha todos os campos obrigatórios (*)'})
+      }
+  }
     
     columns = [
         {
@@ -248,47 +282,40 @@ export default class index extends Component {
           dataIndex: "view",
           key: "view",
           width: "10%",
-          render: (text, driversInfo) => (
+          render: (text, userInfo) => (
             <div className="isoInvoiceBtnView">
               <Icon 
               type="search"  
               style={{ fontSize: 25, color: '#1890ff' }} 
               onClick={() => {
-                console.log(driversInfo)
+                
                 this.showModalView()
-                /*this.setState({ uuid: driversInfo.uuid, driversInfo:{
-                  name: driversInfo.name,
-                  cpf_number: driversInfo.cpf_number,
-                  drivers_license: driversInfo.drivers_license,
-                  admission_date:  moment(new Date(driversInfo.admission_date)).format('YYYY-MM-DD'),
-                  resignation_date:  moment(new Date(driversInfo.resignation_date)).format('YYYY-MM-DD'),
-                  driversLicense_validate:  moment(new Date(driversInfo.driversLicense_validate)).format('YYYY-MM-DD'),
-                  phone_1: driversInfo.phone_1,
-                  phone_2: driversInfo.phone_2,
-                  status: driversInfo.status,
+                this.setState({ uuid: userInfo.uuid, userInfo:{
+                  name: userInfo.name,
+                  email: userInfo.email,
+                  password: userInfo.password,
+                  acess: userInfo.acess,
+                  status: userInfo.status
                   }
                  
-                })*/
+                })
               }}
               />
               <Icon 
               type="form"  
               style={{ fontSize: 25, color: '#faad14' , marginLeft: 20}}
               onClick={() => {
+               
                 this.showModalEdit()
-               /* this.setState({ uuid: driversInfo.uuid, driversInfo:{
-                  name: driversInfo.name,
-                  cpf_number: driversInfo.cpf_number,
-                  drivers_license: driversInfo.drivers_license,
-                  admission_date:  moment(new Date(driversInfo.admission_date)).format('YYYY-MM-DD'),
-                  resignation_date:  moment(new Date(driversInfo.resignation_date)).format('YYYY-MM-DD'),
-                  driversLicense_validate:  moment(new Date(driversInfo.driversLicense_validate)).format('YYYY-MM-DD'),
-                  phone_1: driversInfo.phone_1,
-                  phone_2: driversInfo.phone_2,
-                  status: driversInfo.status,
+                this.setState({ uuid: userInfo.uuid, userInfo:{
+                  name: userInfo.name,
+                  email: userInfo.email,
+                  password: userInfo.password,
+                  acess: userInfo.acess,
+                  status: userInfo.status
                   }
                  
-                })*/
+                })
               }}
               />
             </div>
@@ -343,6 +370,20 @@ export default class index extends Component {
                         close={this.handleAddClose}
                         addUser={this.addUser}
                         onChangeAddUserInfo={this.onChangeAddUserInfo.bind(this)}
+                        confirmLoading={this.state.confirmLoading}
+                    />
+                    <EditUser 
+                        openAddModal={this.state.visibleEdit}
+                        userInfo={this.state.userInfo}
+                        close={this.handleEditClose}
+                        addUser={this.editUser}
+                        onChangeAddUserInfo={this.onChangeAddUserInfo.bind(this)}
+                        confirmLoading={this.state.confirmLoading}
+                    />
+                    <ViewUser 
+                        openAddModal={this.state.visibleView}
+                        userInfo={this.state.userInfo}
+                        close={this.handleViewClose}
                         confirmLoading={this.state.confirmLoading}
                     />
                 </div>

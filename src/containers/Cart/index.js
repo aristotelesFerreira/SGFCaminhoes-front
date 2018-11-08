@@ -70,8 +70,26 @@ export default class index extends Component {
   addCart = () => {
     const { brand, model, type, plate, chassis_number } = this.state.cartsInfo;
     if (brand !== '' && model !== '' && type !== '' && plate !== '' && chassis_number !== '') {
+      var km_current = this.state.cartsInfo.km_current.toString()
+      var purchase_price = this.state.cartsInfo.purchase_price.toString()
+      var sale_value =  this.state.cartsInfo.sale_value.toString()
+      var capacity =  this.state.cartsInfo.capacity.toString()
+
+      capacity = capacity.replace('.', '')
+      capacity = capacity.replace('.', '')
+      km_current = km_current.replace('.','')
+      km_current = km_current.replace('.','')
+      purchase_price = purchase_price.replace('.','')
+      purchase_price = purchase_price.replace('.','')
+      sale_value = sale_value.replace('.','')
+      sale_value = sale_value.replace('.','')
+
       let newCartInfo = {
-        ...this.state.cartsInfo
+        ...this.state.cartsInfo,  
+        km_current: km_current.replace(',', '.'),
+        purchase_price: purchase_price.replace(',','.'),
+        sale_value: sale_value.replace(',', '.'),
+        capacity: capacity.replace(',', '.'),
       };
       axios.post("carts", newCartInfo)
         .then(response => {
@@ -99,8 +117,26 @@ export default class index extends Component {
   editCart = () => {
     const { brand, model, type, plate, chassis_number } = this.state.cartsInfo;
     if (brand !== '' && model !== '' && type !== '' && plate !== '' && chassis_number !== '') {
+      var km_current = this.state.cartsInfo.km_current.toString()
+      var purchase_price = this.state.cartsInfo.purchase_price.toString()
+      var sale_value =  this.state.cartsInfo.sale_value.toString()
+      var capacity =  this.state.cartsInfo.capacity.toString()
+
+      capacity = capacity.replace('.', '')
+      capacity = capacity.replace('.', '')
+      km_current = km_current.replace('.','')
+      km_current = km_current.replace('.','')
+      purchase_price = purchase_price.replace('.','')
+      purchase_price = purchase_price.replace('.','')
+      sale_value = sale_value.replace('.','')
+      sale_value = sale_value.replace('.','')
+
       let newCartInfo = {
-        ...this.state.cartsInfo
+        ...this.state.cartsInfo,  
+        km_current: km_current.replace(',', '.'),
+        purchase_price: purchase_price.replace(',','.'),
+        sale_value: sale_value.replace(',', '.'),
+        capacity: capacity.replace(',', '.'),
       };
       axios.put(`carts/${this.state.uuid}`, newCartInfo)
       .then(response => {
@@ -403,6 +439,7 @@ export default class index extends Component {
         </CardWrapper>
         <AddCart 
         open={this.state.visible}
+        cartsInfo={this.state.cartsInfo}
         close={this.handleAddClose}
         addCart={this.addCart}
         onChangeAddCartInfo={this.onChangeAddCartInfo.bind(this)}
