@@ -55,11 +55,11 @@ class SignIn extends Component {
 
             <div className="isoSignInForm">
               <div className="isoInputWrapper">
-                <Input size="large" placeholder="E-mail" id="inputEmail"  defaultValue="admin@admin.com" />
+                <Input size="large" placeholder="E-mail" id="inputEmail"  />
               </div>
 
               <div className="isoInputWrapper">
-                <Input size="large" type="password" placeholder="Password" id="inputPassword"  defaultValue="123456" />
+                <Input size="large" type="password" placeholder="Password" id="inputPassword"  />
               </div>
 
               <div className="isoInputWrapper isoLeftRightComponent">

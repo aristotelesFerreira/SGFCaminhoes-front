@@ -4,7 +4,7 @@ import axios from 'axios'
 class AuthHelper {
     login = async userInfo => {
         if(!userInfo.email || !userInfo.password) {
-            return { error: 'preencha os campos'}
+            return { error: 'Preencha os campos'}
         }
         return await axios.post('http://127.0.0.1:3333/auth', userInfo)
             .then(response => {

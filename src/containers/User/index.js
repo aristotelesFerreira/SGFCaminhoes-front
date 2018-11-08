@@ -6,14 +6,14 @@ import TableWrapper from "../Tables/antTables/antTable.style";
 import CardWrapper, { Box } from "./index.style";
 import IntlMessages from "../../components/utility/intlMessages";
 import PageHeader from "../../components/utility/pageHeader";
-import { Button, Input, Icon, notification } from 'antd';
+import { Button, Input, Icon, notification, Dropdown, Menu } from 'antd';
 import Scrollbars from "../../components/utility/customScrollBar";
 import axios from '../../helpers/axios'
 
 import AddUser from './addUser'
 import EditUser from './editUser'
 import ViewUser from './viewUser'
-
+import OpenFilters from './openFilters'
 
 export default class index extends Component {
     state = {
@@ -22,7 +22,12 @@ export default class index extends Component {
         visibleView: false,
         confirmLoading: false,
         list: [],
+        visibleCalendar: false,
         uuid: '',
+        info: {
+          key: 0,
+          driver: '',
+        },
         userInfo: {
             name: '',
             email: '',
@@ -63,6 +68,35 @@ export default class index extends Component {
           visibleEdit: false,
           userInfo: {...this.state.initialState} 
         });
+    }
+    onChangeAddDateInfo(key, value) {
+      this.setState({
+          info: {
+          ...this.state.info,
+          [key]: value
+        }
+      });
+  
+    }
+    handleCalendarOpen = () => {
+      this.setState({
+        visibleCalendar: true,
+        info: {
+          key: 1,
+          driver: '',
+        }
+      })
+      
+    }
+    handleCalendarClose = () => {
+      this.setState({
+        visibleCalendar: false,
+        info: {
+          key: 0,
+          driver: '',
+        }
+      })
+      
     }
     handleViewClose = () => {
         this.setState({
@@ -324,7 +358,15 @@ export default class index extends Component {
       ]
    
     render() {
-    const type = localStorage.getItem('type')
+      const menu = (
+        <Menu >
+          <Menu.Item key="1" onClick={ this.handleCalendarOpen}>Status</Menu.Item>
+         
+        </Menu>
+        
+      
+      )
+      const type = localStorage.getItem('type')
        const {list} = this.state
         return (
            
@@ -336,13 +378,17 @@ export default class index extends Component {
                 <Box>
                 { type === 'admin' ? 
                 <div>
+                   <div>
+                    <Dropdown overlay={menu}>
+                      <Button style={{ marginLeft: 8 }}>
+                        Relatórios <Icon type="down" />
+                      </Button>
+                    </Dropdown>
+                    </div>
 
                     <div className='BtnAdd' align='right'>
                         <Button
-                        // style={{ background: '#1890ff' }}
-                        // color='#1890ff'
-                        //ghost
-                        // type='primary'
+                      
                         onClick={this.showAddModal}
                         style={{ top: -10 }}
                         >
@@ -386,6 +432,13 @@ export default class index extends Component {
                         close={this.handleViewClose}
                         confirmLoading={this.state.confirmLoading}
                     />
+                     <OpenFilters
+                      open={this.state.visibleCalendar}
+                      info={this.state.info}
+                      close={this.handleCalendarClose}
+                      confirmLoading={this.state.confirmLoading}
+                      onChangeAddDateInfo={this.onChangeAddDateInfo.bind(this)}
+                      />
                 </div>
                 
                 : <div>Você não tem permissão</div>}
