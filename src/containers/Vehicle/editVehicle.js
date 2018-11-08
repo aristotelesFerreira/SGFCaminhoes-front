@@ -47,6 +47,7 @@ class editVehicle extends Component {
                               type='text'
                               placeholder='Marca'
                               name='brand'
+                              maxLength={50}
                               onChange={e => this.props.onChangeAddVehicleInfo('brand', e.target.value)} 
                             />
                         )}
@@ -67,6 +68,7 @@ class editVehicle extends Component {
                                     type='text'
                                     placeholder='Modelo'
                                     name='model'
+                                    maxLength={50}
                                     onChange={e => this.props.onChangeAddVehicleInfo('model', e.target.value)}
                                 />
                             )}
@@ -112,6 +114,7 @@ class editVehicle extends Component {
                                         type='number'
                                         placeholder='Ano'
                                         name='year'
+                                        maxLength={4}
                                         onChange={e => this.props.onChangeAddVehicleInfo('year', e.target.value)}
                                     />
                                 )}

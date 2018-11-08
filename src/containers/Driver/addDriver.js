@@ -45,7 +45,8 @@ class addDriver extends Component {
                               type='text'
                               placeholder='Nome'
                               name='name'
-                              onChange={e => this.props.onChangeAddDriverInfo('name', e.target.value)} 
+                              onChange={e => this.props.onChangeAddDriverInfo('name', e.target.value)}
+                              maxLength={60}
                             />
                         )}
                       </FormItem>

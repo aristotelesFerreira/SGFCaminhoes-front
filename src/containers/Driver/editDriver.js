@@ -49,6 +49,7 @@ class editDriver extends Component {
                               type='text'
                               placeholder='Nome'
                               name='name'
+                              maxLength={60}
                               onChange={e => this.props.onChangeAddDriverInfo('name', e.target.value)} 
                             />
                         )}

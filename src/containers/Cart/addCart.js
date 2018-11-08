@@ -44,7 +44,7 @@ class addCart extends Component {
                             ]
                         })(
                             <Input 
-                             
+                            maxLength={50}
                               type='text'
                               placeholder='Marca'
                               name='brand'
@@ -67,6 +67,7 @@ class addCart extends Component {
                                     type='text'
                                     placeholder='Modelo'
                                     name='model'
+                                    maxLength={50}
                                     onChange={e => this.props.onChangeAddCartInfo('model', e.target.value)}
                                 />
                             )}
@@ -110,6 +111,7 @@ class addCart extends Component {
                               type='text'
                               placeholder='Descrição'
                               name='description'
+                              maxLength={100}
                               onChange={e => this.props.onChangeAddCartInfo('description', e.target.value)} 
                             />
                         )}

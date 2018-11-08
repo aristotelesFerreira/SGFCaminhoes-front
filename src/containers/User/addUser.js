@@ -96,7 +96,7 @@ class addUser extends Component {
                                 })(
                                     <InputMask className="ant-input"
                                         type='text'
-                                       
+                                        maxLength={60}
                                         placeholder='E-mail'
                                         name='email'
                                         onChange={e => this.props.onChangeAddUserInfo('email', e.target.value)}
