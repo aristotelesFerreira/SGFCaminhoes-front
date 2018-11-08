@@ -7,22 +7,28 @@ import CardWrapper, { Box } from "./index.style";
 import IntlMessages from "../../components/utility/intlMessages";
 import PageHeader from "../../components/utility/pageHeader";
 import Scrollbars from "../../components/utility/customScrollBar";
-import { Button, Input, Icon, notification } from 'antd';
+import { Button, Input, Icon, notification, Dropdown, Menu } from 'antd';
 import axios from '../../helpers/axios'
 import AddDriver from './addDriver'
 import EditDriver from './editDriver'
 import ViewDriver from './viewDriver'
-import moment from 'moment';
+import moment from 'moment'
+import OpenFilters from './openFilters'
 
 export default class index extends Component {
 
   state = {
     selected: [],
+    visibleCalendar: false,
     visible: false,
     visibleEdit: false,
     visibleView: false,
     confirmLoading: false,
     list: [],
+    info: {
+      key: 0,
+      driver: '',
+    },
     initialState: {
         name: '',
         cpf_number: '',
@@ -159,6 +165,36 @@ export default class index extends Component {
       }
     });
   }
+  onChangeAddDateInfo(key, value) {
+    this.setState({
+        info: {
+        ...this.state.info,
+        [key]: value
+      }
+    });
+
+  }
+  
+  handleCalendarOpen = () => {
+    this.setState({
+      visibleCalendar: true,
+      info: {
+        key: 1,
+        driver: '',
+      }
+    })
+    
+  }
+  handleCalendarClose = () => {
+    this.setState({
+      visibleCalendar: false,
+      info: {
+        key: 0,
+        driver: '',
+      }
+    })
+    
+  }
 
   columns = [
     {
@@ -278,6 +314,14 @@ export default class index extends Component {
   ]
   
   render() {
+    const menu = (
+      <Menu >
+        <Menu.Item key="1" onClick={ this.handleCalendarOpen}>Status</Menu.Item>
+       
+      </Menu>
+      
+    
+    )
     const { list } = this.state
     const { selected } = this.state
     const rowSelection = {
@@ -308,12 +352,15 @@ export default class index extends Component {
           <IntlMessages id='header.drivers'/>
         </PageHeader>
         <Box>
+        <div>
+        <Dropdown overlay={menu}>
+          <Button style={{ marginLeft: 8 }}>
+            Relatórios <Icon type="down" />
+          </Button>
+        </Dropdown>
+        </div>
           <div className='BtnAdd' align='right'>
             <Button
-            // style={{ background: '#1890ff' }}
-            // color='#1890ff'
-             //ghost
-            // type='primary'
              onClick={this.showAddModal}
              style={{ top: -10 }}
              >
@@ -358,6 +405,14 @@ export default class index extends Component {
         close={this.handleViewClose}
         confirmLoading={this.state.confirmLoading} 
         />
+         <OpenFilters
+        open={this.state.visibleCalendar}
+        info={this.state.info}
+        close={this.handleCalendarClose}
+        confirmLoading={this.state.confirmLoading}
+        onChangeAddDateInfo={this.onChangeAddDateInfo.bind(this)}
+        />
+
         </Box>
       </LayoutWrapper>
     );
