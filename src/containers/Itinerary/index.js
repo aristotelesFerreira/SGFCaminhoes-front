@@ -4,7 +4,7 @@ import TableWrapper from "../Tables/antTables/antTable.style";
 import CardWrapper, { Box } from "./index.style";
 import IntlMessages from "../../components/utility/intlMessages";
 import PageHeader from "../../components/utility/pageHeader";
-import { Button, Input, Icon, notification } from 'antd';
+import { Button, Input, Icon, notification, Dropdown, Menu } from 'antd';
 import Scrollbars from "../../components/utility/customScrollBar";
 
 import axios from '../../helpers/axios'
@@ -12,6 +12,7 @@ import AddItinerary from './addItinerary'
 import EditItinerary from './editItinerary' 
 import ViewItinerary from './viewItinerary'
 
+import OpenFilters from './openFilters'
 
 export default class index extends Component {
 
@@ -19,10 +20,15 @@ export default class index extends Component {
     newLng = parseFloat(localStorage.getItem('longitude'))
     state = {
         selected: [],
+        visibleCalendar: false,
         visible: false,
         visibleEdit: false,
         visibleView: false,
         confirmLoading: false,
+        info: {
+          key: 0,
+          driver: '',
+        },
         list: [],
         initialState: {
             route_name: '',
@@ -68,6 +74,26 @@ export default class index extends Component {
           console.log(error)
         })
         this.getLocalization()
+    }
+    handleCalendarOpen = () => {
+      this.setState({
+        visibleCalendar: true,
+        info: {
+          key: 1,
+          driver: '',
+        }
+      })
+      
+    }
+    handleCalendarClose = () => {
+      this.setState({
+        visibleCalendar: false,
+        info: {
+          key: 0,
+          driver: '',
+        }
+      })
+      
     }
     getLocalization() {
         if (navigator && navigator.geolocation) {
@@ -143,6 +169,15 @@ export default class index extends Component {
             [key]: value
           }
         });
+    }
+    onChangeAddDateInfo(key, value) {
+      this.setState({
+          info: {
+          ...this.state.info,
+          [key]: value
+        }
+      });
+  
     }
     addItinerary = () => {
       console.log(this.state)
@@ -432,6 +467,14 @@ export default class index extends Component {
     ]
     
     render() {
+      const menu = (
+        <Menu >
+          <Menu.Item key="1" onClick={ this.handleCalendarOpen}>Status</Menu.Item>
+         
+        </Menu>
+        
+      
+      )
         const { list } = this.state
         const { selected } = this.state
         const rowSelection = {
@@ -464,6 +507,13 @@ export default class index extends Component {
               <IntlMessages id='header.itineraries'/>
             </PageHeader>
             <Box>
+            <div>
+              <Dropdown overlay={menu}>
+                <Button style={{ marginLeft: 8 }}>
+                  Relatórios <Icon type="down" />
+                </Button>
+              </Dropdown>
+            </div>
                 <div className='BtnAdd' align='right'>
                     <Button
                     onClick={this.showAddModal}
@@ -529,6 +579,13 @@ export default class index extends Component {
                  distance={this.state.distance}
                  time={this.state.time}//update={this.state.update}
                 /> 
+                <OpenFilters
+                  open={this.state.visibleCalendar}
+                  info={this.state.info}
+                  close={this.handleCalendarClose}
+                  confirmLoading={this.state.confirmLoading}
+                  onChangeAddDateInfo={this.onChangeAddDateInfo.bind(this)}
+                />
               
             </Box>
               </LayoutWrapper> 
