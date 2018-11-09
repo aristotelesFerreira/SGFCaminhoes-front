@@ -82,19 +82,19 @@ class openCalendar extends Component {
              status = ''
         }
 
-        if(this.props.info.key === 1) {
+        if(this.props.info.key === '1') {
             var url = this.state.value === 2 ? `report/traveldate/arrivalDate/${this.props.info.data1}/${this.props.info.data2}/?${status}` :
         `report/traveldate/departureDate/${this.props.info.data1}/${this.props.info.data2}/?${status}`
-        } else if (this.props.info.key === 5) {
+        } else if (this.props.info.key === '5') {
              url = this.state.value === 2 ? `report/traveldate/arrivalDate/${this.props.info.data1}/${this.props.info.data2}/?travels.driver_id=${this.props.info.driver}&${status}` :
             `report/traveldate/departureDate/${this.props.info.data1}/${this.props.info.data2}/?travels.driver_id=${this.props.info.driver}&${status}`
-        } else if (this.props.info.key === 6) {
+        } else if (this.props.info.key === '6') {
              url = this.state.value === 2 ? `report/traveldate/arrivalDate/${this.props.info.data1}/${this.props.info.data2}/?travels.vehicle_id=${this.props.info.vehicle}&${status}` :
             `report/traveldate/departureDate/${this.props.info.data1}/${this.props.info.data2}/?travels.vehicle_id=${this.props.info.vehicle}&${status}`
-        } else if (this.props.info.key === 7) {
+        } else if (this.props.info.key === '7') {
              url = this.state.value === 2 ? `report/traveldate/arrivalDate/${this.props.info.data1}/${this.props.info.data2}/?travels.itinerary_id=${this.props.info.itinerary}&${status}` :
             `report/traveldate/departureDate/${this.props.info.data1}/${this.props.info.data2}/?travels.itinerary_id=${this.props.info.itinerary}&${status}`
-        } else if (this.props.info.key === 8) {
+        } else if (this.props.info.key === '8') {
             if(this.state.valueStatus === 1){
                  status = 'travels_status=finished'
             } else if (this.state.valueStatus === 2){
@@ -117,6 +117,7 @@ class openCalendar extends Component {
             }
             else{
                 console.log(url)
+                console.log(this.state.value)
             axios.get(url)
             .then(response => {
                 if(response.data === 'sucesso'){
@@ -200,7 +201,7 @@ class openCalendar extends Component {
             <Form>
                 
           
-                <Row> {this.props.info.key === 5 ? 
+                <Row> {this.props.info.key === '5' ? 
                 <Col sm={20} xs={24} md={24}> 
                 <FormItem label='Motorista' >
                 <Select
@@ -227,7 +228,7 @@ class openCalendar extends Component {
                 :
                     <div> </div>
                 }
-                {this.props.info.key === 6 ? 
+                {this.props.info.key === '6' ? 
                 <Col sm={20} xs={24} md={24}> 
                 <FormItem label='Veículo' >
                 <Select
@@ -252,7 +253,7 @@ class openCalendar extends Component {
                 :
                     <div> </div>
                 }
-                {this.props.info.key === 7 ? 
+                {this.props.info.key === '7' ? 
                 <Col sm={20} xs={24} md={24}> 
                 <FormItem label='Itinerário' >
                 <Select
@@ -280,7 +281,7 @@ class openCalendar extends Component {
                 :
                     <div> </div>
                 }
-                {this.props.info.key === 8 ? 
+                {this.props.info.key === '8' ? 
                 <Col sm={20} xs={24} md={24}> 
                 <FormItem label='Carreta' >
                 <Select
