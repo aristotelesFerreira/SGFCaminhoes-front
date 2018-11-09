@@ -406,9 +406,9 @@ export default class index extends Component {
     
     )
     const { list } = this.state
-    const { selected } = this.state
+    //const { selected } = this.state
     const rowSelection = {
-      hideDefaultSelections: true,
+      /*hideDefaultSelections: true,
       selectedRowKeys: selected,
       onChange: selected => this.setState({ selected }),
       selections: [
@@ -428,7 +428,7 @@ export default class index extends Component {
         },
        
       ],
-      onSelection: selected => this.setState({ selected })
+      onSelection: selected => this.setState({ selected })*/
     };
     return (
       <LayoutWrapper>

@@ -324,29 +324,7 @@ export default class index extends Component {
     
     )
     const { list } = this.state
-    const { selected } = this.state
-    const rowSelection = {
-      hideDefaultSelections: true,
-      selectedRowKeys: selected,
-      onChange: selected => this.setState({ selected }),
-      selections: [
-        {
-          key: 'index',
-          text: "Select All Invoices",
-          onSelect: () =>
-            this.setState({
-              selected: this.props.list.map(list => list.id)
-            })
-           
-        },
-        {
-          key: 'index1',
-          text: "Unselect all",
-          onSelect: () => this.setState({ selected: [] })
-        },
-      ],
-      onSelection: selected => this.setState({ selected })
-    };
+    const rowSelection = {};
     return (
       <LayoutWrapper>
         <PageHeader>
