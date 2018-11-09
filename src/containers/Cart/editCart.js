@@ -232,6 +232,12 @@ class editCart extends Component {
                             <FormItem label='Data da Compra' hasFeedback>
                                     {getFieldDecorator('purchase_date', {
                                         initialValue: this.props.cartsInfo.purchase_date,
+                                        rules: [
+                                            {
+                                                required: true,
+                                                message: 'Campo obrigatório'
+                                            }
+                                         ]
                                     })(
                                        
                                         <Input 

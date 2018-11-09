@@ -34,7 +34,7 @@ export default class index extends Component {
         name: '',
         cpf_number: '',
         drivers_license: '',
-        admission_date: null,
+        admission_date: '',
         resignation_date: null,
         driversLicense_validate: '',
         phone_1: '',
@@ -46,7 +46,7 @@ export default class index extends Component {
         name: '',
         cpf_number: '',
         drivers_license: '',
-        admission_date: null,
+        admission_date: '',
         resignation_date: null,
         driversLicense_validate: '',
         phone_1: '',
@@ -67,8 +67,8 @@ export default class index extends Component {
   }
   
   addDriver = () => {
-    const { name, cpf_number, drivers_license, driversLicense_validate } = this.state.driversInfo;
-    if (name !== '' && cpf_number !== '' && drivers_license !== '' && driversLicense_validate !== '') {
+    const { name, cpf_number, drivers_license, driversLicense_validate, admission_date } = this.state.driversInfo;
+    if (name !== '' && cpf_number !== '' && drivers_license !== '' && driversLicense_validate !== '' && admission_date !== '') {
       let newDriverInfo = {
         ...this.state.driversInfo
       };
@@ -96,8 +96,8 @@ export default class index extends Component {
     }
   }
   editDriver = () => {
-    const {name, cpf_number, drivers_license, driversLicense_validate } = this.state.driversInfo
-    if(name !== '' && cpf_number !== '' && drivers_license !== '' && driversLicense_validate !== ''){
+    const {name, cpf_number, drivers_license, driversLicense_validate, admission_date } = this.state.driversInfo
+    if(name !== '' && cpf_number !== '' && drivers_license !== '' && driversLicense_validate !== '' && admission_date !== ''){
       let newDriverInfo = {
         ...this.state.driversInfo
       }
@@ -272,7 +272,6 @@ export default class index extends Component {
           type="search"  
           style={{ fontSize: 25, color: '#1890ff' }} 
           onClick={() => {
-            console.log(driversInfo)
             this.showModalView()
             this.setState({ uuid: driversInfo.uuid, driversInfo:{
               name: driversInfo.name,

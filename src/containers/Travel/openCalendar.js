@@ -116,8 +116,6 @@ class openCalendar extends Component {
                 notification.warning({message: 'Selecione um veículo !'})
             }
             else{
-                console.log(url)
-                console.log(this.state.value)
             axios.get(url)
             .then(response => {
                 if(response.data === 'sucesso'){

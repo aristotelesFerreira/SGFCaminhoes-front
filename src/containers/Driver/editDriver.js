@@ -180,7 +180,13 @@ class editDriver extends Component {
                     <Col sm={24} xs={24} md={7}>
                             <FormItem label='Data de admissão' hasFeedback>
                                     {getFieldDecorator('admission_date', {
-                                        initialValue: this.props.driversInfo.admission_date
+                                        initialValue: this.props.driversInfo.admission_date,
+                                        rules: [
+                                            {
+                                                required: true,
+                                                message: 'Campo obrigatório'
+                                            }
+                                        ]
                                       })(
                                         <Input 
                                         type='date'

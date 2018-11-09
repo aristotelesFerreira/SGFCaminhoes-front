@@ -184,6 +184,7 @@ class editVehicle extends Component {
                         <FormItem label='Preço de Compra R$' hasFeedback>
                                 {getFieldDecorator('purchase_price', {
                                     initialValue: this.props.vehicleInfo.purchase_price,
+                                   
                                 })(
                                     <CurrencyInput  className="ant-input"
                                     decimalSeparator="," 
@@ -200,6 +201,12 @@ class editVehicle extends Component {
                             <FormItem label='Data da Compra' hasFeedback>
                                     {getFieldDecorator('purchase_date', {
                                         initialValue: this.props.vehicleInfo.purchase_date,
+                                        rules: [
+                                            {
+                                                required: true,
+                                                message: 'Campo obrigatório'
+                                            }
+                                         ]
                                     })(
                                        
                                         <Input 

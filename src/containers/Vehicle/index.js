@@ -38,7 +38,7 @@ export default class index extends Component {
         plate: '',
         chassis_number: '',
         purchase_price: '0',
-        purchase_date: null,
+        purchase_date: '',
         sale_value: '0',
         status: true
     },
@@ -52,7 +52,7 @@ export default class index extends Component {
         plate: '',
         chassis_number: '',
         purchase_price: '0',
-        purchase_date: null,
+        purchase_date: '',
         sale_value: '0',
         status: true
     }
@@ -71,8 +71,8 @@ export default class index extends Component {
   }
   addVehicle = () => {
 
-    const { brand, model, type, plate, chassis_number } = this.state.vehicleInfo;
-    if (brand !== '' && model !== '' && type !== '' && plate !== '' && chassis_number !== '') {
+    const { brand, model, type, plate, chassis_number, purchase_date } = this.state.vehicleInfo;
+    if (brand !== '' && model !== '' && type !== '' && plate !== '' && chassis_number !== '' && purchase_date !== '') {
       
       let km_current = this.state.vehicleInfo.km_current.replace('.','')
       km_current =  km_current.replace('.','')
@@ -114,13 +114,13 @@ export default class index extends Component {
   
   editVehicle = () => {
     
-    const { brand, model, type, plate, chassis_number } = this.state.vehicleInfo;
-    if (brand !== '' && model !== '' && type !== '' && plate !== '' && chassis_number !== '') {
+    const { brand, model, type, plate, chassis_number, purchase_date } = this.state.vehicleInfo;
+    if (brand !== '' && model !== '' && type !== '' && plate !== '' && chassis_number !== '' && purchase_date !== '') {
 
       var km_current = this.state.vehicleInfo.km_current.toString()
       var purchase_price = this.state.vehicleInfo.purchase_price.toString()
       var sale_value =  this.state.vehicleInfo.sale_value.toString()
-      console.log(km_current)
+      
       km_current = km_current.replace('.','')
       km_current = km_current.replace('.','')
       purchase_price = purchase_price.replace('.','')

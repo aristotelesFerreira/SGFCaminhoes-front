@@ -190,6 +190,7 @@ class addVehicle extends Component {
                         <FormItem label='Preço de Compra R$' hasFeedback>
                                 {getFieldDecorator('purchase_price', {
                                     initialValue: this.props.vehicleInfo.purchase_price,
+                                   
                                 })(
                                     
                                     <CurrencyInput  className="ant-input"
@@ -207,6 +208,12 @@ class addVehicle extends Component {
                     <Col sm={24} xs={24} md={7}>
                             <FormItem label='Data da Compra' hasFeedback>
                                     {getFieldDecorator('purchase_date', {
+                                         rules: [
+                                            {
+                                                required: true,
+                                                message: 'Campo obrigatório'
+                                            }
+                                         ]
                                     })(
                                        
                                         <Input 

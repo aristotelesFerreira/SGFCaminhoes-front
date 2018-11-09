@@ -230,6 +230,12 @@ class addCart extends Component {
                     <Col sm={24} xs={24} md={7}>
                             <FormItem label='Data da Compra' hasFeedback>
                                     {getFieldDecorator('purchase_date', {
+                                         rules: [
+                                            {
+                                                required: true,
+                                                message: 'Campo obrigatório'
+                                            }
+                                         ]
                                     })(
                                        
                                         <Input 
