@@ -59,7 +59,7 @@ class addUser extends Component {
                             </Tooltip>
                             </span> )} hasFeedback>
                             {getFieldDecorator('type', {
-                                
+                                initialValue: this.props.userInfo.acess,
                                 rules: [
                                     {
                                         required: true,

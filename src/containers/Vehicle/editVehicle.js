@@ -99,6 +99,8 @@ class editVehicle extends Component {
                                     <Option value="Leve">3/4 (Leve)</Option>
                                     <Option value="Semi Pesado">Toco (Semi Pesado)</Option>
                                     <Option value="Pesado">Truck (Pesado)</Option>
+                                    <Option value="Cavalo Mecanico">Cavalo Mecanico</Option>
+                                    <Option value="Cavalo Mecanico Truck">Cavalo Mec. Truck</Option>
                                 </Select>
                             )}
                         </FormItem>

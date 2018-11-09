@@ -32,14 +32,14 @@ export default class index extends Component {
             name: '',
             email: '',
             password: 'coisasnadaaver',
-            acess: '',
+            acess: 'operator',
             status: 1
         },
         initialState: {
             name: '',
             email: '',
             password: 'coisasnadaaver',
-            acess: '',
+            acess: 'operator',
             status: 1
         }
 
